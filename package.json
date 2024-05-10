@@ -10,6 +10,7 @@
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
     "@tsconfig/node20": "^20.1.4",
+    "@types/bcrypt": "^5.0.2",
     "@types/node": "^20.12.11",
     "tsx": "^4.9.3",
     "typescript": "^5.4.5",
@@ -19,5 +20,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "zod": "^3.23.8"
+  }
 }
