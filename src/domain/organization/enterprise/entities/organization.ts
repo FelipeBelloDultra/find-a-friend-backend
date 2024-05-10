@@ -17,6 +17,10 @@ export class Organization extends Entity<OrganizationProps> {
     return this.props.phone;
   }
 
+  public get name() {
+    return this.props.name;
+  }
+
   public get email() {
     return this.props.email;
   }
