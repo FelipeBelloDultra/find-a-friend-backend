@@ -19,4 +19,14 @@ export class InMemoryOrganizationRepository implements OrganizationRepository {
 
     return organization;
   }
+
+  async findById(id: string): Promise<Organization | null> {
+    const organization = this.organizations.find(
+      (organization) => organization.id.toValue() === id
+    );
+
+    if (!organization) return null;
+
+    return organization;
+  }
 }
