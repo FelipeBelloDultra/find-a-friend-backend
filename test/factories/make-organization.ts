@@ -10,6 +10,8 @@ export function makeOrganization() {
     logoUrl: faker.image.url(),
     name: faker.company.name(),
     phone: faker.phone.number(),
+    email: faker.internet.email(),
+    password: faker.internet.password(),
   };
 }
 
