@@ -20,6 +20,10 @@ export class Organization extends Entity<OrganizationProps> {
     return this.props.email;
   }
 
+  public get password() {
+    return this.props.password;
+  }
+
   static create(
     props: Optional<OrganizationProps, "createdAt">,
     id?: UniqueEntityID
