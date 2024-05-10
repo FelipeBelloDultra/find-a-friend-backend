@@ -3,6 +3,7 @@ import { Either, left, right } from "~/core/either";
 
 import { Organization } from "~/domain/organization/enterprise/entities/organization";
 import { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
+import { Password } from "~/domain/organization/enterprise/entities/value-object/password";
 
 import { OrganizationAlreadyExists } from "./errors/organization-already-exists";
 
@@ -38,7 +39,7 @@ export class CreateOrganization
       logoUrl: input.logoUrl,
       phone: input.phone,
       email: input.email,
-      password: input.password,
+      password: await Password.create(input.password),
     });
 
     return right({

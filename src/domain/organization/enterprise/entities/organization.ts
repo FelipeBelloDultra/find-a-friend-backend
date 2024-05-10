@@ -1,11 +1,12 @@
 import { Entity } from "~/core/entity/entity";
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
 import { Optional } from "~/core/types/optional";
+import { Password } from "./value-object/password";
 
 export interface OrganizationProps {
   name: string;
   email: string;
-  password: string;
+  password: Password;
   logoUrl: string;
   phone: string;
   createdAt: Date;
