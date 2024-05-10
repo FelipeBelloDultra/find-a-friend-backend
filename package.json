@@ -8,6 +8,7 @@
     "test:watch": "vitest"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^20.12.11",
     "tsx": "^4.9.3",
