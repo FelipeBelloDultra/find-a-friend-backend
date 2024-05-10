@@ -32,6 +32,7 @@ describe("Create organization", () => {
     expect(inMemoryOrganizationRepository.organizations[0].email).toEqual(
       org.email
     );
+    expect(inMemoryOrganizationRepository.organizations[0].address).toBeNull();
   });
 
   it("should not create a new organization if email already exists", async () => {

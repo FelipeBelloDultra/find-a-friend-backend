@@ -29,4 +29,16 @@ export class InMemoryOrganizationRepository implements OrganizationRepository {
 
     return organization;
   }
+
+  async save(organization: Organization): Promise<Organization> {
+    const orgIndex = this.organizations.findIndex(
+      ({ id }) => id === organization.id
+    );
+
+    if (orgIndex !== -1) {
+      this.organizations[orgIndex] = organization;
+    }
+
+    return organization;
+  }
 }
