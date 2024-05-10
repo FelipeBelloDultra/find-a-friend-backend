@@ -5,7 +5,7 @@ import { Organization } from "~/domain/organization/enterprise/entities/organiza
 import { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
 import { Password } from "~/domain/organization/enterprise/entities/value-object/password";
 
-import { OrganizationAlreadyExists } from "./errors/organization-already-exists";
+import { OrganizationAlreadyExists } from "~/core/errors/organization-already-exists";
 
 interface CreateOrganizationInput {
   name: string;

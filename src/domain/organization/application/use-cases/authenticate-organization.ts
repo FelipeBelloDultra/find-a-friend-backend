@@ -3,7 +3,7 @@ import { Either, left, right } from "~/core/either";
 
 import { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
 
-import { InvalidCredentials } from "./errors/invalid-credentials";
+import { InvalidCredentials } from "~/core/errors/invalid-credentials";
 
 interface AuthenticateOrganizationInput {
   email: string;

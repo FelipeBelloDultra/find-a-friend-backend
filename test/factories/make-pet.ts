@@ -4,7 +4,6 @@ import { UniqueEntityID } from "~/core/entity/unique-entity-id";
 
 export function makePet() {
   return {
-    addressId: new UniqueEntityID(),
     organizationId: new UniqueEntityID(),
     name: faker.animal.dog(),
     about: faker.lorem.text(),

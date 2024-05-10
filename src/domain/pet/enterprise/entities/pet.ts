@@ -2,7 +2,6 @@ import { Entity } from "~/core/entity/entity";
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
 
 export interface PetProps {
-  addressId: UniqueEntityID;
   organizationId: UniqueEntityID;
   name: string;
   about: string;
@@ -12,6 +11,10 @@ export interface PetProps {
 }
 
 export class Pet extends Entity<PetProps> {
+  public get organizationId() {
+    return this.props.organizationId;
+  }
+
   static create(props: PetProps, id?: UniqueEntityID) {
     return new Pet(props, id);
   }
