@@ -1,13 +1,10 @@
 import { AuthenticateOrganization } from "./authenticate-organization";
 
-import {
-  makeOrganization,
-  makeOrganizationEntity,
-} from "test/factories/make-organization";
+import { makeOrganizationEntity } from "test/factories/make-organization";
 import { InMemoryOrganizationRepository } from "test/repository/in-memory-organization-repository";
 
 import { InvalidCredentials } from "~/core/errors/invalid-credentials";
-import { Password } from "../../enterprise/entities/value-object/password";
+import { Password } from "~/domain/organization/enterprise/entities/value-object/password";
 
 let sut: AuthenticateOrganization;
 let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
