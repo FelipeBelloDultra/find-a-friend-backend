@@ -2,13 +2,14 @@ import { Entity } from "~/core/entity/entity";
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
 
 export interface AddressProps {
-  organizationId: UniqueEntityID;
-  street: string;
-  city: string;
   zipcode: string;
-  country: string;
+  state: string;
+  city: string;
   neighborhood: string;
+  street: string;
   number: string;
+  latitude: string;
+  longitude: string;
   complement: string | null;
 }
 
