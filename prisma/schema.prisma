@@ -12,3 +12,83 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Organization {
+  id            String   @id
+  name          String
+  email         String   @unique
+  password_hash String
+  logo_url      String
+  phone         String
+  zipcode       String   @default("")
+  state         String   @default("")
+  city          String   @default("")
+  neighborhood  String   @default("")
+  street        String   @default("")
+  number        String   @default("")
+  latitude      Decimal  @default(0)
+  longitude     Decimal  @default(0)
+  complement    String?
+  created_at    DateTime @default(now())
+  updated_at    DateTime @default(now()) @updatedAt
+
+  Pets Pet[]
+
+  Adoptions Adoption[]
+
+  @@index([city])
+  @@map("organizations")
+}
+
+enum PetSize {
+  SMALL
+  MEDIUM
+  LARGE
+}
+
+enum PetEnergyLevel {
+  LOW
+  MODERATE
+  MEDIUM
+  HIGH
+}
+
+enum PetEnvironment {
+  SMALL
+  MEDIUM
+  LARGE
+}
+
+model Pet {
+  id           String         @id
+  name         String
+  about        String
+  adopted      Boolean        @default(false)
+  size         PetSize
+  energy_level PetEnergyLevel
+  environment  PetEnvironment
+  created_at   DateTime       @default(now())
+  updated_at   DateTime       @default(now()) @updatedAt
+
+  organization_id String
+  Organization    Organization @relation(fields: [organization_id], references: [id])
+
+  Adoptions Adoption[]
+
+  @@map("pets")
+}
+
+model Adoption {
+  id            String   @id
+  adopter_name  String
+  adopter_phone String
+  created_at    DateTime @default(now())
+
+  pet_id String
+  Pet    Pet    @relation(fields: [pet_id], references: [id])
+
+  organization_id String
+  Organization    Organization @relation(fields: [organization_id], references: [id])
+
+  @@map("adoptions")
+}

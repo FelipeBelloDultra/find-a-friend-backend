@@ -1,0 +1,10 @@
+-- AlterTable
+ALTER TABLE "organizations" ADD COLUMN     "city" TEXT NOT NULL DEFAULT '',
+ADD COLUMN     "complement" TEXT,
+ADD COLUMN     "latitude" DECIMAL(65,30) NOT NULL DEFAULT 0,
+ADD COLUMN     "longitude" DECIMAL(65,30) NOT NULL DEFAULT 0,
+ADD COLUMN     "neighborhood" TEXT NOT NULL DEFAULT '',
+ADD COLUMN     "number" TEXT NOT NULL DEFAULT '',
+ADD COLUMN     "state" TEXT NOT NULL DEFAULT '',
+ADD COLUMN     "street" TEXT NOT NULL DEFAULT '',
+ADD COLUMN     "zipcode" TEXT NOT NULL DEFAULT '';

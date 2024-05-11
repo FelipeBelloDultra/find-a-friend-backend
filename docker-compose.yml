@@ -9,3 +9,26 @@ services:
             - 3333:3333
         volumes:
             - ./:/home/node/app
+        networks:
+            - find-a-friend-network
+
+    postgres_db:
+        image: bitnami/postgresql:16.2.0
+        restart: always
+        ports:
+            - 5432:5432
+        environment:
+            - POSTGRESQL_USERNAME=docker
+            - POSTGRESQL_PASSWORD=docker
+        volumes:
+            - postgresql_data:/bitnami/postgresql
+        networks:
+            - find-a-friend-network
+
+volumes:
+    postgresql_data:
+        driver: local
+
+networks:
+    find-a-friend-network:
+        driver: bridge
