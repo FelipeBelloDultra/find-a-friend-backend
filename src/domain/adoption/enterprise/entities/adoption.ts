@@ -11,6 +11,10 @@ export interface AdoptionProps {
 }
 
 export class Adoption extends Entity<AdoptionProps> {
+  public get organizationId() {
+    return this.props.organizationId;
+  }
+
   static create(
     props: Optional<AdoptionProps, "createdAt">,
     id?: UniqueEntityID

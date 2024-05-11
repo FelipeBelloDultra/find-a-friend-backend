@@ -13,7 +13,7 @@ interface FetchManyPetsInput {
   page: number;
   limit: number;
 }
-type OnLeft = null;
+type OnLeft = never;
 type OnRight = { pets: Array<Pet> };
 
 type FetchManyPetsOutput = Promise<Either<OnLeft, OnRight>>;

@@ -1,7 +1,5 @@
 import { FetchManyPets } from "./fetch-many-pets";
 
-import { Right } from "~/core/either";
-
 import { Organization } from "~/domain/organization/enterprise/entities/organization";
 import { Address } from "~/domain/organization/enterprise/entities/value-object/address";
 import { Pet } from "~/domain/pet/enterprise/entities/pet";
@@ -44,11 +42,11 @@ describe("Fetch many pets", () => {
   it("should fetch all pets by city in the first page", async () => {
     organization.address = address;
 
-    const result = (await sut.execute({
+    const result = await sut.execute({
       city: address.value.city,
       page: 1,
       limit: 20,
-    })) as Right<never, { pets: Array<Pet> }>;
+    });
 
     expect(result.isRight()).toBeTruthy();
     expect(inMemoryPetRepository.pets.length).toBe(25);
@@ -58,11 +56,11 @@ describe("Fetch many pets", () => {
   it("should fetch all pets by city in the second page", async () => {
     organization.address = address;
 
-    const result = (await sut.execute({
+    const result = await sut.execute({
       city: address.value.city,
       page: 2,
       limit: 20,
-    })) as Right<never, { pets: Array<Pet> }>;
+    });
 
     expect(result.isRight()).toBeTruthy();
     expect(inMemoryPetRepository.pets.length).toBe(25);
@@ -70,11 +68,11 @@ describe("Fetch many pets", () => {
   });
 
   it("should return an empty array if does not find some city", async () => {
-    const result = (await sut.execute({
+    const result = await sut.execute({
       city: address.value.city,
       page: 1,
       limit: 20,
-    })) as Right<never, { pets: Array<Pet> }>;
+    });
 
     expect(result.isRight()).toBeTruthy();
     expect(inMemoryPetRepository.pets.length).toBe(25);
