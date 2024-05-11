@@ -13,6 +13,14 @@ export class InMemoryPetRepository implements PetRepository {
 
   constructor(private organizationRepository: InMemoryOrganizationRepository) {}
 
+  async findById(id: string): Promise<Pet | null> {
+    const pet = this.pets.find((pet) => pet.id.toValue() === id);
+
+    if (!pet) return null;
+
+    return pet;
+  }
+
   async create(pet: Pet): Promise<Pet> {
     this.pets.push(pet);
 

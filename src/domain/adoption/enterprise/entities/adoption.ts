@@ -1,5 +1,6 @@
 import { Entity } from "~/core/entity/entity";
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
+import { Optional } from "~/core/types/optional";
 
 export interface AdoptionProps {
   petId: UniqueEntityID;
@@ -10,7 +11,16 @@ export interface AdoptionProps {
 }
 
 export class Adoption extends Entity<AdoptionProps> {
-  static create(props: AdoptionProps, id?: UniqueEntityID) {
-    return new Adoption(props, id);
+  static create(
+    props: Optional<AdoptionProps, "createdAt">,
+    id?: UniqueEntityID
+  ) {
+    return new Adoption(
+      {
+        ...props,
+        createdAt: props.createdAt ?? new Date(),
+      },
+      id
+    );
   }
 }

@@ -10,6 +10,7 @@ export interface FindAllPetsFilters {
 
 export interface PetRepository {
   create: (pet: Pet) => Promise<Pet>;
+  findById: (id: string) => Promise<Pet | null>;
   findAll: (
     filters: FindAllPetsFilters,
     paginationParams: PaginationRepository
