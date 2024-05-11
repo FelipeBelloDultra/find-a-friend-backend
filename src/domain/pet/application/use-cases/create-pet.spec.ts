@@ -16,7 +16,9 @@ let inMemoryPetRepository: InMemoryPetRepository;
 describe("Create pet", () => {
   beforeEach(() => {
     inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
-    inMemoryPetRepository = new InMemoryPetRepository();
+    inMemoryPetRepository = new InMemoryPetRepository(
+      inMemoryOrganizationRepository
+    );
     sut = new CreatePet(inMemoryOrganizationRepository, inMemoryPetRepository);
   });
 
