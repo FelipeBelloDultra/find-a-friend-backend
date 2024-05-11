@@ -17,6 +17,38 @@ export class Address {
     this.value = value;
   }
 
+  static getInstanceOrNull(props: AddressProps): Address | null {
+    const {
+      zipcode,
+      state,
+      city,
+      neighborhood,
+      street,
+      number,
+      latitude,
+      longitude,
+      complement,
+    } = props;
+
+    if (
+      [
+        zipcode,
+        state,
+        city,
+        neighborhood,
+        street,
+        number,
+        latitude,
+        longitude,
+        complement,
+      ].every((item) => !!item)
+    ) {
+      return Address.create(props);
+    }
+
+    return null;
+  }
+
   static create(props: AddressProps) {
     return new Address(props);
   }

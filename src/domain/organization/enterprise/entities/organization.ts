@@ -17,6 +17,18 @@ export interface OrganizationProps {
 }
 
 export class Organization extends Entity<OrganizationProps> {
+  public get logoUrl() {
+    return this.props.logoUrl;
+  }
+
+  public get updatedAt() {
+    return this.props.updatedAt;
+  }
+
+  public get createdAt() {
+    return this.props.createdAt;
+  }
+
   public get phone() {
     return this.props.phone;
   }

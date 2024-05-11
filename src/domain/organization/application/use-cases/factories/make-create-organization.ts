@@ -1,8 +1,8 @@
 import { CreateOrganization } from "../create-organization";
-import { InMemoryOrganizationRepository } from "test/repository/in-memory-organization-repository";
+import { PrismaOrganizationRepository } from "~/infra/repository/prisma-organization-repository";
 
 export function makeCreateOrganization() {
-  const inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
+  const prismaOrganizationRepository = new PrismaOrganizationRepository();
 
-  return new CreateOrganization(inMemoryOrganizationRepository);
+  return new CreateOrganization(prismaOrganizationRepository);
 }
