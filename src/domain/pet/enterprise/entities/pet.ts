@@ -1,13 +1,17 @@
 import { Entity } from "~/core/entity/entity";
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
+import { Optional } from "~/core/types/optional";
 
 export interface PetProps {
   organizationId: UniqueEntityID;
   name: string;
   about: string;
+  adopted: boolean;
   size: "SMALL" | "MEDIUM" | "LARGE";
   energyLevel: "LOW" | "MODERATE" | "MEDIUM" | "HIGH";
   environment: "SMALL" | "MEDIUM" | "LARGE";
+  createdAt: Date;
+  adoptedAt: Date | null;
 }
 
 export class Pet extends Entity<PetProps> {
@@ -27,7 +31,27 @@ export class Pet extends Entity<PetProps> {
     return this.props.environment;
   }
 
-  static create(props: PetProps, id?: UniqueEntityID) {
-    return new Pet(props, id);
+  public get adopted() {
+    return this.props.adopted;
+  }
+
+  public adopt() {
+    this.props.adopted = true;
+    this.props.adoptedAt = new Date();
+  }
+
+  static create(
+    props: Optional<PetProps, "createdAt" | "adoptedAt" | "adopted">,
+    id?: UniqueEntityID
+  ) {
+    return new Pet(
+      {
+        ...props,
+        adopted: props.adopted ?? false,
+        createdAt: props.createdAt ?? new Date(),
+        adoptedAt: props.adoptedAt ?? null,
+      },
+      id
+    );
   }
 }

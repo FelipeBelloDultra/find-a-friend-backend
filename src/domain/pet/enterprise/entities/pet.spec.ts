@@ -10,5 +10,17 @@ describe("Pet", () => {
     expect(sut.id.toValue()).toEqual(expect.any(String));
     expect(sut).toBeInstanceOf(Pet);
     expect(sut.id).toBeInstanceOf(UniqueEntityID);
+    expect(sut.adopted).toBeFalsy();
+  });
+
+  it("should be able to adopt pet", () => {
+    const pet = makePet();
+    const sut = Pet.create(pet);
+
+    expect(sut.adopted).toBeFalsy();
+
+    sut.adopt();
+
+    expect(sut.adopted).toBeTruthy();
   });
 });

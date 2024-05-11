@@ -48,6 +48,8 @@ export class AdoptPet implements UseCase<AdoptPetInput, AdoptPetOutput> {
       return left(new NotAllowed());
     }
 
+    pet.adopt();
+
     const adoption = Adoption.create({
       adopterName: input.adopterName,
       adopterPhone: input.adopterPhone,
@@ -55,8 +57,13 @@ export class AdoptPet implements UseCase<AdoptPetInput, AdoptPetOutput> {
       organizationId: organization.id,
     });
 
+    await Promise.all([
+      this.adoptionRepository.create(adoption),
+      this.petRepository.save(pet),
+    ]);
+
     return right({
-      adoption: await this.adoptionRepository.create(adoption),
+      adoption: adoption,
     });
   }
 }

@@ -9,6 +9,7 @@ interface FetchManyPetsInput {
   size?: "SMALL" | "MEDIUM" | "LARGE";
   energyLevel?: "LOW" | "MODERATE" | "MEDIUM" | "HIGH";
   environment?: "SMALL" | "MEDIUM" | "LARGE";
+  adopted?: boolean;
   page: number;
   limit: number;
 }
@@ -29,6 +30,7 @@ export class FetchManyPets
         size: input.size,
         energyLevel: input.energyLevel,
         environment: input.environment,
+        adopted: input.adopted,
       },
       {
         limit: input.limit,

@@ -46,6 +46,7 @@ export class InMemoryPetRepository implements PetRepository {
       .filter((pet) =>
         orgsByCity.some((org) => org.id.equals(pet.organizationId))
       )
+      .filter((pet) => (params.adopted ? pet.adopted === params.adopted : true))
       .filter((pet) => (params.size ? pet.size === params.size : true))
       .filter((pet) =>
         params.energyLevel ? pet.energyLevel === params.energyLevel : true
@@ -58,5 +59,15 @@ export class InMemoryPetRepository implements PetRepository {
     const TAKE = page * limit;
 
     return pets.slice(SKIP, TAKE);
+  }
+
+  async save(pet: Pet): Promise<Pet> {
+    const petIndex = this.pets.findIndex(({ id }) => id === pet.id);
+
+    if (petIndex !== -1) {
+      this.pets[petIndex] = pet;
+    }
+
+    return pet;
   }
 }
