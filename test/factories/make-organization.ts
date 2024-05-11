@@ -10,7 +10,7 @@ export async function makeOrganization() {
   return {
     logoUrl: faker.image.url(),
     name: faker.company.name(),
-    phone: faker.phone.number(),
+    phone: "+55 (16) 99999-9999",
     email: faker.internet.email(),
     password: await Password.create("password"),
   };

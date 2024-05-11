@@ -5,5 +5,6 @@ export default defineConfig({
   plugins: [viteTsConfigPaths()],
   test: {
     globals: true,
+    include: ["src/**/*.spec.ts", "!src/**/*.e2e.spec.ts"],
   },
 });
