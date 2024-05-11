@@ -7,6 +7,7 @@ import { Pet } from "~/domain/pet/enterprise/entities/pet";
 interface FetchManyPetsInput {
   city: string;
   page: number;
+  limit: number;
 }
 type OnLeft = null;
 type OnRight = { pets: Array<Pet> };
@@ -24,6 +25,7 @@ export class FetchManyPets
         city: input.city,
       },
       {
+        limit: input.limit,
         page: input.page,
       }
     );

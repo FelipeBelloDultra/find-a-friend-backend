@@ -1,7 +1,7 @@
 import { PaginationRepository } from "~/core/repository/pagination-repository";
 
 import {
-  FindAllPetsParams,
+  FindAllPetsFilters,
   PetRepository,
 } from "~/domain/pet/application/repository/pet-repository";
 import { Pet } from "~/domain/pet/enterprise/entities/pet";
@@ -20,8 +20,8 @@ export class InMemoryPetRepository implements PetRepository {
   }
 
   async findAll(
-    params: FindAllPetsParams,
-    { page }: PaginationRepository
+    params: FindAllPetsFilters,
+    { limit, page }: PaginationRepository
   ): Promise<Pet[]> {
     const orgsByCity = await this.organizationRepository.organizations.filter(
       (organization) => {
@@ -38,6 +38,9 @@ export class InMemoryPetRepository implements PetRepository {
       orgsByCity.some((org) => org.id.equals(pet.organizationId))
     );
 
-    return pets.slice((page - 1) * 20, page * 20);
+    const SKIP = (page - 1) * limit;
+    const TAKE = page * limit;
+
+    return pets.slice(SKIP, TAKE);
   }
 }
