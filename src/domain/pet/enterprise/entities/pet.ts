@@ -15,6 +15,18 @@ export class Pet extends Entity<PetProps> {
     return this.props.organizationId;
   }
 
+  public get energyLevel() {
+    return this.props.energyLevel;
+  }
+
+  public get size() {
+    return this.props.size;
+  }
+
+  public get environment() {
+    return this.props.environment;
+  }
+
   static create(props: PetProps, id?: UniqueEntityID) {
     return new Pet(props, id);
   }

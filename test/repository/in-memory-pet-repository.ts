@@ -23,7 +23,7 @@ export class InMemoryPetRepository implements PetRepository {
     params: FindAllPetsFilters,
     { limit, page }: PaginationRepository
   ): Promise<Pet[]> {
-    const orgsByCity = await this.organizationRepository.organizations.filter(
+    const orgsByCity = this.organizationRepository.organizations.filter(
       (organization) => {
         if (
           organization.address &&
@@ -34,9 +34,17 @@ export class InMemoryPetRepository implements PetRepository {
       }
     );
 
-    const pets = this.pets.filter((pet) =>
-      orgsByCity.some((org) => org.id.equals(pet.organizationId))
-    );
+    const pets = this.pets
+      .filter((pet) =>
+        orgsByCity.some((org) => org.id.equals(pet.organizationId))
+      )
+      .filter((pet) => (params.size ? pet.size === params.size : true))
+      .filter((pet) =>
+        params.energyLevel ? pet.energyLevel === params.energyLevel : true
+      )
+      .filter((pet) =>
+        params.environment ? pet.environment === params.environment : true
+      );
 
     const SKIP = (page - 1) * limit;
     const TAKE = page * limit;

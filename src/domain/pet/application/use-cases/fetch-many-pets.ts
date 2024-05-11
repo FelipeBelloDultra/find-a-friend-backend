@@ -6,6 +6,9 @@ import { Pet } from "~/domain/pet/enterprise/entities/pet";
 
 interface FetchManyPetsInput {
   city: string;
+  size?: "SMALL" | "MEDIUM" | "LARGE";
+  energyLevel?: "LOW" | "MODERATE" | "MEDIUM" | "HIGH";
+  environment?: "SMALL" | "MEDIUM" | "LARGE";
   page: number;
   limit: number;
 }
@@ -23,6 +26,9 @@ export class FetchManyPets
     const pets = await this.petRepository.findAll(
       {
         city: input.city,
+        size: input.size,
+        energyLevel: input.energyLevel,
+        environment: input.environment,
       },
       {
         limit: input.limit,
