@@ -3,7 +3,7 @@ import { makeOrganization } from "test/factories/make-organization";
 
 import { app } from "~/infra/http/app";
 
-describe("[POST] Create controller", () => {
+describe("[POST] Create organization controller", () => {
   beforeAll(async () => {
     await app.ready();
   });
