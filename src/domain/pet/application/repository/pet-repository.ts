@@ -1,4 +1,4 @@
-import { PaginationRepository } from "~/core/repository/pagination-repository";
+import { PaginationRepository } from "~/application/repository/pagination-repository";
 import { Pet } from "~/domain/pet/enterprise/entities/pet";
 
 export interface FindAllPetsFilters {

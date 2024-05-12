@@ -1,4 +1,4 @@
-import { PaginationRepository } from "~/core/repository/pagination-repository";
+import { PaginationRepository } from "~/application/repository/pagination-repository";
 import { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
 
 export interface FindAllAdoptionsFilters {
