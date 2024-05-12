@@ -22,12 +22,12 @@ type OnRight = { pet: Pet };
 type CreatePetOutput = Promise<Either<OnLeft, OnRight>>;
 
 export class CreatePet implements UseCase<CreatePetInput, CreatePetOutput> {
-  constructor(
+  public constructor(
     private readonly organizationRepository: OrganizationRepository,
     private readonly petRepository: PetRepository,
   ) {}
 
-  async execute(input: CreatePetInput): CreatePetOutput {
+  public async execute(input: CreatePetInput): CreatePetOutput {
     const organization = await this.organizationRepository.findById(input.organizationId);
     if (!organization) {
       return left(new OrganizationNotFound());

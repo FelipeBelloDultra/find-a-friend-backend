@@ -62,7 +62,7 @@ export class Organization extends Entity<OrganizationProps> {
     return this.address !== null;
   }
 
-  static create(props: Optional<OrganizationProps, "createdAt" | "address" | "updatedAt">, id?: UniqueEntityID) {
+  public static create(props: Optional<OrganizationProps, "createdAt" | "address" | "updatedAt">, id?: UniqueEntityID) {
     return new Organization(
       {
         ...props,

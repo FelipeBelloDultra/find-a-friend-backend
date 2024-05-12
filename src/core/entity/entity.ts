@@ -4,7 +4,7 @@ export abstract class Entity<Props = unknown> {
   private _id: UniqueEntityID;
   protected props: Props;
 
-  get id() {
+  public get id() {
     return this._id;
   }
 

@@ -8,7 +8,7 @@ import { Address } from "~/domain/organization/enterprise/entities/value-object/
 import type { Organization as DatabaseOrganization } from "@prisma/client";
 
 export class OrganizationMapper {
-  static async toDomain(fromPersistence: DatabaseOrganization): Promise<Organization> {
+  public static async toDomain(fromPersistence: DatabaseOrganization): Promise<Organization> {
     const password = await Password.create(fromPersistence.password_hash, true);
     const id = new UniqueEntityID(fromPersistence.id);
     const address = Address.getInstanceOrNull({
@@ -40,7 +40,7 @@ export class OrganizationMapper {
     return organization;
   }
 
-  static toPersistence(organizationToPersistence: Organization): DatabaseOrganization {
+  public static toPersistence(organizationToPersistence: Organization): DatabaseOrganization {
     const { id, name, email, logoUrl, password, phone, address, createdAt, updatedAt } = organizationToPersistence;
 
     return {

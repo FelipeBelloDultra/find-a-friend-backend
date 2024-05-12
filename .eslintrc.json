@@ -34,7 +34,8 @@
         "newlines-between": "always"
       }
     ],
-    "import/newline-after-import": "error"
+    "import/newline-after-import": "error",
+    "@typescript-eslint/explicit-member-accessibility": "warn"
   },
   "settings": {
     "import/parsers": {

@@ -5,7 +5,7 @@ import type { OrganizationRepository } from "~/domain/organization/application/r
 import type { Organization } from "~/domain/organization/enterprise/entities/organization";
 
 export class PrismaOrganizationRepository implements OrganizationRepository {
-  async create(organization: Organization): Promise<Organization> {
+  public async create(organization: Organization): Promise<Organization> {
     await query.organization.create({
       data: OrganizationMapper.toPersistence(organization),
     });
@@ -13,7 +13,7 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
     return organization;
   }
 
-  async findByEmail(email: string): Promise<Organization | null> {
+  public async findByEmail(email: string): Promise<Organization | null> {
     const findedByEmail = await query.organization.findUnique({
       where: {
         email,
@@ -25,7 +25,7 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
     return await OrganizationMapper.toDomain(findedByEmail);
   }
 
-  async findById(id: string): Promise<Organization | null> {
+  public async findById(id: string): Promise<Organization | null> {
     const findedById = await query.organization.findUnique({
       where: {
         id,
@@ -37,7 +37,7 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
     return await OrganizationMapper.toDomain(findedById);
   }
 
-  async save(organization: Organization): Promise<Organization> {
+  public async save(organization: Organization): Promise<Organization> {
     await query.organization.update({
       where: {
         id: organization.id.toValue(),

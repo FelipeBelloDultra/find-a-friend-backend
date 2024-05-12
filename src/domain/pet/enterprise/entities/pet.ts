@@ -41,7 +41,7 @@ export class Pet extends Entity<PetProps> {
     this.props.adoptedAt = new Date();
   }
 
-  static create(props: Optional<PetProps, "createdAt" | "adoptedAt" | "adopted">, id?: UniqueEntityID) {
+  public static create(props: Optional<PetProps, "createdAt" | "adoptedAt" | "adopted">, id?: UniqueEntityID) {
     return new Pet(
       {
         ...props,

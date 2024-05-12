@@ -13,11 +13,11 @@ export class Password {
     return await bcrypt.hash(password, env.PASSWORD_SALT);
   }
 
-  async comparePassword(passwordToCompare: string) {
+  public async comparePassword(passwordToCompare: string) {
     return await bcrypt.compare(passwordToCompare, this.value);
   }
 
-  static async create(value: string, isHashed = false) {
+  public static async create(value: string, isHashed = false) {
     let password = value;
 
     if (!isHashed) {

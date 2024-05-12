@@ -4,13 +4,13 @@ import type { Organization } from "~/domain/organization/enterprise/entities/org
 export class InMemoryOrganizationRepository implements OrganizationRepository {
   public readonly organizations: Array<Organization> = [];
 
-  async create(organization: Organization): Promise<Organization> {
+  public async create(organization: Organization): Promise<Organization> {
     this.organizations.push(organization);
 
     return organization;
   }
 
-  async findByEmail(email: string): Promise<Organization | null> {
+  public async findByEmail(email: string): Promise<Organization | null> {
     const organization = this.organizations.find((organization) => organization.email === email);
 
     if (!organization) return null;
@@ -18,7 +18,7 @@ export class InMemoryOrganizationRepository implements OrganizationRepository {
     return organization;
   }
 
-  async findById(id: string): Promise<Organization | null> {
+  public async findById(id: string): Promise<Organization | null> {
     const organization = this.organizations.find((organization) => organization.id.toValue() === id);
 
     if (!organization) return null;
@@ -26,7 +26,7 @@ export class InMemoryOrganizationRepository implements OrganizationRepository {
     return organization;
   }
 
-  async save(organization: Organization): Promise<Organization> {
+  public async save(organization: Organization): Promise<Organization> {
     const orgIndex = this.organizations.findIndex(({ id }) => id === organization.id);
 
     if (orgIndex !== -1) {

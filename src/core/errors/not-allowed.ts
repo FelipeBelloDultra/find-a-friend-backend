@@ -1,5 +1,5 @@
 export class NotAllowed extends Error {
-  constructor() {
+  public constructor() {
     super("Not allowed");
   }
 }

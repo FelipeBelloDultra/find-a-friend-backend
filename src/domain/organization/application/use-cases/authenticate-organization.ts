@@ -18,9 +18,9 @@ type AuthenticateOrganizationOutput = Promise<Either<OnLeft, OnRight>>;
 export class AuthenticateOrganization
   implements UseCase<AuthenticateOrganizationInput, AuthenticateOrganizationOutput>
 {
-  constructor(private readonly organizationRepository: OrganizationRepository) {}
+  public constructor(private readonly organizationRepository: OrganizationRepository) {}
 
-  async execute(input: AuthenticateOrganizationInput): AuthenticateOrganizationOutput {
+  public async execute(input: AuthenticateOrganizationInput): AuthenticateOrganizationOutput {
     const org = await this.organizationRepository.findByEmail(input.email);
     if (!org) {
       return left(new InvalidCredentials());

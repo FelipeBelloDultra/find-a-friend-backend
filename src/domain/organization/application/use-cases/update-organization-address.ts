@@ -28,9 +28,9 @@ type UpdateOrganizationAddressOutput = Promise<Either<OnLeft, OnRight>>;
 export class UpdateOrganizationAddress
   implements UseCase<UpdateOrganizationAddressInput, UpdateOrganizationAddressOutput>
 {
-  constructor(private readonly organizationRepository: OrganizationRepository) {}
+  public constructor(private readonly organizationRepository: OrganizationRepository) {}
 
-  async execute(input: UpdateOrganizationAddressInput): UpdateOrganizationAddressOutput {
+  public async execute(input: UpdateOrganizationAddressInput): UpdateOrganizationAddressOutput {
     const organization = await this.organizationRepository.findById(input.organizationId);
     if (!organization) {
       return left(new OrganizationNotFound());

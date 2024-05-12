@@ -16,9 +16,9 @@ type OnRight = { pet: Pet };
 type ShowPetDetailOutput = Promise<Either<OnLeft, OnRight>>;
 
 export class ShowPetDetail implements UseCase<ShowPetDetailInput, ShowPetDetailOutput> {
-  constructor(private readonly petRepository: PetRepository) {}
+  public constructor(private readonly petRepository: PetRepository) {}
 
-  async execute(input: ShowPetDetailInput): ShowPetDetailOutput {
+  public async execute(input: ShowPetDetailInput): ShowPetDetailOutput {
     const pet = await this.petRepository.findById(input.petId);
     if (!pet) {
       return left(new PetNotFound());

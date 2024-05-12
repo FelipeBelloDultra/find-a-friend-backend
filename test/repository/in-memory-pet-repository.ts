@@ -6,9 +6,9 @@ import type { InMemoryOrganizationRepository } from "./in-memory-organization-re
 export class InMemoryPetRepository implements PetRepository {
   public readonly pets: Array<Pet> = [];
 
-  constructor(private organizationRepository: InMemoryOrganizationRepository) {}
+  public constructor(private organizationRepository: InMemoryOrganizationRepository) {}
 
-  async findById(id: string): Promise<Pet | null> {
+  public async findById(id: string): Promise<Pet | null> {
     const pet = this.pets.find((pet) => pet.id.toValue() === id);
 
     if (!pet) return null;
@@ -16,13 +16,13 @@ export class InMemoryPetRepository implements PetRepository {
     return pet;
   }
 
-  async create(pet: Pet): Promise<Pet> {
+  public async create(pet: Pet): Promise<Pet> {
     this.pets.push(pet);
 
     return pet;
   }
 
-  async findAll(params: FindAllPetsFilters, { limit, page }: PaginationRepository): Promise<Pet[]> {
+  public async findAll(params: FindAllPetsFilters, { limit, page }: PaginationRepository): Promise<Pet[]> {
     const orgsByCity = this.organizationRepository.organizations.filter((organization) => {
       if (organization.address && organization.address.value.city === params.city) {
         return organization;
@@ -42,7 +42,7 @@ export class InMemoryPetRepository implements PetRepository {
     return pets.slice(SKIP, TAKE);
   }
 
-  async save(pet: Pet): Promise<Pet> {
+  public async save(pet: Pet): Promise<Pet> {
     const petIndex = this.pets.findIndex(({ id }) => id === pet.id);
 
     if (petIndex !== -1) {

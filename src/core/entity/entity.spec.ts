@@ -2,7 +2,7 @@ import { Entity } from "~/core/entity/entity";
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
 
 class SomeClass extends Entity {
-  static create(id?: UniqueEntityID) {
+  public static create(id?: UniqueEntityID) {
     return new SomeClass({}, id);
   }
 }
