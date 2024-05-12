@@ -1,16 +1,20 @@
 import supertest from "supertest";
 
 import { makeOrganization } from "test/factories/make-organization";
-import { app } from "~/infra/http/app";
+import { App } from "~/infra/http/app";
+
+let app: App;
 
 describe("[POST] Authenticate organization controller", () => {
   beforeAll(async () => {
-    await app.ready();
+    app = new App();
+    await app.start();
+    await app.instance.ready();
   });
 
   it("should authenticate organization and return the token (with refresh token in setCookie header)", async () => {
     const org = await makeOrganization();
-    await supertest(app.server).post("/api/orgs").send({
+    await supertest(app.instance.server).post("/api/orgs").send({
       email: org.email,
       logoUrl: org.logoUrl,
       name: org.name,
@@ -18,7 +22,7 @@ describe("[POST] Authenticate organization controller", () => {
       phone: org.phone,
     });
 
-    const sut = await supertest(app.server).post("/api/session").send({
+    const sut = await supertest(app.instance.server).post("/api/session").send({
       email: org.email,
       password: "123456",
     });
@@ -31,7 +35,7 @@ describe("[POST] Authenticate organization controller", () => {
   });
 
   it("should not be able authenticate organization with wrong email", async () => {
-    const sut = await supertest(app.server).post("/api/session").send({
+    const sut = await supertest(app.instance.server).post("/api/session").send({
       email: "example@email.com",
       password: "123456",
     });
@@ -44,7 +48,7 @@ describe("[POST] Authenticate organization controller", () => {
 
   it("should not be able authenticate organization with wrong password", async () => {
     const org = await makeOrganization();
-    await supertest(app.server).post("/api/orgs").send({
+    await supertest(app.instance.server).post("/api/orgs").send({
       email: org.email,
       logoUrl: org.logoUrl,
       name: org.name,
@@ -52,7 +56,7 @@ describe("[POST] Authenticate organization controller", () => {
       phone: org.phone,
     });
 
-    const sut = await supertest(app.server).post("/api/session").send({
+    const sut = await supertest(app.instance.server).post("/api/session").send({
       email: org.email,
       password: "wrong-password",
     });
@@ -64,6 +68,6 @@ describe("[POST] Authenticate organization controller", () => {
   });
 
   afterAll(async () => {
-    await app.close();
+    await app.disconnect();
   });
 });

@@ -1,18 +1,22 @@
 import supertest from "supertest";
 
-import { query } from "~/infra/database/connection";
-import { app } from "~/infra/http/app";
+import { DatabaseConnection } from "~/infra/database/connection";
+import { App } from "~/infra/http/app";
 import { makeAndAuthenticateOrganization } from "test/factories/make-organization";
+
+let app: App;
 
 describe("[GET] Show organization profile controller", () => {
   beforeAll(async () => {
-    await app.ready();
+    app = new App();
+    await app.start();
+    await app.instance.ready();
   });
 
   it("should be able show authenticated organization profile", async () => {
-    const { token, organization } = await makeAndAuthenticateOrganization(app);
+    const { token, organization } = await makeAndAuthenticateOrganization(app.instance);
 
-    const sut = await supertest(app.server).get("/api/auth/me").set("Authorization", `Bearer ${token}`).send();
+    const sut = await supertest(app.instance.server).get("/api/auth/me").set("Authorization", `Bearer ${token}`).send();
 
     expect(sut.statusCode).toEqual(200);
     expect(sut.body).toEqual(
@@ -26,19 +30,19 @@ describe("[GET] Show organization profile controller", () => {
   });
 
   it("should not be able show authenticated organization profile if organization does not exists", async () => {
-    const { token, organization } = await makeAndAuthenticateOrganization(app);
-    await query.organization.delete({
+    const { token, organization } = await makeAndAuthenticateOrganization(app.instance);
+    await DatabaseConnection.query.organization.delete({
       where: { id: organization.id.toValue() },
     });
 
-    const sut = await supertest(app.server).get("/api/auth/me").set("Authorization", `Bearer ${token}`).send();
+    const sut = await supertest(app.instance.server).get("/api/auth/me").set("Authorization", `Bearer ${token}`).send();
 
     expect(sut.statusCode).toEqual(404);
     expect(sut.body).toEqual({ message: "Organization not found." });
   });
 
   it("should not be able show authenticated organization profile if JWT is wrong", async () => {
-    const sut = await supertest(app.server)
+    const sut = await supertest(app.instance.server)
       .get("/api/auth/me")
       .set("Authorization", "Bearer invalid-bearer-token")
       .send();
@@ -48,6 +52,6 @@ describe("[GET] Show organization profile controller", () => {
   });
 
   afterAll(async () => {
-    await app.close();
+    await app.disconnect();
   });
 });

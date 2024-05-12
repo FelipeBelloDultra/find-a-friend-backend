@@ -1,16 +1,20 @@
 import supertest from "supertest";
 
 import { makeOrganization } from "test/factories/make-organization";
-import { app } from "~/infra/http/app";
+import { App } from "~/infra/http/app";
+
+let app: App;
 
 describe("[PATCH] Refresh token controller", () => {
   beforeAll(async () => {
-    await app.ready();
+    app = new App();
+    await app.start();
+    await app.instance.ready();
   });
 
   it("should be able refresh token", async () => {
     const org = await makeOrganization();
-    await supertest(app.server).post("/api/orgs").send({
+    await supertest(app.instance.server).post("/api/orgs").send({
       email: org.email,
       logoUrl: org.logoUrl,
       name: org.name,
@@ -18,13 +22,13 @@ describe("[PATCH] Refresh token controller", () => {
       phone: org.phone,
     });
 
-    const authResponse = await supertest(app.server).post("/api/session").send({
+    const authResponse = await supertest(app.instance.server).post("/api/session").send({
       email: org.email,
       password: "123456",
     });
     const cookies = authResponse.get("Set-Cookie") as Array<string>;
 
-    const sut = await supertest(app.server).patch("/api/refresh-token").set("Cookie", cookies).send();
+    const sut = await supertest(app.instance.server).patch("/api/refresh-token").set("Cookie", cookies).send();
 
     expect(sut.status).toEqual(200);
     expect(sut.body).toEqual({
@@ -34,6 +38,6 @@ describe("[PATCH] Refresh token controller", () => {
   });
 
   afterAll(async () => {
-    await app.close();
+    await app.disconnect();
   });
 });

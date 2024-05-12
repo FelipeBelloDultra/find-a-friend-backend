@@ -34,7 +34,7 @@ export class App {
     this.instance.register(fastifyHelmet);
     this.instance.register(fastifyRateLimit, {
       max: 100,
-      timeWindow: this.RATE_LIMIT_TIME_WINDOW, // milliseconds * seconds * minutes
+      timeWindow: this.RATE_LIMIT_TIME_WINDOW,
       ban: 1,
     });
     this.instance.register(fastifyJwt, {

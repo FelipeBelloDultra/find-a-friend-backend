@@ -1,12 +1,12 @@
 import { OrganizationMapper } from "~/domain/organization/application/mappers/organization-mapper";
-import { query } from "~/infra/database/connection";
+import { DatabaseConnection } from "~/infra/database/connection";
 
 import type { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
 import type { Organization } from "~/domain/organization/enterprise/entities/organization";
 
 export class PrismaOrganizationRepository implements OrganizationRepository {
   public async create(organization: Organization): Promise<Organization> {
-    await query.organization.create({
+    await DatabaseConnection.query.organization.create({
       data: OrganizationMapper.toPersistence(organization),
     });
 
@@ -14,7 +14,7 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
   }
 
   public async findByEmail(email: string): Promise<Organization | null> {
-    const findedByEmail = await query.organization.findUnique({
+    const findedByEmail = await DatabaseConnection.query.organization.findUnique({
       where: {
         email,
       },
@@ -26,7 +26,7 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
   }
 
   public async findById(id: string): Promise<Organization | null> {
-    const findedById = await query.organization.findUnique({
+    const findedById = await DatabaseConnection.query.organization.findUnique({
       where: {
         id,
       },
@@ -38,7 +38,7 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
   }
 
   public async save(organization: Organization): Promise<Organization> {
-    await query.organization.update({
+    await DatabaseConnection.query.organization.update({
       where: {
         id: organization.id.toValue(),
       },

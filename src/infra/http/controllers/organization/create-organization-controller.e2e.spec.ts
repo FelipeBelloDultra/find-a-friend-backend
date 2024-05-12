@@ -1,17 +1,21 @@
 import supertest from "supertest";
 
 import { makeOrganization } from "test/factories/make-organization";
-import { app } from "~/infra/http/app";
+import { App } from "~/infra/http/app";
+
+let app: App;
 
 describe("[POST] Create organization controller", () => {
   beforeAll(async () => {
-    await app.ready();
+    app = new App();
+    await app.start();
+    await app.instance.ready();
   });
 
   it("should create organization and return 201", async () => {
     const org = await makeOrganization();
 
-    const sut = await supertest(app.server).post("/api/orgs").send({
+    const sut = await supertest(app.instance.server).post("/api/orgs").send({
       email: org.email,
       logoUrl: org.logoUrl,
       name: org.name,
@@ -25,7 +29,7 @@ describe("[POST] Create organization controller", () => {
 
   it("should not be able to create an organization with same email", async () => {
     const org = await makeOrganization();
-    await supertest(app.server).post("/api/orgs").send({
+    await supertest(app.instance.server).post("/api/orgs").send({
       email: org.email,
       logoUrl: org.logoUrl,
       name: org.name,
@@ -33,7 +37,7 @@ describe("[POST] Create organization controller", () => {
       phone: org.phone,
     });
 
-    const sut = await supertest(app.server).post("/api/orgs").send({
+    const sut = await supertest(app.instance.server).post("/api/orgs").send({
       email: org.email,
       logoUrl: org.logoUrl,
       name: org.name,
@@ -46,6 +50,6 @@ describe("[POST] Create organization controller", () => {
   });
 
   afterAll(async () => {
-    await app.close();
+    await app.disconnect();
   });
 });

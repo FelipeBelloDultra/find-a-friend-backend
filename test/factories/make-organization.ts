@@ -4,7 +4,7 @@ import { faker } from "@faker-js/faker";
 import { OrganizationMapper } from "~/domain/organization/application/mappers/organization-mapper";
 import { Organization } from "~/domain/organization/enterprise/entities/organization";
 import { Password } from "~/domain/organization/enterprise/entities/value-object/password";
-import { query } from "~/infra/database/connection";
+import { DatabaseConnection } from "~/infra/database/connection";
 
 import type { OrganizationProps } from "~/domain/organization/enterprise/entities/organization";
 import type { FastifyInstance } from "fastify";
@@ -37,7 +37,7 @@ export async function makeAndAuthenticateOrganization(fastifyInstance: FastifyIn
     password: await Password.create("123456"),
   });
 
-  await query.organization.create({
+  await DatabaseConnection.query.organization.create({
     data: OrganizationMapper.toPersistence(organization),
   });
 
