@@ -1,4 +1,4 @@
-import { UseCaseError } from "~/core/errors/use-case-error";
+import { UseCaseError } from "~/application/errors/use-case-error";
 
 export class OrganizationAlreadyExists extends Error implements UseCaseError {
   constructor() {
