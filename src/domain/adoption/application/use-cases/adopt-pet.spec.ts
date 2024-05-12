@@ -1,14 +1,14 @@
 import { AdoptPet } from "./adopt-pet";
 
 import { Right } from "~/core/either";
-import { OrganizationNotFound } from "~/core/errors/organization-not-found";
 import { NotAllowed } from "~/core/errors/not-allowed";
-import { PetNotFound } from "~/core/errors/pet-not-found";
+import { PetNotFound } from "~/domain/pet/application/use-cases/errors/pet-not-found";
 
 import { Organization } from "~/domain/organization/enterprise/entities/organization";
 import { Address } from "~/domain/organization/enterprise/entities/value-object/address";
 import { Pet } from "~/domain/pet/enterprise/entities/pet";
 import { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
+import { OrganizationNotFound } from "~/domain/organization/application/use-cases/errors/organization-not-found";
 
 import { InMemoryAdoptionRepository } from "test/repository/in-memory-adoption-repository";
 import { InMemoryOrganizationRepository } from "test/repository/in-memory-organization-repository";

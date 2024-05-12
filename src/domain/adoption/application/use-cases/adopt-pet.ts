@@ -1,9 +1,9 @@
 import { UseCase } from "~/application/use-case";
 import { Either, left, right } from "~/core/either";
-import { PetNotFound } from "~/core/errors/pet-not-found";
-import { OrganizationNotFound } from "~/core/errors/organization-not-found";
 import { NotAllowed } from "~/core/errors/not-allowed";
 
+import { PetNotFound } from "~/domain/pet/application/use-cases/errors/pet-not-found";
+import { OrganizationNotFound } from "~/domain/organization/application/use-cases/errors/organization-not-found";
 import { PetRepository } from "~/domain/pet/application/repository/pet-repository";
 import { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
 import { AdoptionRepository } from "~/domain/adoption/application/repository/adoption-repository";

@@ -1,6 +1,6 @@
 import { ShowPetDetail } from "./show-pet-detail";
 
-import { PetNotFound } from "~/core/errors/pet-not-found";
+import { PetNotFound } from "./errors/pet-not-found";
 
 import { InMemoryPetRepository } from "test/repository/in-memory-pet-repository";
 import { InMemoryOrganizationRepository } from "test/repository/in-memory-organization-repository";

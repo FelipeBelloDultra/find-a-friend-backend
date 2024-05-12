@@ -1,6 +1,6 @@
 import { UseCase } from "~/application/use-case";
 import { Either, left, right } from "~/core/either";
-import { OrganizationNotFound } from "~/core/errors/organization-not-found";
+import { OrganizationNotFound } from "~/domain/organization/application/use-cases/errors/organization-not-found";
 import { NotAllowed } from "~/core/errors/not-allowed";
 
 import { Pet } from "~/domain/pet/enterprise/entities/pet";

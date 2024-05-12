@@ -1,6 +1,6 @@
 import { CreatePet } from "./create-pet";
 
-import { OrganizationNotFound } from "~/core/errors/organization-not-found";
+import { OrganizationNotFound } from "~/domain/organization/application/use-cases/errors/organization-not-found";
 import { NotAllowed } from "~/core/errors/not-allowed";
 
 import { InMemoryOrganizationRepository } from "test/repository/in-memory-organization-repository";

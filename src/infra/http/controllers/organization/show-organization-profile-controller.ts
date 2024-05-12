@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { OrganizationNotFound } from "~/core/errors/organization-not-found";
+import { OrganizationNotFound } from "~/domain/organization/application/use-cases/errors/organization-not-found";
 import { makeShowOrganizationProfile } from "~/domain/organization/application/use-cases/factories/make-show-organization-profile";
 
 export async function showOrganizationProfileController(

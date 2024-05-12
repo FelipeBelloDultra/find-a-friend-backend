@@ -6,7 +6,7 @@ import {
 } from "test/factories/make-organization";
 import { InMemoryOrganizationRepository } from "test/repository/in-memory-organization-repository";
 
-import { OrganizationAlreadyExists } from "~/core/errors/organization-already-exists";
+import { OrganizationAlreadyExists } from "./errors/organization-already-exists";
 
 let sut: CreateOrganization;
 let inMemoryOrganizationRepository: InMemoryOrganizationRepository;

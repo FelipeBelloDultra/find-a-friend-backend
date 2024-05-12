@@ -1,7 +1,8 @@
 import { z } from "zod";
 import { FastifyReply, FastifyRequest } from "fastify";
+
 import { makeCreateOrganization } from "~/domain/organization/application/use-cases/factories/make-create-organization";
-import { OrganizationAlreadyExists } from "~/core/errors/organization-already-exists";
+import { OrganizationAlreadyExists } from "~/domain/organization/application/use-cases/errors/organization-already-exists";
 
 export async function createOrganizationController(
   request: FastifyRequest,

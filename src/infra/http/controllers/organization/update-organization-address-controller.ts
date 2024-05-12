@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { FastifyReply, FastifyRequest } from "fastify";
-import { OrganizationNotFound } from "~/core/errors/organization-not-found";
+import { OrganizationNotFound } from "~/domain/organization/application/use-cases/errors/organization-not-found";
 import { makeUpdateOrganizationAddress } from "~/domain/organization/application/use-cases/factories/make-update-organization-address";
 
 export async function updateOrganizationAddressController(
