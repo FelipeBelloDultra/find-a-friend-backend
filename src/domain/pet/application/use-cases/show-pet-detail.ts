@@ -1,4 +1,5 @@
-import { UseCase } from "~/core/entity/use-case";
+import { UseCase } from "~/application/use-case";
+
 import { Either, right, left } from "~/core/either";
 import { PetNotFound } from "~/core/errors/pet-not-found";
 

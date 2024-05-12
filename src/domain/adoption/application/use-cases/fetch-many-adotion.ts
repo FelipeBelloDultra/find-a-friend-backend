@@ -1,4 +1,4 @@
-import { UseCase } from "~/core/entity/use-case";
+import { UseCase } from "~/application/use-case";
 import { Either, right } from "~/core/either";
 
 import { AdoptionRepository } from "~/domain/adoption/application/repository/adoption-repository";

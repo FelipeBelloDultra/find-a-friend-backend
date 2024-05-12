@@ -1,4 +1,4 @@
-import { UseCase } from "~/core/entity/use-case";
+import { UseCase } from "~/application/use-case";
 import { Either, left, right } from "~/core/either";
 import { OrganizationNotFound } from "~/core/errors/organization-not-found";
 import { NotAllowed } from "~/core/errors/not-allowed";
