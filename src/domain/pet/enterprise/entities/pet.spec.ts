@@ -11,6 +11,9 @@ describe("Pet", () => {
     expect(sut).toBeInstanceOf(Pet);
     expect(sut.id).toBeInstanceOf(UniqueEntityID);
     expect(sut.adopted).toBeFalsy();
+    expect(sut.energyLevel).toBeDefined();
+    expect(sut.size).toBeDefined();
+    expect(sut.environment).toBeDefined();
   });
 
   it("should be able to adopt pet", () => {

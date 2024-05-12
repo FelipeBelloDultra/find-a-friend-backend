@@ -14,7 +14,7 @@
     "test:watch": "vitest -c vitest.config.mts",
     "test:ui": "vitest --ui -c vitest.config.mts",
     "test:e2e": "vitest run -c vitest.e2e.config.mts",
-    "test:coverage": "vitest run --coverage",
+    "test:cov": "vitest run --coverage",
     "db:migrate:dev": "prisma migrate dev",
     "db:migrate:deploy": "prisma migrate deploy",
     "db:preview": "prisma studio"

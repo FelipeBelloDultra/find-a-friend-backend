@@ -23,6 +23,9 @@ describe("Organization", () => {
     expect(sut.email).toBe(email);
     expect(sut.phone).toBe(phone);
     expect(sut.address).toBeNull();
+    expect(sut.updatedAt).toBeDefined();
+    expect(sut.logoUrl).toBeDefined();
+    expect(sut.createdAt).toBeDefined();
   });
 
   it("should not be able to continue if address is empty", async () => {
