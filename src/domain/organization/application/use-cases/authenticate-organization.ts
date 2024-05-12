@@ -1,9 +1,10 @@
-import { type UseCase } from "~/application/use-case";
+import { left, right } from "~/core/either";
 
-import { type Either, left, right } from "~/core/either";
 import { InvalidCredentials } from "./errors/invalid-credentials";
 
-import { type OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
+import type { UseCase } from "~/application/use-case";
+import type { Either } from "~/core/either";
+import type { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
 
 interface AuthenticateOrganizationInput {
   email: string;

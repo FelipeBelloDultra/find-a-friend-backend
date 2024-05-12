@@ -2,6 +2,7 @@ import "dotenv/config";
 
 import { randomUUID } from "node:crypto";
 import { execSync } from "node:child_process";
+
 import { PrismaClient } from "@prisma/client";
 
 class DatabaseSetupTesting {

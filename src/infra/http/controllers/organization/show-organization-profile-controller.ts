@@ -1,6 +1,7 @@
-import { type FastifyReply, type FastifyRequest } from "fastify";
 import { OrganizationNotFound } from "~/domain/organization/application/use-cases/errors/organization-not-found";
 import { makeShowOrganizationProfile } from "~/domain/organization/application/use-cases/factories/make-show-organization-profile";
+
+import type { FastifyReply, FastifyRequest } from "fastify";
 
 export async function showOrganizationProfileController(request: FastifyRequest, reply: FastifyReply) {
   const result = await makeShowOrganizationProfile().execute({

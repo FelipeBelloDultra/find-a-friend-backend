@@ -1,8 +1,9 @@
-import { type UseCase } from "~/application/use-case";
-import { type Either, right } from "~/core/either";
+import { right } from "~/core/either";
 
-import { type PetRepository } from "~/domain/pet/application/repository/pet-repository";
-import { type Pet } from "~/domain/pet/enterprise/entities/pet";
+import type { UseCase } from "~/application/use-case";
+import type { Either } from "~/core/either";
+import type { PetRepository } from "~/domain/pet/application/repository/pet-repository";
+import type { Pet } from "~/domain/pet/enterprise/entities/pet";
 
 interface FetchManyPetsInput {
   city: string;

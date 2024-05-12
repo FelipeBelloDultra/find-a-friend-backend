@@ -1,9 +1,8 @@
-import { UpdateOrganizationAddress } from "./update-organization-address";
-
 import { InMemoryOrganizationRepository } from "test/repository/in-memory-organization-repository";
 import { makeAddress, makeAddressEntity } from "test/factories/make-address";
 import { makeOrganizationEntity } from "test/factories/make-organization";
 
+import { UpdateOrganizationAddress } from "./update-organization-address";
 import { OrganizationNotFound } from "./errors//organization-not-found";
 
 let sut: UpdateOrganizationAddress;

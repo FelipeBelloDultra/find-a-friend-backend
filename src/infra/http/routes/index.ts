@@ -1,6 +1,6 @@
-import { type FastifyInstance } from "fastify";
-
 import { organizationRoutes } from "./organization-routes";
+
+import type { FastifyInstance } from "fastify";
 
 const ROUTES = [organizationRoutes] as const;
 

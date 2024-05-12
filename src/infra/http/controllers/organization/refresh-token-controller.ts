@@ -1,4 +1,4 @@
-import { type FastifyReply, type FastifyRequest } from "fastify";
+import type { FastifyReply, FastifyRequest } from "fastify";
 
 export async function refreshTokenController(request: FastifyRequest, reply: FastifyReply) {
   await request.jwtVerify();

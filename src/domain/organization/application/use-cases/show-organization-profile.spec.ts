@@ -1,12 +1,11 @@
-import { ShowOrganizationProfile } from "./show-organization-profile";
-
-import { OrganizationNotFound } from "./errors/organization-not-found";
-import { type Right } from "~/core/either";
-
-import { type Organization } from "~/domain/organization/enterprise/entities/organization";
-
 import { makeOrganizationEntity } from "test/factories/make-organization";
 import { InMemoryOrganizationRepository } from "test/repository/in-memory-organization-repository";
+
+import { OrganizationNotFound } from "./errors/organization-not-found";
+import { ShowOrganizationProfile } from "./show-organization-profile";
+
+import type { Organization } from "~/domain/organization/enterprise/entities/organization";
+import type { Right } from "~/core/either";
 
 let sut: ShowOrganizationProfile;
 let inMemoryOrganizationRepository: InMemoryOrganizationRepository;

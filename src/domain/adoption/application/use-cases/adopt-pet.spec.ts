@@ -1,15 +1,6 @@
-import { AdoptPet } from "./adopt-pet";
-
-import { type Right } from "~/core/either";
 import { NotAllowed } from "~/core/errors/not-allowed";
 import { PetNotFound } from "~/domain/pet/application/use-cases/errors/pet-not-found";
-
-import { type Organization } from "~/domain/organization/enterprise/entities/organization";
-import { type Address } from "~/domain/organization/enterprise/entities/value-object/address";
-import { type Pet } from "~/domain/pet/enterprise/entities/pet";
-import { type Adoption } from "~/domain/adoption/enterprise/entities/adoption";
 import { OrganizationNotFound } from "~/domain/organization/application/use-cases/errors/organization-not-found";
-
 import { InMemoryAdoptionRepository } from "test/repository/in-memory-adoption-repository";
 import { InMemoryOrganizationRepository } from "test/repository/in-memory-organization-repository";
 import { InMemoryPetRepository } from "test/repository/in-memory-pet-repository";
@@ -17,6 +8,14 @@ import { makeOrganizationEntity } from "test/factories/make-organization";
 import { makeAddressEntity } from "test/factories/make-address";
 import { makePetEntity } from "test/factories/make-pet";
 import { makeAdoption } from "test/factories/make-adoption";
+
+import { AdoptPet } from "./adopt-pet";
+
+import type { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
+import type { Pet } from "~/domain/pet/enterprise/entities/pet";
+import type { Address } from "~/domain/organization/enterprise/entities/value-object/address";
+import type { Organization } from "~/domain/organization/enterprise/entities/organization";
+import type { Right } from "~/core/either";
 
 let sut: AdoptPet;
 let inMemoryPetRepository: InMemoryPetRepository;

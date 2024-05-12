@@ -2,7 +2,6 @@ import supertest from "supertest";
 
 import { query } from "~/infra/database/connection";
 import { app } from "~/infra/http/app";
-
 import { makeAndAuthenticateOrganization } from "test/factories/make-organization";
 
 describe("[GET] Show organization profile controller", () => {

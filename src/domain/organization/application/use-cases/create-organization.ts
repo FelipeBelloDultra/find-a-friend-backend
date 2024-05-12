@@ -1,11 +1,12 @@
-import { type UseCase } from "~/application/use-case";
-import { type Either, left, right } from "~/core/either";
-
+import { left, right } from "~/core/either";
 import { Organization } from "~/domain/organization/enterprise/entities/organization";
-import { type OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
 import { Password } from "~/domain/organization/enterprise/entities/value-object/password";
 
 import { OrganizationAlreadyExists } from "./errors/organization-already-exists";
+
+import type { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
+import type { Either } from "~/core/either";
+import type { UseCase } from "~/application/use-case";
 
 interface CreateOrganizationInput {
   name: string;

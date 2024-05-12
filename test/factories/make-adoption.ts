@@ -1,6 +1,9 @@
 import { faker } from "@faker-js/faker";
+
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
-import { Adoption, type AdoptionProps } from "~/domain/adoption/enterprise/entities/adoption";
+import { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
+
+import type { AdoptionProps } from "~/domain/adoption/enterprise/entities/adoption";
 
 export function makeAdoption() {
   return {

@@ -1,8 +1,7 @@
-import { CreateOrganization } from "./create-organization";
-
 import { makeOrganization, makeOrganizationEntity } from "test/factories/make-organization";
 import { InMemoryOrganizationRepository } from "test/repository/in-memory-organization-repository";
 
+import { CreateOrganization } from "./create-organization";
 import { OrganizationAlreadyExists } from "./errors/organization-already-exists";
 
 let sut: CreateOrganization;

@@ -1,14 +1,14 @@
 import supertest from "supertest";
 import { faker } from "@faker-js/faker";
-import { type FastifyInstance } from "fastify";
 
-import { type UniqueEntityID } from "~/core/entity/unique-entity-id";
 import { OrganizationMapper } from "~/domain/organization/application/mappers/organization-mapper";
-
-import { Organization, type OrganizationProps } from "~/domain/organization/enterprise/entities/organization";
+import { Organization } from "~/domain/organization/enterprise/entities/organization";
 import { Password } from "~/domain/organization/enterprise/entities/value-object/password";
-
 import { query } from "~/infra/database/connection";
+
+import type { OrganizationProps } from "~/domain/organization/enterprise/entities/organization";
+import type { FastifyInstance } from "fastify";
+import type { UniqueEntityID } from "~/core/entity/unique-entity-id";
 
 export async function makeOrganization() {
   return {

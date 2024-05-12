@@ -1,13 +1,14 @@
-import { type UseCase } from "~/application/use-case";
-import { type Either, left, right } from "~/core/either";
+import { left, right } from "~/core/either";
 import { NotAllowed } from "~/core/errors/not-allowed";
-
 import { PetNotFound } from "~/domain/pet/application/use-cases/errors/pet-not-found";
 import { OrganizationNotFound } from "~/domain/organization/application/use-cases/errors/organization-not-found";
-import { type PetRepository } from "~/domain/pet/application/repository/pet-repository";
-import { type OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
-import { type AdoptionRepository } from "~/domain/adoption/application/repository/adoption-repository";
 import { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
+
+import type { UseCase } from "~/application/use-case";
+import type { Either } from "~/core/either";
+import type { PetRepository } from "~/domain/pet/application/repository/pet-repository";
+import type { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
+import type { AdoptionRepository } from "~/domain/adoption/application/repository/adoption-repository";
 
 interface AdoptPetInput {
   petId: string;

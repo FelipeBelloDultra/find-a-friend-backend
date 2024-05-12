@@ -1,13 +1,12 @@
-import { CreatePet } from "./create-pet";
-
 import { OrganizationNotFound } from "~/domain/organization/application/use-cases/errors/organization-not-found";
 import { NotAllowed } from "~/core/errors/not-allowed";
-
 import { InMemoryOrganizationRepository } from "test/repository/in-memory-organization-repository";
 import { InMemoryPetRepository } from "test/repository/in-memory-pet-repository";
 import { makeOrganizationEntity } from "test/factories/make-organization";
 import { makeAddressEntity } from "test/factories/make-address";
 import { makePet } from "test/factories/make-pet";
+
+import { CreatePet } from "./create-pet";
 
 let sut: CreatePet;
 let inMemoryOrganizationRepository: InMemoryOrganizationRepository;

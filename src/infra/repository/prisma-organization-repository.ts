@@ -1,8 +1,8 @@
-import { type OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
-import { type Organization } from "~/domain/organization/enterprise/entities/organization";
 import { OrganizationMapper } from "~/domain/organization/application/mappers/organization-mapper";
-
 import { query } from "~/infra/database/connection";
+
+import type { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
+import type { Organization } from "~/domain/organization/enterprise/entities/organization";
 
 export class PrismaOrganizationRepository implements OrganizationRepository {
   async create(organization: Organization): Promise<Organization> {

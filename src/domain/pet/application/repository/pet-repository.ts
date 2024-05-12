@@ -1,5 +1,5 @@
-import { type PaginationRepository } from "~/application/repository/pagination-repository";
-import { type Pet } from "~/domain/pet/enterprise/entities/pet";
+import type { PaginationRepository } from "~/application/repository/pagination-repository";
+import type { Pet } from "~/domain/pet/enterprise/entities/pet";
 
 export interface FindAllPetsFilters {
   city: string;

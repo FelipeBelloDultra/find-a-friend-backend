@@ -1,5 +1,8 @@
 import { faker } from "@faker-js/faker";
-import { Address, type AddressProps } from "~/domain/organization/enterprise/entities/value-object/address";
+
+import { Address } from "~/domain/organization/enterprise/entities/value-object/address";
+
+import type { AddressProps } from "~/domain/organization/enterprise/entities/value-object/address";
 
 export function makeAddress() {
   return {
@@ -11,7 +14,7 @@ export function makeAddress() {
     number: faker.location.buildingNumber(),
     latitude: faker.location.latitude(),
     longitude: faker.location.longitude(),
-    complement: faker.lorem.text(),
+    complement: faker.lorem.word({ length: { max: 254, min: 10 } }),
   };
 }
 

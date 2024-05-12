@@ -1,4 +1,5 @@
 import { makeAddress } from "test/factories/make-address";
+
 import { Address } from "./address";
 
 describe("Address", () => {

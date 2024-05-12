@@ -1,6 +1,7 @@
-import { Pet } from "./pet";
 import { makePet } from "test/factories/make-pet";
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
+
+import { Pet } from "./pet";
 
 describe("Pet", () => {
   it("should create a new pet instance", () => {

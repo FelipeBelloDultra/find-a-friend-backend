@@ -1,4 +1,4 @@
-import { type Either } from "~/core/either";
+import type { Either } from "~/core/either";
 
 type UseCaseOutput = Promise<Either<void, void>>;
 

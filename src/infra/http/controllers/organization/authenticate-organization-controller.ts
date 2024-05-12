@@ -1,7 +1,9 @@
-import { type FastifyReply, type FastifyRequest } from "fastify";
 import { z } from "zod";
+
 import { InvalidCredentials } from "~/domain/organization/application/use-cases/errors/invalid-credentials";
 import { makeAuthenticateOrganization } from "~/domain/organization/application/use-cases/factories/make-authenticate-organization";
+
+import type { FastifyReply, FastifyRequest } from "fastify";
 
 export async function authenticateOrganizationController(request: FastifyRequest, reply: FastifyReply) {
   const authenticateOrganizationSchema = z.object({

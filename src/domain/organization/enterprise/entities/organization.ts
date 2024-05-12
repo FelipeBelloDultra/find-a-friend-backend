@@ -1,9 +1,9 @@
 import { Entity } from "~/core/entity/entity";
-import { type UniqueEntityID } from "~/core/entity/unique-entity-id";
-import { type Optional } from "~/core/types/optional";
 
-import { type Password } from "./value-object/password";
-import { type Address } from "./value-object/address";
+import type { UniqueEntityID } from "~/core/entity/unique-entity-id";
+import type { Optional } from "~/core/types/optional";
+import type { Password } from "./value-object/password";
+import type { Address } from "./value-object/address";
 
 export interface OrganizationProps {
   name: string;

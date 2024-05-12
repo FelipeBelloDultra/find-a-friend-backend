@@ -1,9 +1,7 @@
-import { type PaginationRepository } from "~/application/repository/pagination-repository";
-
-import { type FindAllPetsFilters, type PetRepository } from "~/domain/pet/application/repository/pet-repository";
-import { type Pet } from "~/domain/pet/enterprise/entities/pet";
-
-import { type InMemoryOrganizationRepository } from "./in-memory-organization-repository";
+import type { PaginationRepository } from "~/application/repository/pagination-repository";
+import type { FindAllPetsFilters, PetRepository } from "~/domain/pet/application/repository/pet-repository";
+import type { Pet } from "~/domain/pet/enterprise/entities/pet";
+import type { InMemoryOrganizationRepository } from "./in-memory-organization-repository";
 
 export class InMemoryPetRepository implements PetRepository {
   public readonly pets: Array<Pet> = [];

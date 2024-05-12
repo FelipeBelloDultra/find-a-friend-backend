@@ -1,11 +1,12 @@
-import { type UseCase } from "~/application/use-case";
+import { left, right } from "~/core/either";
+import { Address } from "~/domain/organization/enterprise/entities/value-object/address";
 
-import { type Either, left, right } from "~/core/either";
 import { OrganizationNotFound } from "./errors/organization-not-found";
 
-import { type OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
-import { type Organization } from "~/domain/organization/enterprise/entities/organization";
-import { Address } from "~/domain/organization/enterprise/entities/value-object/address";
+import type { UseCase } from "~/application/use-case";
+import type { Either } from "~/core/either";
+import type { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
+import type { Organization } from "~/domain/organization/enterprise/entities/organization";
 
 interface UpdateOrganizationAddressInput {
   organizationId: string;

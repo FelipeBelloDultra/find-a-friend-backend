@@ -1,6 +1,6 @@
 import supertest from "supertest";
-import { makeOrganization } from "test/factories/make-organization";
 
+import { makeOrganization } from "test/factories/make-organization";
 import { app } from "~/infra/http/app";
 
 describe("[PATCH] Refresh token controller", () => {

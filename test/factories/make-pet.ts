@@ -1,6 +1,9 @@
 import { faker } from "@faker-js/faker";
-import { Pet, type PetProps } from "~/domain/pet/enterprise/entities/pet";
+
+import { Pet } from "~/domain/pet/enterprise/entities/pet";
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
+
+import type { PetProps } from "~/domain/pet/enterprise/entities/pet";
 
 export function makePet() {
   return {

@@ -1,7 +1,9 @@
 import { z } from "zod";
-import { type FastifyReply, type FastifyRequest } from "fastify";
+
 import { OrganizationNotFound } from "~/domain/organization/application/use-cases/errors/organization-not-found";
 import { makeUpdateOrganizationAddress } from "~/domain/organization/application/use-cases/factories/make-update-organization-address";
+
+import type { FastifyReply, FastifyRequest } from "fastify";
 
 export async function updateOrganizationAddressController(request: FastifyRequest, reply: FastifyReply) {
   const updateOrganizationAddressSchema = z.object({

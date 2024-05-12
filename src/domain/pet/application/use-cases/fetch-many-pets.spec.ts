@@ -1,14 +1,14 @@
-import { FetchManyPets } from "./fetch-many-pets";
-
-import { type Organization } from "~/domain/organization/enterprise/entities/organization";
-import { type Address } from "~/domain/organization/enterprise/entities/value-object/address";
-import { type Pet } from "~/domain/pet/enterprise/entities/pet";
-
 import { makeAddressEntity } from "test/factories/make-address";
 import { makeOrganizationEntity } from "test/factories/make-organization";
 import { makePetEntity } from "test/factories/make-pet";
 import { InMemoryOrganizationRepository } from "test/repository/in-memory-organization-repository";
 import { InMemoryPetRepository } from "test/repository/in-memory-pet-repository";
+
+import { FetchManyPets } from "./fetch-many-pets";
+
+import type { Pet } from "~/domain/pet/enterprise/entities/pet";
+import type { Address } from "~/domain/organization/enterprise/entities/value-object/address";
+import type { Organization } from "~/domain/organization/enterprise/entities/organization";
 
 let sut: FetchManyPets;
 let inMemoryPetRepository: InMemoryPetRepository;

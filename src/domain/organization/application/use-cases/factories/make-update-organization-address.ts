@@ -1,5 +1,6 @@
-import { UpdateOrganizationAddress } from "../update-organization-address";
 import { PrismaOrganizationRepository } from "~/infra/repository/prisma-organization-repository";
+
+import { UpdateOrganizationAddress } from "../update-organization-address";
 
 export function makeUpdateOrganizationAddress() {
   const prismaOrganizationRepository = new PrismaOrganizationRepository();

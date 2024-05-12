@@ -1,6 +1,7 @@
 import { Entity } from "~/core/entity/entity";
-import { type UniqueEntityID } from "~/core/entity/unique-entity-id";
-import { type Optional } from "~/core/types/optional";
+
+import type { UniqueEntityID } from "~/core/entity/unique-entity-id";
+import type { Optional } from "~/core/types/optional";
 
 export interface AdoptionProps {
   petId: UniqueEntityID;

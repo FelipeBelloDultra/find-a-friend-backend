@@ -1,9 +1,11 @@
 import { faker } from "@faker-js/faker";
+
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
+import { makeAddress } from "test/factories/make-address";
+
 import { Organization } from "./organization";
 import { Password } from "./value-object/password";
 import { Address } from "./value-object/address";
-import { makeAddress } from "test/factories/make-address";
 
 describe("Organization", () => {
   it("should create a new organization", async () => {

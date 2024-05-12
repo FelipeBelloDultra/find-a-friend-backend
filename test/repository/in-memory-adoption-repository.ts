@@ -1,9 +1,9 @@
-import { type PaginationRepository } from "~/application/repository/pagination-repository";
-import {
-  type AdoptionRepository,
-  type FindAllAdoptionsFilters,
+import type { PaginationRepository } from "~/application/repository/pagination-repository";
+import type {
+  AdoptionRepository,
+  FindAllAdoptionsFilters,
 } from "~/domain/adoption/application/repository/adoption-repository";
-import { type Adoption } from "~/domain/adoption/enterprise/entities/adoption";
+import type { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
 
 export class InMemoryAdoptionRepository implements AdoptionRepository {
   public readonly adoptions: Array<Adoption> = [];
