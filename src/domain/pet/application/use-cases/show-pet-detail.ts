@@ -1,10 +1,10 @@
-import { UseCase } from "~/application/use-case";
+import { type UseCase } from "~/application/use-case";
 
-import { Either, right, left } from "~/core/either";
+import { type Either, left, right } from "~/core/either";
 import { PetNotFound } from "./errors/pet-not-found";
 
-import { PetRepository } from "~/domain/pet/application/repository/pet-repository";
-import { Pet } from "~/domain/pet/enterprise/entities/pet";
+import { type PetRepository } from "~/domain/pet/application/repository/pet-repository";
+import { type Pet } from "~/domain/pet/enterprise/entities/pet";
 
 interface ShowPetDetailInput {
   petId: string;

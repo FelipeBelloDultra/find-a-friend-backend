@@ -1,5 +1,5 @@
-import { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
-import { Organization } from "~/domain/organization/enterprise/entities/organization";
+import { type OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
+import { type Organization } from "~/domain/organization/enterprise/entities/organization";
 import { OrganizationMapper } from "~/domain/organization/application/mappers/organization-mapper";
 
 import { query } from "~/infra/database/connection";

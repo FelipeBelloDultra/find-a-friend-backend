@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { Address, AddressProps } from "~/domain/organization/enterprise/entities/value-object/address";
+import { Address, type AddressProps } from "~/domain/organization/enterprise/entities/value-object/address";
 
 export function makeAddress() {
   return {

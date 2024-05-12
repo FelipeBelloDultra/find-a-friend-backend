@@ -1,8 +1,8 @@
-import { UseCase } from "~/application/use-case";
-import { Either, right } from "~/core/either";
+import { type UseCase } from "~/application/use-case";
+import { type Either, right } from "~/core/either";
 
-import { AdoptionRepository } from "~/domain/adoption/application/repository/adoption-repository";
-import { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
+import { type AdoptionRepository } from "~/domain/adoption/application/repository/adoption-repository";
+import { type Adoption } from "~/domain/adoption/enterprise/entities/adoption";
 
 interface FetchManyAdoptionInput {
   organizationId: string;

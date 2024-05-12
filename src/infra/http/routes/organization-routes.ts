@@ -1,4 +1,4 @@
-import { FastifyInstance } from "fastify";
+import { type FastifyInstance } from "fastify";
 
 import { createOrganizationController } from "../controllers/organization/create-organization-controller";
 import { authenticateOrganizationController } from "../controllers/organization/authenticate-organization-controller";

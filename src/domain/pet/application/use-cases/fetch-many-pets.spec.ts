@@ -1,8 +1,8 @@
 import { FetchManyPets } from "./fetch-many-pets";
 
-import { Organization } from "~/domain/organization/enterprise/entities/organization";
-import { Address } from "~/domain/organization/enterprise/entities/value-object/address";
-import { Pet } from "~/domain/pet/enterprise/entities/pet";
+import { type Organization } from "~/domain/organization/enterprise/entities/organization";
+import { type Address } from "~/domain/organization/enterprise/entities/value-object/address";
+import { type Pet } from "~/domain/pet/enterprise/entities/pet";
 
 import { makeAddressEntity } from "test/factories/make-address";
 import { makeOrganizationEntity } from "test/factories/make-organization";

@@ -1,5 +1,5 @@
-import { PaginationRepository } from "~/application/repository/pagination-repository";
-import { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
+import { type PaginationRepository } from "~/application/repository/pagination-repository";
+import { type Adoption } from "~/domain/adoption/enterprise/entities/adoption";
 
 export interface FindAllAdoptionsFilters {
   organizationId: string;

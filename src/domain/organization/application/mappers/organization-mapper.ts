@@ -1,4 +1,4 @@
-import { Organization as DatabaseOrganization, Prisma } from "@prisma/client";
+import { type Organization as DatabaseOrganization, Prisma } from "@prisma/client";
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
 
 import { Organization } from "~/domain/organization/enterprise/entities/organization";
