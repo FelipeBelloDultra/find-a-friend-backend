@@ -31,4 +31,5 @@ volumes:
 
 networks:
     find-a-friend-network:
+        name: find-a-friend-network
         driver: bridge
