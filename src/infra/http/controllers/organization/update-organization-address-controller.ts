@@ -3,10 +3,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { OrganizationNotFound } from "~/domain/organization/application/use-cases/errors/organization-not-found";
 import { makeUpdateOrganizationAddress } from "~/domain/organization/application/use-cases/factories/make-update-organization-address";
 
-export async function updateOrganizationAddressController(
-  request: FastifyRequest,
-  reply: FastifyReply
-) {
+export async function updateOrganizationAddressController(request: FastifyRequest, reply: FastifyReply) {
   const updateOrganizationAddressSchema = z.object({
     zipcode: z.string().max(255),
     state: z.string().max(255),
@@ -20,17 +17,8 @@ export async function updateOrganizationAddressController(
   });
 
   const organizationId = request.user.sub;
-  const {
-    city,
-    complement,
-    latitude,
-    longitude,
-    neighborhood,
-    number,
-    state,
-    street,
-    zipcode,
-  } = updateOrganizationAddressSchema.parse(request.body);
+  const { city, complement, latitude, longitude, neighborhood, number, state, street, zipcode } =
+    updateOrganizationAddressSchema.parse(request.body);
 
   const result = await makeUpdateOrganizationAddress().execute({
     organizationId,

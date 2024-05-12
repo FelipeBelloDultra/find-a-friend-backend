@@ -6,9 +6,7 @@ import { Password } from "~/domain/organization/enterprise/entities/value-object
 import { Address } from "~/domain/organization/enterprise/entities/value-object/address";
 
 export class OrganizationMapper {
-  static async toDomain(
-    fromPersistence: DatabaseOrganization
-  ): Promise<Organization> {
+  static async toDomain(fromPersistence: DatabaseOrganization): Promise<Organization> {
     const password = await Password.create(fromPersistence.password_hash, true);
     const id = new UniqueEntityID(fromPersistence.id);
     const address = Address.getInstanceOrNull({
@@ -34,26 +32,14 @@ export class OrganizationMapper {
         createdAt: fromPersistence.created_at,
         updatedAt: fromPersistence.updated_at,
       },
-      id
+      id,
     );
 
     return organization;
   }
 
-  static toPersistence(
-    organizationToPersistence: Organization
-  ): DatabaseOrganization {
-    const {
-      id,
-      name,
-      email,
-      logoUrl,
-      password,
-      phone,
-      address,
-      createdAt,
-      updatedAt,
-    } = organizationToPersistence;
+  static toPersistence(organizationToPersistence: Organization): DatabaseOrganization {
+    const { id, name, email, logoUrl, password, phone, address, createdAt, updatedAt } = organizationToPersistence;
 
     return {
       id: id.toValue(),

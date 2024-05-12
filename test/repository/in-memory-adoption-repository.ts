@@ -16,11 +16,9 @@ export class InMemoryAdoptionRepository implements AdoptionRepository {
 
   async findAll(
     { organizationId }: FindAllAdoptionsFilters,
-    { limit, page }: PaginationRepository
+    { limit, page }: PaginationRepository,
   ): Promise<Array<Adoption>> {
-    const adoptions = this.adoptions.filter(
-      (adoption) => adoption.organizationId.toValue() === organizationId
-    );
+    const adoptions = this.adoptions.filter((adoption) => adoption.organizationId.toValue() === organizationId);
 
     const SKIP = (page - 1) * limit;
     const TAKE = page * limit;

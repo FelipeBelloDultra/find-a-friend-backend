@@ -15,16 +15,13 @@ export class Adoption extends Entity<AdoptionProps> {
     return this.props.organizationId;
   }
 
-  static create(
-    props: Optional<AdoptionProps, "createdAt">,
-    id?: UniqueEntityID
-  ) {
+  static create(props: Optional<AdoptionProps, "createdAt">, id?: UniqueEntityID) {
     return new Adoption(
       {
         ...props,
         createdAt: props.createdAt ?? new Date(),
       },
-      id
+      id,
     );
   }
 }

@@ -5,10 +5,7 @@ import { FastifyInstance } from "fastify";
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
 import { OrganizationMapper } from "~/domain/organization/application/mappers/organization-mapper";
 
-import {
-  Organization,
-  OrganizationProps,
-} from "~/domain/organization/enterprise/entities/organization";
+import { Organization, OrganizationProps } from "~/domain/organization/enterprise/entities/organization";
 import { Password } from "~/domain/organization/enterprise/entities/value-object/password";
 
 import { query } from "~/infra/database/connection";
@@ -23,24 +20,19 @@ export async function makeOrganization() {
   };
 }
 
-export async function makeOrganizationEntity(
-  override: Partial<OrganizationProps> = {},
-  id?: UniqueEntityID
-) {
+export async function makeOrganizationEntity(override: Partial<OrganizationProps> = {}, id?: UniqueEntityID) {
   const organization = Organization.create(
     {
       ...(await makeOrganization()),
       ...override,
     },
-    id
+    id,
   );
 
   return organization;
 }
 
-export async function makeAndAuthenticateOrganization(
-  fastifyInstance: FastifyInstance
-) {
+export async function makeAndAuthenticateOrganization(fastifyInstance: FastifyInstance) {
   const organization = await makeOrganizationEntity({
     password: await Password.create("123456"),
   });
@@ -49,12 +41,10 @@ export async function makeAndAuthenticateOrganization(
     data: OrganizationMapper.toPersistence(organization),
   });
 
-  const authResponse = await supertest(fastifyInstance.server)
-    .post("/api/session")
-    .send({
-      email: organization.email,
-      password: "123456",
-    });
+  const authResponse = await supertest(fastifyInstance.server).post("/api/session").send({
+    email: organization.email,
+    password: "123456",
+  });
 
   const { token } = authResponse.body;
 

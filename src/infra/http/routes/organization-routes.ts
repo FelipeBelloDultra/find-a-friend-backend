@@ -12,14 +12,6 @@ export async function organizationRoutes(app: FastifyInstance) {
   app.post("/api/orgs", createOrganizationController);
   app.post("/api/session", authenticateOrganizationController);
   app.patch("/api/refresh-token", refreshTokenController);
-  app.get(
-    "/api/auth/me",
-    { onRequest: [verifyJwt] },
-    showOrganizationProfileController
-  );
-  app.put(
-    "/api/orgs/address",
-    { onRequest: [verifyJwt] },
-    updateOrganizationAddressController
-  );
+  app.get("/api/auth/me", { onRequest: [verifyJwt] }, showOrganizationProfileController);
+  app.put("/api/orgs/address", { onRequest: [verifyJwt] }, updateOrganizationAddressController);
 }

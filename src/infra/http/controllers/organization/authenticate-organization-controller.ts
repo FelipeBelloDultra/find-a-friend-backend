@@ -3,18 +3,13 @@ import { z } from "zod";
 import { InvalidCredentials } from "~/domain/organization/application/use-cases/errors/invalid-credentials";
 import { makeAuthenticateOrganization } from "~/domain/organization/application/use-cases/factories/make-authenticate-organization";
 
-export async function authenticateOrganizationController(
-  request: FastifyRequest,
-  reply: FastifyReply
-) {
+export async function authenticateOrganizationController(request: FastifyRequest, reply: FastifyReply) {
   const authenticateOrganizationSchema = z.object({
     email: z.string().email().max(255),
     password: z.string().min(6).max(255),
   });
 
-  const { email, password } = authenticateOrganizationSchema.parse(
-    request.body
-  );
+  const { email, password } = authenticateOrganizationSchema.parse(request.body);
 
   const result = await makeAuthenticateOrganization().execute({
     email,
@@ -30,7 +25,7 @@ export async function authenticateOrganizationController(
         sign: {
           sub: id,
         },
-      }
+      },
     );
     const refreshToken = await reply.jwtSign(
       { email },
@@ -39,7 +34,7 @@ export async function authenticateOrganizationController(
           sub: id,
           expiresIn: "7d",
         },
-      }
+      },
     );
 
     return reply

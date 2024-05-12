@@ -14,9 +14,7 @@ type OnRight = { adoptions: Array<Adoption> };
 
 type FetchManyAdoptionOutput = Promise<Either<OnLeft, OnRight>>;
 
-export class FetchManyAdoption
-  implements UseCase<FetchManyAdoptionInput, FetchManyAdoptionOutput>
-{
+export class FetchManyAdoption implements UseCase<FetchManyAdoptionInput, FetchManyAdoptionOutput> {
   constructor(private readonly adoptionRepository: AdoptionRepository) {}
 
   async execute(input: FetchManyAdoptionInput): FetchManyAdoptionOutput {
@@ -27,7 +25,7 @@ export class FetchManyAdoption
       {
         limit: input.limit,
         page: input.page,
-      }
+      },
     );
 
     return right({

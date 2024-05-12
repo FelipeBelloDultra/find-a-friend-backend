@@ -13,8 +13,5 @@ export interface PetRepository {
   create: (pet: Pet) => Promise<Pet>;
   findById: (id: string) => Promise<Pet | null>;
   save: (pet: Pet) => Promise<Pet>;
-  findAll: (
-    filters: FindAllPetsFilters,
-    paginationParams: PaginationRepository
-  ) => Promise<Array<Pet>>;
+  findAll: (filters: FindAllPetsFilters, paginationParams: PaginationRepository) => Promise<Array<Pet>>;
 }

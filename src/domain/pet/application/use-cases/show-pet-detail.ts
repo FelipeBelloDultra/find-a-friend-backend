@@ -14,9 +14,7 @@ type OnRight = { pet: Pet };
 
 type ShowPetDetailOutput = Promise<Either<OnLeft, OnRight>>;
 
-export class ShowPetDetail
-  implements UseCase<ShowPetDetailInput, ShowPetDetailOutput>
-{
+export class ShowPetDetail implements UseCase<ShowPetDetailInput, ShowPetDetailOutput> {
   constructor(private readonly petRepository: PetRepository) {}
 
   async execute(input: ShowPetDetailInput): ShowPetDetailOutput {

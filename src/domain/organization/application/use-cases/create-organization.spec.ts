@@ -1,9 +1,6 @@
 import { CreateOrganization } from "./create-organization";
 
-import {
-  makeOrganization,
-  makeOrganizationEntity,
-} from "test/factories/make-organization";
+import { makeOrganization, makeOrganizationEntity } from "test/factories/make-organization";
 import { InMemoryOrganizationRepository } from "test/repository/in-memory-organization-repository";
 
 import { OrganizationAlreadyExists } from "./errors/organization-already-exists";
@@ -29,17 +26,13 @@ describe("Create organization", () => {
     });
 
     expect(result.isRight()).toBe(true);
-    expect(inMemoryOrganizationRepository.organizations[0].email).toEqual(
-      org.email
-    );
+    expect(inMemoryOrganizationRepository.organizations[0].email).toEqual(org.email);
     expect(inMemoryOrganizationRepository.organizations[0].address).toBeNull();
   });
 
   it("should not create a new organization if email already exists", async () => {
     const orgData = await makeOrganization();
-    const createdOrg = await inMemoryOrganizationRepository.create(
-      await makeOrganizationEntity()
-    );
+    const createdOrg = await inMemoryOrganizationRepository.create(await makeOrganizationEntity());
 
     const result = await sut.execute({
       ...orgData,
@@ -63,8 +56,6 @@ describe("Create organization", () => {
       phone: org.phone,
     });
 
-    expect(
-      inMemoryOrganizationRepository.organizations[0].password
-    ).not.toEqual(PASSWORD);
+    expect(inMemoryOrganizationRepository.organizations[0].password).not.toEqual(PASSWORD);
   });
 });

@@ -13,10 +13,7 @@ describe("[GET] Show organization profile controller", () => {
   it("should be able show authenticated organization profile", async () => {
     const { token, organization } = await makeAndAuthenticateOrganization(app);
 
-    const sut = await supertest(app.server)
-      .get("/api/auth/me")
-      .set("Authorization", `Bearer ${token}`)
-      .send();
+    const sut = await supertest(app.server).get("/api/auth/me").set("Authorization", `Bearer ${token}`).send();
 
     expect(sut.statusCode).toEqual(200);
     expect(sut.body).toEqual(
@@ -25,7 +22,7 @@ describe("[GET] Show organization profile controller", () => {
         name: organization.name,
         phone: organization.phone,
         id: organization.id.toValue(),
-      })
+      }),
     );
   });
 
@@ -35,10 +32,7 @@ describe("[GET] Show organization profile controller", () => {
       where: { id: organization.id.toValue() },
     });
 
-    const sut = await supertest(app.server)
-      .get("/api/auth/me")
-      .set("Authorization", `Bearer ${token}`)
-      .send();
+    const sut = await supertest(app.server).get("/api/auth/me").set("Authorization", `Bearer ${token}`).send();
 
     expect(sut.statusCode).toEqual(404);
     expect(sut.body).toEqual({ message: "Organization not found." });

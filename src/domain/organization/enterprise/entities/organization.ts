@@ -62,10 +62,7 @@ export class Organization extends Entity<OrganizationProps> {
     return this.address !== null;
   }
 
-  static create(
-    props: Optional<OrganizationProps, "createdAt" | "address" | "updatedAt">,
-    id?: UniqueEntityID
-  ) {
+  static create(props: Optional<OrganizationProps, "createdAt" | "address" | "updatedAt">, id?: UniqueEntityID) {
     return new Organization(
       {
         ...props,
@@ -73,7 +70,7 @@ export class Organization extends Entity<OrganizationProps> {
         createdAt: props.createdAt ?? new Date(),
         updatedAt: props.updatedAt ?? new Date(),
       },
-      id
+      id,
     );
   }
 }

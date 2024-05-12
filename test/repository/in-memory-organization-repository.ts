@@ -11,9 +11,7 @@ export class InMemoryOrganizationRepository implements OrganizationRepository {
   }
 
   async findByEmail(email: string): Promise<Organization | null> {
-    const organization = this.organizations.find(
-      (organization) => organization.email === email
-    );
+    const organization = this.organizations.find((organization) => organization.email === email);
 
     if (!organization) return null;
 
@@ -21,9 +19,7 @@ export class InMemoryOrganizationRepository implements OrganizationRepository {
   }
 
   async findById(id: string): Promise<Organization | null> {
-    const organization = this.organizations.find(
-      (organization) => organization.id.toValue() === id
-    );
+    const organization = this.organizations.find((organization) => organization.id.toValue() === id);
 
     if (!organization) return null;
 
@@ -31,9 +27,7 @@ export class InMemoryOrganizationRepository implements OrganizationRepository {
   }
 
   async save(organization: Organization): Promise<Organization> {
-    const orgIndex = this.organizations.findIndex(
-      ({ id }) => id === organization.id
-    );
+    const orgIndex = this.organizations.findIndex(({ id }) => id === organization.id);
 
     if (orgIndex !== -1) {
       this.organizations[orgIndex] = organization;

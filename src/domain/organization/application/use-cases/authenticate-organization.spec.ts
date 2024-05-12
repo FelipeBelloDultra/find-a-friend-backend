@@ -22,7 +22,7 @@ describe("Authenticate organization", () => {
       await makeOrganizationEntity({
         password: await Password.create(PASSWORD),
         email: EMAIL,
-      })
+      }),
     );
 
     const result = await sut.execute({
@@ -57,7 +57,7 @@ describe("Authenticate organization", () => {
       await makeOrganizationEntity({
         password: await Password.create(PASSWORD),
         email: EMAIL,
-      })
+      }),
     );
 
     const result = await sut.execute({

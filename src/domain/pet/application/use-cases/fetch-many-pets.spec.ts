@@ -26,9 +26,7 @@ describe("Fetch many pets", () => {
     });
 
     inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
-    inMemoryPetRepository = new InMemoryPetRepository(
-      inMemoryOrganizationRepository
-    );
+    inMemoryPetRepository = new InMemoryPetRepository(inMemoryOrganizationRepository);
 
     await inMemoryOrganizationRepository.create(organization);
 

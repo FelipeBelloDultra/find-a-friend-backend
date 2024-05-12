@@ -27,9 +27,7 @@ describe("[POST] Authenticate organization controller", () => {
     expect(sut.body).toEqual({
       token: expect.any(String),
     });
-    expect(sut.headers["set-cookie"]).toEqual([
-      expect.stringContaining("refreshToken"),
-    ]);
+    expect(sut.headers["set-cookie"]).toEqual([expect.stringContaining("refreshToken")]);
   });
 
   it("should not be able authenticate organization with wrong email", async () => {

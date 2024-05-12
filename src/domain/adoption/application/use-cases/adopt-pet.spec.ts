@@ -35,16 +35,10 @@ describe("Adopt pet", () => {
     });
 
     inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
-    inMemoryPetRepository = new InMemoryPetRepository(
-      inMemoryOrganizationRepository
-    );
+    inMemoryPetRepository = new InMemoryPetRepository(inMemoryOrganizationRepository);
     inMemoryAdoptionRepository = new InMemoryAdoptionRepository();
 
-    sut = new AdoptPet(
-      inMemoryAdoptionRepository,
-      inMemoryOrganizationRepository,
-      inMemoryPetRepository
-    );
+    sut = new AdoptPet(inMemoryAdoptionRepository, inMemoryOrganizationRepository, inMemoryPetRepository);
   });
 
   it("should be able to adopt a pet", async () => {
@@ -61,11 +55,7 @@ describe("Adopt pet", () => {
 
     expect(result.isRight()).toBeTruthy();
     expect(inMemoryAdoptionRepository.adoptions.length).toBe(1);
-    expect(
-      inMemoryAdoptionRepository.adoptions[0].id.equals(
-        result.value.adoption.id
-      )
-    ).toBeTruthy();
+    expect(inMemoryAdoptionRepository.adoptions[0].id.equals(result.value.adoption.id)).toBeTruthy();
   });
 
   it("should not be able to adopt a pet if organization does not exists", async () => {

@@ -13,16 +13,9 @@ const ENVIRONMENT_SCHEMA = z.object({
 const parsedEnv = ENVIRONMENT_SCHEMA.safeParse(process.env);
 
 if (!parsedEnv.success) {
-  throw new Error(
-    `Invalid env var: ${JSON.stringify(
-      parsedEnv.error.formErrors.fieldErrors,
-      undefined,
-      2
-    )}`,
-    {
-      cause: "Invalid env config",
-    }
-  );
+  throw new Error(`Invalid env var: ${JSON.stringify(parsedEnv.error.formErrors.fieldErrors, undefined, 2)}`, {
+    cause: "Invalid env config",
+  });
 }
 
 export const env = parsedEnv.data;

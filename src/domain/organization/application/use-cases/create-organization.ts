@@ -19,17 +19,11 @@ type OnRight = { organization: Organization };
 
 type CreateOrganizationOutput = Promise<Either<OnLeft, OnRight>>;
 
-export class CreateOrganization
-  implements UseCase<CreateOrganizationInput, CreateOrganizationOutput>
-{
-  constructor(
-    private readonly organizationRepository: OrganizationRepository
-  ) {}
+export class CreateOrganization implements UseCase<CreateOrganizationInput, CreateOrganizationOutput> {
+  constructor(private readonly organizationRepository: OrganizationRepository) {}
 
   async execute(input: CreateOrganizationInput): CreateOrganizationOutput {
-    const findedByEmail = await this.organizationRepository.findByEmail(
-      input.email
-    );
+    const findedByEmail = await this.organizationRepository.findByEmail(input.email);
     if (findedByEmail) {
       return left(new OrganizationAlreadyExists());
     }

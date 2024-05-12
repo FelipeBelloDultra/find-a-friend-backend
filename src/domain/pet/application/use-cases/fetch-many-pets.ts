@@ -18,9 +18,7 @@ type OnRight = { pets: Array<Pet> };
 
 type FetchManyPetsOutput = Promise<Either<OnLeft, OnRight>>;
 
-export class FetchManyPets
-  implements UseCase<FetchManyPetsInput, FetchManyPetsOutput>
-{
+export class FetchManyPets implements UseCase<FetchManyPetsInput, FetchManyPetsOutput> {
   constructor(private readonly petRepository: PetRepository) {}
 
   async execute(input: FetchManyPetsInput): FetchManyPetsOutput {
@@ -35,7 +33,7 @@ export class FetchManyPets
       {
         limit: input.limit,
         page: input.page,
-      }
+      },
     );
 
     return right({

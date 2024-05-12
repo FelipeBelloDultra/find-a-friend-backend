@@ -1,9 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
-import {
-  Adoption,
-  AdoptionProps,
-} from "~/domain/adoption/enterprise/entities/adoption";
+import { Adoption, AdoptionProps } from "~/domain/adoption/enterprise/entities/adoption";
 
 export function makeAdoption() {
   return {
@@ -14,16 +11,13 @@ export function makeAdoption() {
   };
 }
 
-export function makeAdoptionEntity(
-  override: Partial<AdoptionProps> = {},
-  id?: UniqueEntityID
-) {
+export function makeAdoptionEntity(override: Partial<AdoptionProps> = {}, id?: UniqueEntityID) {
   const adoption = Adoption.create(
     {
       ...makeAdoption(),
       ...override,
     },
-    id
+    id,
   );
 
   return adoption;

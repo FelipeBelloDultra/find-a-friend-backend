@@ -14,20 +14,11 @@ type OnRight = { organization: Organization };
 
 type ShowOrganizationProfileOutput = Promise<Either<OnLeft, OnRight>>;
 
-export class ShowOrganizationProfile
-  implements
-    UseCase<ShowOrganizationProfileInput, ShowOrganizationProfileOutput>
-{
-  constructor(
-    private readonly organizationRepository: OrganizationRepository
-  ) {}
+export class ShowOrganizationProfile implements UseCase<ShowOrganizationProfileInput, ShowOrganizationProfileOutput> {
+  constructor(private readonly organizationRepository: OrganizationRepository) {}
 
-  async execute(
-    input: ShowOrganizationProfileInput
-  ): ShowOrganizationProfileOutput {
-    const organization = await this.organizationRepository.findById(
-      input.organizationId
-    );
+  async execute(input: ShowOrganizationProfileInput): ShowOrganizationProfileOutput {
+    const organization = await this.organizationRepository.findById(input.organizationId);
     if (!organization) {
       return left(new OrganizationNotFound());
     }

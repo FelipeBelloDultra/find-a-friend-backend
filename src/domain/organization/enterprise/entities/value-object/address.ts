@@ -18,31 +18,9 @@ export class Address {
   }
 
   static getInstanceOrNull(props: AddressProps): Address | null {
-    const {
-      zipcode,
-      state,
-      city,
-      neighborhood,
-      street,
-      number,
-      latitude,
-      longitude,
-      complement,
-    } = props;
+    const { zipcode, state, city, neighborhood, street, number, latitude, longitude, complement } = props;
 
-    if (
-      [
-        zipcode,
-        state,
-        city,
-        neighborhood,
-        street,
-        number,
-        latitude,
-        longitude,
-        complement,
-      ].every((item) => !!item)
-    ) {
+    if ([zipcode, state, city, neighborhood, street, number, latitude, longitude, complement].every((item) => !!item)) {
       return Address.create(props);
     }
 

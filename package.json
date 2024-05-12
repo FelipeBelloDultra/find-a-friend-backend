@@ -17,7 +17,9 @@
     "test:cov": "vitest run --coverage",
     "db:migrate:dev": "prisma migrate dev",
     "db:migrate:deploy": "prisma migrate deploy",
-    "db:preview": "prisma studio"
+    "db:preview": "prisma studio",
+    "lint:check": "eslint --ext .ts src/ test/",
+    "lint:fix": "eslint --fix --ext .ts src/ test/"
   },
   "dependencies": {
     "@fastify/cookie": "^9.3.1",

@@ -28,9 +28,7 @@ describe("Update organziation address", () => {
 
     expect(result.isRight()).toBeTruthy();
     expect(inMemoryOrganizationRepository.organizations.length).toBe(1);
-    expect(
-      inMemoryOrganizationRepository.organizations[0].address
-    ).toMatchObject(addressEntity);
+    expect(inMemoryOrganizationRepository.organizations[0].address).toMatchObject(addressEntity);
   });
 
   it("should not be able to update the address if organization does not exists", async () => {

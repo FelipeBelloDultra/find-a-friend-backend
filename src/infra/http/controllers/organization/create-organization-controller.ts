@@ -4,10 +4,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { makeCreateOrganization } from "~/domain/organization/application/use-cases/factories/make-create-organization";
 import { OrganizationAlreadyExists } from "~/domain/organization/application/use-cases/errors/organization-already-exists";
 
-export async function createOrganizationController(
-  request: FastifyRequest,
-  reply: FastifyReply
-) {
+export async function createOrganizationController(request: FastifyRequest, reply: FastifyReply) {
   const createOrganizationSchema = z.object({
     name: z.string().min(5).max(255),
     logoUrl: z.string(),
@@ -16,7 +13,7 @@ export async function createOrganizationController(
     phone: z
       .string()
       .regex(
-        /^((\+?55\ ?[1-9]{2}\ ?)|(\+?55\ ?\([1-9]{2}\)\ ?)|(0[1-9]{2}\ ?)|(\([1-9]{2}\)\ ?)|([1-9]{2}\ ?))((\d{4}\-?\d{4})|(9[1-9]{1}\d{3}\-?\d{4}))$/
+        /^((\+?55 ?[1-9]{2} ?)|(\+?55 ?\([1-9]{2}\) ?)|(0[1-9]{2} ?)|(\([1-9]{2}\) ?)|([1-9]{2} ?))((\d{4}-?\d{4})|(9[1-9]{1}\d{3}-?\d{4}))$/,
       ),
   });
 

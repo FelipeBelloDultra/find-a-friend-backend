@@ -24,13 +24,11 @@ export class AdoptPet implements UseCase<AdoptPetInput, AdoptPetOutput> {
   constructor(
     private readonly adoptionRepository: AdoptionRepository,
     private readonly organizationRepository: OrganizationRepository,
-    private readonly petRepository: PetRepository
+    private readonly petRepository: PetRepository,
   ) {}
 
   async execute(input: AdoptPetInput): AdoptPetOutput {
-    const organization = await this.organizationRepository.findById(
-      input.organizationId
-    );
+    const organization = await this.organizationRepository.findById(input.organizationId);
     if (!organization) {
       return left(new OrganizationNotFound());
     }
@@ -40,9 +38,7 @@ export class AdoptPet implements UseCase<AdoptPetInput, AdoptPetOutput> {
       return left(new PetNotFound());
     }
 
-    const petIsFromSameOrganization = organization.id.equals(
-      pet.organizationId
-    );
+    const petIsFromSameOrganization = organization.id.equals(pet.organizationId);
 
     if (!petIsFromSameOrganization || !organization.canContinue()) {
       return left(new NotAllowed());
@@ -57,10 +53,7 @@ export class AdoptPet implements UseCase<AdoptPetInput, AdoptPetOutput> {
       organizationId: organization.id,
     });
 
-    await Promise.all([
-      this.adoptionRepository.create(adoption),
-      this.petRepository.save(pet),
-    ]);
+    await Promise.all([this.adoptionRepository.create(adoption), this.petRepository.save(pet)]);
 
     return right({
       adoption: adoption,

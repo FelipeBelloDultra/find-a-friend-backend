@@ -55,7 +55,7 @@ describe("Organization", () => {
         logoUrl: faker.image.url(),
         phone: faker.phone.number(),
       },
-      id
+      id,
     );
 
     expect(sut.id.equals(id)).toBeTruthy();
@@ -72,7 +72,7 @@ describe("Organization", () => {
         logoUrl: faker.image.url(),
         phone: faker.phone.number(),
       },
-      id
+      id,
     );
 
     expect(sut.id.equals(id)).toBeTruthy();

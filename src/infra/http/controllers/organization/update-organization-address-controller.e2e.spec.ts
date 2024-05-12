@@ -26,21 +26,15 @@ describe("[PUT] Update organization address", () => {
   it("should be able update an organization address and verify is profile is completed", async () => {
     const { token } = await makeAndAuthenticateOrganization(app);
     const address = makeAddress();
-    await supertest(app.server)
-      .put("/api/orgs/address")
-      .set("Authorization", `Bearer ${token}`)
-      .send(address);
+    await supertest(app.server).put("/api/orgs/address").set("Authorization", `Bearer ${token}`).send(address);
 
-    const sut = await supertest(app.server)
-      .get("/api/auth/me")
-      .set("Authorization", `Bearer ${token}`)
-      .send();
+    const sut = await supertest(app.server).get("/api/auth/me").set("Authorization", `Bearer ${token}`).send();
 
     expect(sut.statusCode).toEqual(200);
     expect(sut.body).toEqual(
       expect.objectContaining({
         profile_is_completed: true,
-      })
+      }),
     );
   });
 

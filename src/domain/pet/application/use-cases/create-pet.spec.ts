@@ -16,9 +16,7 @@ let inMemoryPetRepository: InMemoryPetRepository;
 describe("Create pet", () => {
   beforeEach(() => {
     inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
-    inMemoryPetRepository = new InMemoryPetRepository(
-      inMemoryOrganizationRepository
-    );
+    inMemoryPetRepository = new InMemoryPetRepository(inMemoryOrganizationRepository);
     sut = new CreatePet(inMemoryOrganizationRepository, inMemoryPetRepository);
   });
 
@@ -35,9 +33,7 @@ describe("Create pet", () => {
     });
 
     expect(result.isRight()).toBeTruthy();
-    expect(
-      inMemoryPetRepository.pets[0].organizationId.equals(org.id)
-    ).toBeTruthy();
+    expect(inMemoryPetRepository.pets[0].organizationId.equals(org.id)).toBeTruthy();
   });
 
   it("should not be able to create a pet with one organization if organization does not exists", async () => {

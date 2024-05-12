@@ -13,9 +13,7 @@ let inMemoryPetRepository: InMemoryPetRepository;
 describe("Show pet details", () => {
   beforeEach(() => {
     inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
-    inMemoryPetRepository = new InMemoryPetRepository(
-      inMemoryOrganizationRepository
-    );
+    inMemoryPetRepository = new InMemoryPetRepository(inMemoryOrganizationRepository);
     sut = new ShowPetDetail(inMemoryPetRepository);
   });
 

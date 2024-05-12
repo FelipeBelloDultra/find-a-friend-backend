@@ -36,7 +36,7 @@ beforeEach(async () => {
 
 afterEach(async () => {
   await DatabaseSetupTesting.DB_CONNECTION.$executeRawUnsafe(
-    `DROP SCHEMA IF EXISTS "${DatabaseSetupTesting.SCHEMA_NAME_ID}" CASCADE`
+    `DROP SCHEMA IF EXISTS "${DatabaseSetupTesting.SCHEMA_NAME_ID}" CASCADE`,
   );
 
   await DatabaseSetupTesting.DB_CONNECTION.$disconnect();

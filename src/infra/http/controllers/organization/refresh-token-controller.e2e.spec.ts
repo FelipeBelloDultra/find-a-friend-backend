@@ -24,18 +24,13 @@ describe("[PATCH] Refresh token controller", () => {
     });
     const cookies = authResponse.get("Set-Cookie") as Array<string>;
 
-    const sut = await supertest(app.server)
-      .patch("/api/refresh-token")
-      .set("Cookie", cookies)
-      .send();
+    const sut = await supertest(app.server).patch("/api/refresh-token").set("Cookie", cookies).send();
 
     expect(sut.status).toEqual(200);
     expect(sut.body).toEqual({
       token: expect.any(String),
     });
-    expect(sut.get("Set-Cookie")).toEqual([
-      expect.stringContaining("refreshToken="),
-    ]);
+    expect(sut.get("Set-Cookie")).toEqual([expect.stringContaining("refreshToken=")]);
   });
 
   afterAll(async () => {

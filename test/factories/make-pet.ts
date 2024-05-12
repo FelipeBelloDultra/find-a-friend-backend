@@ -13,16 +13,13 @@ export function makePet() {
   } as const;
 }
 
-export function makePetEntity(
-  override: Partial<PetProps> = {},
-  id?: UniqueEntityID
-) {
+export function makePetEntity(override: Partial<PetProps> = {}, id?: UniqueEntityID) {
   const pet = Pet.create(
     {
       ...makePet(),
       ...override,
     },
-    id
+    id,
   );
 
   return pet;

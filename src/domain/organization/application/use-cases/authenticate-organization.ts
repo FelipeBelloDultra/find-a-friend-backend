@@ -15,24 +15,17 @@ type OnRight = { id: string; email: string; name: string };
 type AuthenticateOrganizationOutput = Promise<Either<OnLeft, OnRight>>;
 
 export class AuthenticateOrganization
-  implements
-    UseCase<AuthenticateOrganizationInput, AuthenticateOrganizationOutput>
+  implements UseCase<AuthenticateOrganizationInput, AuthenticateOrganizationOutput>
 {
-  constructor(
-    private readonly organizationRepository: OrganizationRepository
-  ) {}
+  constructor(private readonly organizationRepository: OrganizationRepository) {}
 
-  async execute(
-    input: AuthenticateOrganizationInput
-  ): AuthenticateOrganizationOutput {
+  async execute(input: AuthenticateOrganizationInput): AuthenticateOrganizationOutput {
     const org = await this.organizationRepository.findByEmail(input.email);
     if (!org) {
       return left(new InvalidCredentials());
     }
 
-    const doesPasswordMatch = await org.password.comparePassword(
-      input.password
-    );
+    const doesPasswordMatch = await org.password.comparePassword(input.password);
     if (!doesPasswordMatch) {
       return left(new InvalidCredentials());
     }
