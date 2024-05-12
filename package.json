@@ -8,7 +8,8 @@
   "description": "",
   "scripts": {
     "build": "tsup",
-    "dev:watch": "tsx --watch src/infra/http/server.ts",
+    "start:server": "node dist/infra/http/server.js",
+    "dev:server:watch": "tsx --watch src/infra/http/server.ts",
     "test": "vitest run -c vitest.config.mts",
     "test:watch": "vitest -c vitest.config.mts",
     "test:ui": "vitest --ui -c vitest.config.mts",

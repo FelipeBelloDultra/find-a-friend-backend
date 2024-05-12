@@ -1,10 +1,17 @@
+import supertest from "supertest";
 import { faker } from "@faker-js/faker";
+import { FastifyInstance } from "fastify";
+
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
+import { OrganizationMapper } from "~/domain/organization/application/mappers/organization-mapper";
+
 import {
   Organization,
   OrganizationProps,
 } from "~/domain/organization/enterprise/entities/organization";
 import { Password } from "~/domain/organization/enterprise/entities/value-object/password";
+
+import { query } from "~/infra/database/connection";
 
 export async function makeOrganization() {
   return {
@@ -29,4 +36,27 @@ export async function makeOrganizationEntity(
   );
 
   return organization;
+}
+
+export async function makeAndAuthenticateOrganization(
+  fastifyInstance: FastifyInstance
+) {
+  const organization = await makeOrganizationEntity({
+    password: await Password.create("123456"),
+  });
+
+  await query.organization.create({
+    data: OrganizationMapper.toPersistence(organization),
+  });
+
+  const authResponse = await supertest(fastifyInstance.server)
+    .post("/api/session")
+    .send({
+      email: organization.email,
+      password: "123456",
+    });
+
+  const { token } = authResponse.body;
+
+  return { token, organization };
 }
