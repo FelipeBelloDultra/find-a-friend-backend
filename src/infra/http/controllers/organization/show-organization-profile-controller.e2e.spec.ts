@@ -5,7 +5,7 @@ import { app } from "~/infra/http/app";
 
 import { makeAndAuthenticateOrganization } from "test/factories/make-organization";
 
-describe("[GET] Show organization profile", () => {
+describe("[GET] Show organization profile controller", () => {
   beforeAll(async () => {
     await app.ready();
   });
