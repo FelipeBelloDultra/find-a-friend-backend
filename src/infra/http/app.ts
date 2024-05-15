@@ -69,7 +69,7 @@ export class App {
       }
 
       if (error instanceof ZodError) {
-        return reply.status(400).send({
+        return reply.status(422).send({
           message: "Validation error.",
           issues: error.flatten().fieldErrors,
         });
