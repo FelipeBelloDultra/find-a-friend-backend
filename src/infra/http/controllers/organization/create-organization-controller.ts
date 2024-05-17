@@ -35,6 +35,9 @@ export async function createOrganizationController(request: FastifyRequest, repl
   if (result.isLeft() && result.value instanceof OrganizationAlreadyExists) {
     return reply.status(409).send({
       message: "Email already used.",
+      issues: {
+        email: "Email already used.",
+      },
     });
   }
 
