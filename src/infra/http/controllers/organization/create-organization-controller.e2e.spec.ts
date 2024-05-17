@@ -46,7 +46,12 @@ describe("[POST] Create organization controller", () => {
     });
 
     expect(sut.status).toBe(409);
-    expect(sut.body).toEqual({ message: "Email already used." });
+    expect(sut.body).toStrictEqual({
+      message: "Email already used.",
+      issues: {
+        email: "Email already used.",
+      },
+    });
   });
 
   afterAll(async () => {

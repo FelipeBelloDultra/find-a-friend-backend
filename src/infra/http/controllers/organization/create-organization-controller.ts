@@ -8,7 +8,6 @@ import type { FastifyReply, FastifyRequest } from "fastify";
 export async function createOrganizationController(request: FastifyRequest, reply: FastifyReply) {
   const createOrganizationSchema = z.object({
     name: z.string().min(5).max(255),
-    logoUrl: z.string(),
     email: z.string().email().max(255),
     password: z.string().min(6).max(255),
     phone: z
@@ -22,7 +21,6 @@ export async function createOrganizationController(request: FastifyRequest, repl
 
   const result = await makeCreateOrganization().execute({
     email: requestBody.email,
-    logoUrl: requestBody.logoUrl,
     name: requestBody.name,
     password: requestBody.password,
     phone: requestBody.phone,

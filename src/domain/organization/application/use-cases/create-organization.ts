@@ -1,6 +1,7 @@
 import { left, right } from "~/core/either";
 import { Organization } from "~/domain/organization/enterprise/entities/organization";
 import { Password } from "~/domain/organization/enterprise/entities/value-object/password";
+import { env } from "~/config/env";
 
 import { OrganizationAlreadyExists } from "./errors/organization-already-exists";
 
@@ -10,7 +11,6 @@ import type { UseCase } from "~/application/use-case";
 
 interface CreateOrganizationInput {
   name: string;
-  logoUrl: string;
   email: string;
   password: string;
   phone: string;
@@ -31,7 +31,7 @@ export class CreateOrganization implements UseCase<CreateOrganizationInput, Crea
 
     const organization = Organization.create({
       name: input.name,
-      logoUrl: input.logoUrl,
+      logoUrl: env.DEFAULT_LOGO_PLACEHOLDER,
       phone: input.phone,
       email: input.email,
       password: await Password.create(input.password),

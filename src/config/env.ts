@@ -9,6 +9,7 @@ const ENVIRONMENT_SCHEMA = z.object({
   HTTP_FRONTEND_ALLOWED: z.string().default("http://localhost:3333"),
   JWT_SECRET_KEY: z.string(),
   NODE_ENV: z.enum(["production", "dev", "test"]).default("dev"),
+  DEFAULT_LOGO_PLACEHOLDER: z.string(),
 });
 
 const parsedEnv = ENVIRONMENT_SCHEMA.safeParse(process.env);

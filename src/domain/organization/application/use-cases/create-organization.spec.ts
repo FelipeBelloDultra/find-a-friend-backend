@@ -18,7 +18,6 @@ describe("Create organization", () => {
 
     const result = await sut.execute({
       email: org.email,
-      logoUrl: org.logoUrl,
       name: org.name,
       password: "password",
       phone: org.phone,
@@ -49,7 +48,6 @@ describe("Create organization", () => {
 
     await sut.execute({
       email: org.email,
-      logoUrl: org.logoUrl,
       name: org.name,
       password: PASSWORD,
       phone: org.phone,
