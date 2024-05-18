@@ -62,6 +62,12 @@ export class App {
 
   private setErrorHandler() {
     this.instance.setErrorHandler((error, _, reply) => {
+      if (!error.statusCode || error.statusCode === 500) {
+        return reply.status(500).send({
+          message: "Internal server error.",
+        });
+      }
+
       if (error.statusCode === 429) {
         return reply.status(429).send({
           message: "Too many requests.",
@@ -75,10 +81,8 @@ export class App {
         });
       }
 
-      console.log(error);
-
-      return reply.status(500).send({
-        message: "Internal server error.",
+      return reply.status(error.statusCode).send({
+        message: error.message,
       });
     });
   }

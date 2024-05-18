@@ -1,7 +1,14 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
 
 export async function refreshTokenController(request: FastifyRequest, reply: FastifyReply) {
-  await request.jwtVerify();
+  const isRefreshTokenFilled = !!request.cookies["refreshToken"];
+
+  if (!isRefreshTokenFilled) {
+    return reply.status(401).send({
+      message: "Unauthorized.",
+    });
+  }
+  await request.jwtVerify({ onlyCookie: true });
 
   const { email } = request.user;
 

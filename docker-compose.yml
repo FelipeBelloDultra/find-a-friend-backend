@@ -11,10 +11,11 @@ services:
             - ./:/home/node/app
         networks:
             - find-a-friend-network
+        depends_on:
+            - postgres_db
 
     postgres_db:
         image: bitnami/postgresql:16.2.0
-        restart: always
         ports:
             - 5432:5432
         environment:
