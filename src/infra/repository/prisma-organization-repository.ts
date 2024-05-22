@@ -14,27 +14,43 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
   }
 
   public async findByEmail(email: string): Promise<Organization | null> {
-    const findedByEmail = await DatabaseConnection.query.organization.findUnique({
+    const organizationByEmail = await DatabaseConnection.query.organization.findUnique({
       where: {
         email,
       },
     });
 
-    if (!findedByEmail) return null;
+    if (!organizationByEmail) return null;
 
-    return await OrganizationMapper.toDomain(findedByEmail);
+    const countOrganizationAddress = await DatabaseConnection.query.organizationAddress.count({
+      where: {
+        Organization: {
+          email,
+        },
+      },
+    });
+
+    return await OrganizationMapper.toDomain(organizationByEmail, countOrganizationAddress);
   }
 
   public async findById(id: string): Promise<Organization | null> {
-    const findedById = await DatabaseConnection.query.organization.findUnique({
+    const organizationById = await DatabaseConnection.query.organization.findUnique({
       where: {
         id,
       },
     });
 
-    if (!findedById) return null;
+    if (!organizationById) return null;
 
-    return await OrganizationMapper.toDomain(findedById);
+    const countOrganizationAddress = await DatabaseConnection.query.organizationAddress.count({
+      where: {
+        Organization: {
+          id,
+        },
+      },
+    });
+
+    return await OrganizationMapper.toDomain(organizationById, countOrganizationAddress);
   }
 
   public async save(organization: Organization): Promise<Organization> {
