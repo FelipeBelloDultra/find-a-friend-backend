@@ -16,4 +16,16 @@ export abstract class Entity<Props = unknown> {
   public get values() {
     return this.props;
   }
+
+  public equals(entity: Entity<unknown>) {
+    if (entity === this) {
+      return true;
+    }
+
+    if (entity.id === this._id) {
+      return true;
+    }
+
+    return false;
+  }
 }
