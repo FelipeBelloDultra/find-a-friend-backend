@@ -9,4 +9,14 @@ export class InMemoryOrganizationAddressRepository implements OrganizationAddres
 
     return organizationAddress;
   }
+
+  public async findById(organizationAddressId: string): Promise<OrganizationAddress | null> {
+    const organizationAddress = this.organizationAddresses.find(
+      (organizationAddress) => organizationAddress.id.toValue() === organizationAddressId,
+    );
+
+    if (!organizationAddress) return null;
+
+    return organizationAddress;
+  }
 }

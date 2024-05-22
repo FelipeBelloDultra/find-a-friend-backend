@@ -1,12 +1,12 @@
+import type { InMemoryOrganizationAddressRepository } from "./in-memory-organization-address-repository";
 import type { PaginationRepository } from "~/application/repository/pagination-repository";
 import type { FindAllPetsFilters, PetRepository } from "~/domain/pet/application/repository/pet-repository";
 import type { Pet } from "~/domain/pet/enterprise/entities/pet";
-import type { InMemoryOrganizationRepository } from "./in-memory-organization-repository";
 
 export class InMemoryPetRepository implements PetRepository {
   public readonly pets: Array<Pet> = [];
 
-  public constructor(private organizationRepository: InMemoryOrganizationRepository) {}
+  public constructor(private organizationAddressRepository: InMemoryOrganizationAddressRepository) {}
 
   public async findById(id: string): Promise<Pet | null> {
     const pet = this.pets.find((pet) => pet.id.toValue() === id);
@@ -23,14 +23,14 @@ export class InMemoryPetRepository implements PetRepository {
   }
 
   public async findAll(params: FindAllPetsFilters, { limit, page }: PaginationRepository): Promise<Pet[]> {
-    const orgsByCity = this.organizationRepository.organizations.filter((organization) => {
-      if (organization.address && organization.address.value.city === params.city) {
-        return organization;
+    const orgsByCity = this.organizationAddressRepository.organizationAddresses.filter((organizationAddresses) => {
+      if (organizationAddresses.city === params.city) {
+        return organizationAddresses;
       }
     });
 
     const pets = this.pets
-      .filter((pet) => orgsByCity.some((org) => org.id.equals(pet.organizationId)))
+      .filter((pet) => orgsByCity.some((orgAddress) => orgAddress.id.equals(pet.organizationAddressId)))
       .filter((pet) => (params.adopted ? pet.adopted === params.adopted : true))
       .filter((pet) => (params.size ? pet.size === params.size : true))
       .filter((pet) => (params.energyLevel ? pet.energyLevel === params.energyLevel : true))

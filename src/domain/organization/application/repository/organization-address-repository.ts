@@ -2,4 +2,5 @@ import type { OrganizationAddress } from "~/domain/organization/enterprise/entit
 
 export interface OrganizationAddressRepository {
   create: (organizationAddress: OrganizationAddress) => Promise<OrganizationAddress>;
+  findById: (organizationAddressId: string) => Promise<OrganizationAddress | null>;
 }

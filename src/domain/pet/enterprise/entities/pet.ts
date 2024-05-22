@@ -21,6 +21,10 @@ export class Pet extends Entity<PetProps> {
     return this.props.organizationId;
   }
 
+  public get organizationAddressId() {
+    return this.props.organizationAddressId;
+  }
+
   public get energyLevel() {
     return this.props.energyLevel;
   }

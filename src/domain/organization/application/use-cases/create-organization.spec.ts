@@ -1,15 +1,18 @@
 import { makeOrganization, makeOrganizationEntity } from "test/factories/make-organization";
 import { InMemoryOrganizationRepository } from "test/repository/in-memory-organization-repository";
+import { InMemoryOrganizationAddressRepository } from "test/repository/in-memory-organization-address-repository";
 
 import { CreateOrganization } from "./create-organization";
 import { OrganizationAlreadyExists } from "./errors/organization-already-exists";
 
 let sut: CreateOrganization;
 let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
+let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
 
 describe("Create organization", () => {
   beforeEach(() => {
-    inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
+    inMemoryOrganizationAddressRepository = new InMemoryOrganizationAddressRepository();
+    inMemoryOrganizationRepository = new InMemoryOrganizationRepository(inMemoryOrganizationAddressRepository);
     sut = new CreateOrganization(inMemoryOrganizationRepository);
   });
 
@@ -25,7 +28,6 @@ describe("Create organization", () => {
 
     expect(result.isRight()).toBe(true);
     expect(inMemoryOrganizationRepository.organizations[0].email).toEqual(org.email);
-    expect(inMemoryOrganizationRepository.organizations[0].address).toBeNull();
   });
 
   it("should not create a new organization if email already exists", async () => {

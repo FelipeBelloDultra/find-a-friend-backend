@@ -1,32 +1,36 @@
-import { makeAddressEntity } from "test/factories/make-address";
 import { makeOrganizationEntity } from "test/factories/make-organization";
 import { makePetEntity } from "test/factories/make-pet";
 import { InMemoryOrganizationRepository } from "test/repository/in-memory-organization-repository";
 import { InMemoryPetRepository } from "test/repository/in-memory-pet-repository";
+import { InMemoryOrganizationAddressRepository } from "test/repository/in-memory-organization-address-repository";
+import { makeOrganizationAddressEntity } from "test/factories/make-organization-address";
 
 import { FetchManyPets } from "./fetch-many-pets";
 
 import type { Pet } from "~/domain/pet/enterprise/entities/pet";
-import type { Address } from "~/domain/organization/enterprise/entities/value-object/address";
+import type { OrganizationAddress } from "~/domain/organization/enterprise/entities/organization-address";
 import type { Organization } from "~/domain/organization/enterprise/entities/organization";
 
 let sut: FetchManyPets;
 let inMemoryPetRepository: InMemoryPetRepository;
 let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
+let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
 let organization: Organization;
-let address: Address;
+let organizationAddress: OrganizationAddress;
 let pet: Pet;
 
 describe("Fetch many pets", () => {
   beforeEach(async () => {
-    address = makeAddressEntity();
+    organizationAddress = makeOrganizationAddressEntity();
     organization = await makeOrganizationEntity();
     pet = makePetEntity({
       organizationId: organization.id,
+      organizationAddressId: organizationAddress.id,
     });
 
-    inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
-    inMemoryPetRepository = new InMemoryPetRepository(inMemoryOrganizationRepository);
+    inMemoryOrganizationAddressRepository = new InMemoryOrganizationAddressRepository();
+    inMemoryOrganizationRepository = new InMemoryOrganizationRepository(inMemoryOrganizationAddressRepository);
+    inMemoryPetRepository = new InMemoryPetRepository(inMemoryOrganizationAddressRepository);
 
     await inMemoryOrganizationRepository.create(organization);
 
@@ -38,10 +42,10 @@ describe("Fetch many pets", () => {
   });
 
   it("should fetch all pets by city in the first page", async () => {
-    organization.address = address;
+    await inMemoryOrganizationAddressRepository.create(organizationAddress);
 
     const result = await sut.execute({
-      city: address.value.city,
+      city: organizationAddress.city,
       page: 1,
       limit: 20,
     });
@@ -52,10 +56,10 @@ describe("Fetch many pets", () => {
   });
 
   it("should fetch all pets by city in the second page", async () => {
-    organization.address = address;
+    await inMemoryOrganizationAddressRepository.create(organizationAddress);
 
     const result = await sut.execute({
-      city: address.value.city,
+      city: organizationAddress.city,
       page: 2,
       limit: 20,
     });
@@ -67,7 +71,7 @@ describe("Fetch many pets", () => {
 
   it("should return an empty array if does not find some city", async () => {
     const result = await sut.execute({
-      city: address.value.city,
+      city: organizationAddress.city,
       page: 1,
       limit: 20,
     });

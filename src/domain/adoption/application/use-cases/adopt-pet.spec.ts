@@ -5,36 +5,41 @@ import { InMemoryAdoptionRepository } from "test/repository/in-memory-adoption-r
 import { InMemoryOrganizationRepository } from "test/repository/in-memory-organization-repository";
 import { InMemoryPetRepository } from "test/repository/in-memory-pet-repository";
 import { makeOrganizationEntity } from "test/factories/make-organization";
-import { makeAddressEntity } from "test/factories/make-address";
 import { makePetEntity } from "test/factories/make-pet";
 import { makeAdoption } from "test/factories/make-adoption";
+import { InMemoryOrganizationAddressRepository } from "test/repository/in-memory-organization-address-repository";
+import { makeOrganizationAddressEntity } from "test/factories/make-organization-address";
 
 import { AdoptPet } from "./adopt-pet";
 
+import type { OrganizationAddress } from "~/domain/organization/enterprise/entities/organization-address";
 import type { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
 import type { Pet } from "~/domain/pet/enterprise/entities/pet";
-import type { Address } from "~/domain/organization/enterprise/entities/value-object/address";
 import type { Organization } from "~/domain/organization/enterprise/entities/organization";
 import type { Right } from "~/core/either";
 
 let sut: AdoptPet;
 let inMemoryPetRepository: InMemoryPetRepository;
 let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
+let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
 let inMemoryAdoptionRepository: InMemoryAdoptionRepository;
+let organizationAddress: OrganizationAddress;
 let organization: Organization;
-let address: Address;
 let pet: Pet;
 
 describe("Adopt pet", () => {
   beforeEach(async () => {
-    address = makeAddressEntity();
     organization = await makeOrganizationEntity();
+    organizationAddress = makeOrganizationAddressEntity({
+      organizationId: organization.id,
+    });
     pet = makePetEntity({
       organizationId: organization.id,
     });
 
-    inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
-    inMemoryPetRepository = new InMemoryPetRepository(inMemoryOrganizationRepository);
+    inMemoryOrganizationAddressRepository = new InMemoryOrganizationAddressRepository();
+    inMemoryOrganizationRepository = new InMemoryOrganizationRepository(inMemoryOrganizationAddressRepository);
+    inMemoryPetRepository = new InMemoryPetRepository(inMemoryOrganizationAddressRepository);
     inMemoryAdoptionRepository = new InMemoryAdoptionRepository();
 
     sut = new AdoptPet(inMemoryAdoptionRepository, inMemoryOrganizationRepository, inMemoryPetRepository);
@@ -42,8 +47,9 @@ describe("Adopt pet", () => {
 
   it("should be able to adopt a pet", async () => {
     await inMemoryPetRepository.create(pet);
-    organization.address = address;
     await inMemoryOrganizationRepository.create(organization);
+    await inMemoryOrganizationAddressRepository.create(organizationAddress);
+    organization.increaseAddressCounter();
     const adoption = makeAdoption();
 
     const result = (await sut.execute({
@@ -59,7 +65,7 @@ describe("Adopt pet", () => {
 
   it("should not be able to adopt a pet if organization does not exists", async () => {
     await inMemoryPetRepository.create(pet);
-    organization.address = address;
+    await inMemoryOrganizationAddressRepository.create(organizationAddress);
     await inMemoryOrganizationRepository.create(organization);
     const adoption = makeAdoption();
 
@@ -75,7 +81,7 @@ describe("Adopt pet", () => {
 
   it("should not be able to adopt a pet if pet does not exists", async () => {
     await inMemoryPetRepository.create(pet);
-    organization.address = address;
+    await inMemoryOrganizationAddressRepository.create(organizationAddress);
     await inMemoryOrganizationRepository.create(organization);
     const adoption = makeAdoption();
 
@@ -90,7 +96,7 @@ describe("Adopt pet", () => {
   });
 
   it("should not be able to adopt a pet if pet is from another organization", async () => {
-    organization.address = address;
+    await inMemoryOrganizationAddressRepository.create(organizationAddress);
     await inMemoryOrganizationRepository.create(organization);
     const newPet = await inMemoryPetRepository.create(makePetEntity());
     const adoption = makeAdoption();

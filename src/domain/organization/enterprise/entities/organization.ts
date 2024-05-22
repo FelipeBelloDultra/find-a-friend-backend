@@ -48,8 +48,8 @@ export class Organization extends Entity<OrganizationProps> {
     return this.totalAddresses > 0;
   }
 
-  public increaseAddressCounter() {
-    this.totalAddress = this.totalAddresses + 1;
+  public increaseAddressCounter(total = 1) {
+    this.totalAddress = this.totalAddresses + total;
   }
 
   private set totalAddress(total: number) {

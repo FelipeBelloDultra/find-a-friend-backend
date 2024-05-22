@@ -13,6 +13,7 @@ import type { AdoptionRepository } from "~/domain/adoption/application/repositor
 interface AdoptPetInput {
   petId: string;
   organizationId: string;
+  adopterEmail: string;
   adopterName: string;
   adopterPhone: string;
 }
@@ -48,9 +49,10 @@ export class AdoptPet implements UseCase<AdoptPetInput, AdoptPetOutput> {
     pet.adopt();
 
     const adoption = Adoption.create({
-      adopterName: input.adopterName,
-      adopterPhone: input.adopterPhone,
       petId: pet.id,
+      adopterName: input.adopterName,
+      adopterEmail: input.adopterEmail,
+      adopterPhone: input.adopterPhone,
       organizationId: organization.id,
     });
 

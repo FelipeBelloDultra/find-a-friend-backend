@@ -12,4 +12,16 @@ export class PrismaOrganizationAddressRepository implements OrganizationAddressR
 
     return organizationAddress;
   }
+
+  public async findById(organizationAddressId: string): Promise<OrganizationAddress | null> {
+    const organizationAddress = await DatabaseConnection.query.organizationAddress.findUnique({
+      where: {
+        id: organizationAddressId,
+      },
+    });
+
+    if (!organizationAddress) return null;
+
+    return OrganizationAddressMapper.toDomain(organizationAddress);
+  }
 }
