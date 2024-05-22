@@ -1,3 +1,5 @@
+import { DomainEvents } from "~/core/events/domain-events";
+
 import type { OrganizationAddress } from "~/domain/organization/enterprise/entities/organization-address";
 import type { OrganizationAddressRepository } from "~/domain/organization/application/repository/organization-address-repository";
 
@@ -6,6 +8,8 @@ export class InMemoryOrganizationAddressRepository implements OrganizationAddres
 
   public async create(organizationAddress: OrganizationAddress): Promise<OrganizationAddress> {
     this.organizationAddresses.push(organizationAddress);
+
+    DomainEvents.dispatchEventsForAggregate(organizationAddress.id);
 
     return organizationAddress;
   }
