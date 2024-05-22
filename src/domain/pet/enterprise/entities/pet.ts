@@ -13,10 +13,18 @@ export interface PetProps {
   energyLevel: "LOW" | "MODERATE" | "MEDIUM" | "HIGH";
   environment: "SMALL" | "MEDIUM" | "LARGE";
   createdAt: Date;
-  adoptedAt: Date | null;
+  updatedAt: Date;
 }
 
 export class Pet extends Entity<PetProps> {
+  public get updatedAt() {
+    return this.props.updatedAt;
+  }
+
+  public get createdAt() {
+    return this.props.createdAt;
+  }
+
   public get organizationId() {
     return this.props.organizationId;
   }
@@ -41,18 +49,26 @@ export class Pet extends Entity<PetProps> {
     return this.props.adopted;
   }
 
-  public adopt() {
-    this.props.adopted = true;
-    this.props.adoptedAt = new Date();
+  public get about() {
+    return this.props.about;
   }
 
-  public static create(props: Optional<PetProps, "createdAt" | "adoptedAt" | "adopted">, id?: UniqueEntityID) {
+  public get name() {
+    return this.props.name;
+  }
+
+  public adopt() {
+    this.props.adopted = true;
+    this.props.updatedAt = new Date();
+  }
+
+  public static create(props: Optional<PetProps, "createdAt" | "updatedAt" | "adopted">, id?: UniqueEntityID) {
     return new Pet(
       {
         ...props,
         adopted: props.adopted ?? false,
         createdAt: props.createdAt ?? new Date(),
-        adoptedAt: props.adoptedAt ?? null,
+        updatedAt: props.updatedAt ?? new Date(),
       },
       id,
     );
