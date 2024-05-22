@@ -5,6 +5,7 @@ import type { Optional } from "~/core/types/optional";
 
 export interface PetProps {
   organizationId: UniqueEntityID;
+  organizationAddressId: UniqueEntityID;
   name: string;
   about: string;
   adopted: boolean;

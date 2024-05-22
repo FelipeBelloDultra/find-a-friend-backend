@@ -9,6 +9,7 @@ export function makeAdoption() {
   return {
     petId: new UniqueEntityID(),
     organizationId: new UniqueEntityID(),
+    adopterEmail: faker.internet.email(),
     adopterName: faker.person.fullName(),
     adopterPhone: faker.phone.number(),
   };

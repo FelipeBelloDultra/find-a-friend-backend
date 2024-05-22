@@ -7,6 +7,7 @@ export interface AdoptionProps {
   petId: UniqueEntityID;
   organizationId: UniqueEntityID;
   adopterName: string;
+  adopterEmail: string;
   adopterPhone: string;
   createdAt: Date;
 }

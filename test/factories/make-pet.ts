@@ -8,6 +8,7 @@ import type { PetProps } from "~/domain/pet/enterprise/entities/pet";
 export function makePet() {
   return {
     organizationId: new UniqueEntityID(),
+    organizationAddressId: new UniqueEntityID(),
     name: faker.animal.dog(),
     about: faker.lorem.text(),
     size: "LARGE",
