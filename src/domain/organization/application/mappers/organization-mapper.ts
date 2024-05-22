@@ -5,7 +5,7 @@ import { Password } from "~/domain/organization/enterprise/entities/value-object
 import type { Organization as DatabaseOrganization } from "@prisma/client";
 
 export class OrganizationMapper {
-  public static async toDomain(fromPersistence: DatabaseOrganization, totalAddresses = 0): Promise<Organization> {
+  public static async toDomain(fromPersistence: DatabaseOrganization): Promise<Organization> {
     const password = await Password.create(fromPersistence.password_hash, true);
     const id = new UniqueEntityID(fromPersistence.id);
 
@@ -18,7 +18,7 @@ export class OrganizationMapper {
         phone: fromPersistence.phone,
         createdAt: fromPersistence.created_at,
         updatedAt: fromPersistence.updated_at,
-        totalAddresses,
+        profileCompleted: fromPersistence.profile_completed,
       },
       id,
     );
@@ -27,7 +27,8 @@ export class OrganizationMapper {
   }
 
   public static toPersistence(organizationToPersistence: Organization): DatabaseOrganization {
-    const { name, email, logoUrl, password, phone, createdAt, updatedAt } = organizationToPersistence.values;
+    const { name, email, logoUrl, password, phone, profileCompleted, createdAt, updatedAt } =
+      organizationToPersistence.values;
 
     return {
       id: organizationToPersistence.id.toValue(),
@@ -38,6 +39,7 @@ export class OrganizationMapper {
       phone: phone,
       updated_at: updatedAt,
       created_at: createdAt,
+      profile_completed: profileCompleted,
     };
   }
 }

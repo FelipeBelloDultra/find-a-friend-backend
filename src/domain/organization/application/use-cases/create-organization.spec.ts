@@ -1,18 +1,15 @@
 import { makeOrganization, makeOrganizationEntity } from "test/factories/make-organization";
 import { InMemoryOrganizationRepository } from "test/repository/in-memory-organization-repository";
-import { InMemoryOrganizationAddressRepository } from "test/repository/in-memory-organization-address-repository";
 
 import { CreateOrganization } from "./create-organization";
 import { OrganizationAlreadyExists } from "./errors/organization-already-exists";
 
 let sut: CreateOrganization;
 let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
-let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
 
 describe("Create organization", () => {
   beforeEach(() => {
-    inMemoryOrganizationAddressRepository = new InMemoryOrganizationAddressRepository();
-    inMemoryOrganizationRepository = new InMemoryOrganizationRepository(inMemoryOrganizationAddressRepository);
+    inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
     sut = new CreateOrganization(inMemoryOrganizationRepository);
   });
 

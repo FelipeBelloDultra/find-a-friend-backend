@@ -38,7 +38,7 @@ describe("Adopt pet", () => {
     });
 
     inMemoryOrganizationAddressRepository = new InMemoryOrganizationAddressRepository();
-    inMemoryOrganizationRepository = new InMemoryOrganizationRepository(inMemoryOrganizationAddressRepository);
+    inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
     inMemoryPetRepository = new InMemoryPetRepository(inMemoryOrganizationAddressRepository);
     inMemoryAdoptionRepository = new InMemoryAdoptionRepository();
 
@@ -49,7 +49,7 @@ describe("Adopt pet", () => {
     await inMemoryPetRepository.create(pet);
     await inMemoryOrganizationRepository.create(organization);
     await inMemoryOrganizationAddressRepository.create(organizationAddress);
-    organization.increaseAddressCounter();
+    organization.completeProfile();
     const adoption = makeAdoption();
 
     const result = (await sut.execute({

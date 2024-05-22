@@ -1,6 +1,5 @@
 import { makeOrganizationEntity } from "test/factories/make-organization";
 import { InMemoryOrganizationRepository } from "test/repository/in-memory-organization-repository";
-import { InMemoryOrganizationAddressRepository } from "test/repository/in-memory-organization-address-repository";
 
 import { OrganizationNotFound } from "./errors/organization-not-found";
 import { ShowOrganizationProfile } from "./show-organization-profile";
@@ -10,12 +9,10 @@ import type { Right } from "~/core/either";
 
 let sut: ShowOrganizationProfile;
 let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
-let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
 
 describe("Show organization profile", () => {
   beforeEach(() => {
-    inMemoryOrganizationAddressRepository = new InMemoryOrganizationAddressRepository();
-    inMemoryOrganizationRepository = new InMemoryOrganizationRepository(inMemoryOrganizationAddressRepository);
+    inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
     sut = new ShowOrganizationProfile(inMemoryOrganizationRepository);
   });
 

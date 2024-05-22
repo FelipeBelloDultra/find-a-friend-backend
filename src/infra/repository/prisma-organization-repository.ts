@@ -22,15 +22,7 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
 
     if (!organizationByEmail) return null;
 
-    const countOrganizationAddress = await DatabaseConnection.query.organizationAddress.count({
-      where: {
-        Organization: {
-          email,
-        },
-      },
-    });
-
-    return await OrganizationMapper.toDomain(organizationByEmail, countOrganizationAddress);
+    return await OrganizationMapper.toDomain(organizationByEmail);
   }
 
   public async findById(id: string): Promise<Organization | null> {
@@ -42,15 +34,7 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
 
     if (!organizationById) return null;
 
-    const countOrganizationAddress = await DatabaseConnection.query.organizationAddress.count({
-      where: {
-        Organization: {
-          id,
-        },
-      },
-    });
-
-    return await OrganizationMapper.toDomain(organizationById, countOrganizationAddress);
+    return await OrganizationMapper.toDomain(organizationById);
   }
 
   public async save(organization: Organization): Promise<Organization> {

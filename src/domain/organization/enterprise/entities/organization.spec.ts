@@ -18,7 +18,6 @@ describe("Organization", () => {
       phone,
       email,
       password: await Password.create("password"),
-      totalAddresses: 0,
     });
 
     expect(sut.id.toValue()).toEqual(expect.any(String));
@@ -26,10 +25,11 @@ describe("Organization", () => {
     expect(sut.values.phone).toBe(phone);
   });
 
-  it("should not be able to continue if has no address registered", async () => {
+  it("should not be able to continue with profile wasn't completed", async () => {
     const sut = await makeOrganizationEntity();
 
     expect(sut.canContinue()).toBeFalsy();
+    expect(sut.values.profileCompleted).toBeFalsy();
   });
 
   it("should restore an old organization", async () => {
@@ -49,12 +49,12 @@ describe("Organization", () => {
     expect(sut.id.equals(id)).toBeTruthy();
   });
 
-  it("should be able to add address to organization", async () => {
+  it("should be able to complete profile", async () => {
     const sut = await makeOrganizationEntity();
 
     expect(sut.canContinue()).toBeFalsy();
 
-    sut.increaseAddressCounter();
+    sut.completeProfile();
 
     expect(sut.canContinue()).toBeTruthy();
   });

@@ -13,7 +13,7 @@ let sut: CreateOrganizationAddress;
 describe("Create organization address", () => {
   beforeEach(() => {
     inMemoryOrganizationAddressRepository = new InMemoryOrganizationAddressRepository();
-    inMemoryOrganizationRepository = new InMemoryOrganizationRepository(inMemoryOrganizationAddressRepository);
+    inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
     sut = new CreateOrganizationAddress(inMemoryOrganizationRepository, inMemoryOrganizationAddressRepository);
   });
 

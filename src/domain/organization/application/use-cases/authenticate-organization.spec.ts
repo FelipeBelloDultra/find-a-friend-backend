@@ -1,19 +1,16 @@
 import { makeOrganizationEntity } from "test/factories/make-organization";
 import { InMemoryOrganizationRepository } from "test/repository/in-memory-organization-repository";
 import { Password } from "~/domain/organization/enterprise/entities/value-object/password";
-import { InMemoryOrganizationAddressRepository } from "test/repository/in-memory-organization-address-repository";
 
 import { InvalidCredentials } from "./errors/invalid-credentials";
 import { AuthenticateOrganization } from "./authenticate-organization";
 
 let sut: AuthenticateOrganization;
-let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
 let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
 
 describe("Authenticate organization", () => {
   beforeEach(() => {
-    inMemoryOrganizationAddressRepository = new InMemoryOrganizationAddressRepository();
-    inMemoryOrganizationRepository = new InMemoryOrganizationRepository(inMemoryOrganizationAddressRepository);
+    inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
     sut = new AuthenticateOrganization(inMemoryOrganizationRepository);
   });
 

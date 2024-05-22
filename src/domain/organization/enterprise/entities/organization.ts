@@ -10,36 +10,32 @@ export interface OrganizationProps {
   password: Password;
   logoUrl: string;
   phone: string;
-  totalAddresses: number;
+  profileCompleted: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
 
 export class Organization extends Entity<OrganizationProps> {
   public canContinue() {
-    return this.totalAddresses > 0;
+    return this.values.profileCompleted;
   }
 
-  public increaseAddressCounter(total = 1) {
-    this.totalAddress = this.totalAddresses + total;
+  public completeProfile() {
+    this.profileCompleted = true;
   }
 
-  private set totalAddress(total: number) {
-    this.props.totalAddresses = total;
-  }
-
-  private get totalAddresses() {
-    return this.values.totalAddresses;
+  private set profileCompleted(profileCompleted: boolean) {
+    this.props.profileCompleted = profileCompleted;
   }
 
   public static create(
-    props: Optional<OrganizationProps, "createdAt" | "updatedAt" | "totalAddresses">,
+    props: Optional<OrganizationProps, "createdAt" | "updatedAt" | "profileCompleted">,
     id?: UniqueEntityID,
   ) {
     return new Organization(
       {
         ...props,
-        totalAddresses: props.totalAddresses ?? 0,
+        profileCompleted: props.profileCompleted ?? false,
         createdAt: props.createdAt ?? new Date(),
         updatedAt: props.updatedAt ?? new Date(),
       },
