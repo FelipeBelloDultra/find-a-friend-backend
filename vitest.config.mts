@@ -8,8 +8,9 @@ export default defineConfig({
     coverage: {
       include: [
         "src/domain/**/enterprise/**",
-        "src/domain/**/application/use-cases/**",
+        "src/domain/**/application/{subscribers,use-cases}/**",
         "!src/domain/**/application/use-cases/factories/**",
+        "!src/domain/**/enterprise/events/**",
       ],
     },
     include: ["src/**/*.spec.ts", "!src/**/*.e2e.spec.ts"],
