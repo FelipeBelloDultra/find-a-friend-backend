@@ -20,15 +20,6 @@ model Organization {
   password_hash String
   logo_url      String
   phone         String
-  zipcode       String   @default("")
-  state         String   @default("")
-  city          String   @default("")
-  neighborhood  String   @default("")
-  street        String   @default("")
-  number        String   @default("")
-  latitude      Decimal  @default(0)
-  longitude     Decimal  @default(0)
-  complement    String?
   created_at    DateTime @default(now())
   updated_at    DateTime @default(now()) @updatedAt
 
@@ -36,8 +27,32 @@ model Organization {
 
   Adoptions Adoption[]
 
-  @@index([city])
+  OrganizationAddress OrganizationAddress[]
+
   @@map("organizations")
+}
+
+model OrganizationAddress {
+  id           String   @id
+  zipcode      String
+  state        String
+  city         String
+  neighborhood String
+  street       String
+  number       String
+  latitude     Decimal  @default(0)
+  longitude    Decimal  @default(0)
+  complement   String?
+  created_at   DateTime @default(now())
+  updated_at   DateTime @default(now()) @updatedAt
+
+  organization_id String
+  Organization    Organization @relation(fields: [organization_id], references: [id])
+
+  Pet Pet[]
+
+  @@index([city])
+  @@map("organization_addresses")
 }
 
 enum PetSize {
@@ -73,6 +88,9 @@ model Pet {
   organization_id String
   Organization    Organization @relation(fields: [organization_id], references: [id])
 
+  organization_address_id String
+  OrganizationAddress     OrganizationAddress @relation(fields: [organization_address_id], references: [id])
+
   Adoptions Adoption[]
 
   @@map("pets")
@@ -80,6 +98,7 @@ model Pet {
 
 model Adoption {
   id            String   @id
+  adopter_email String   @unique
   adopter_name  String
   adopter_phone String
   created_at    DateTime @default(now())
