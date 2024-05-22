@@ -12,4 +12,8 @@ export abstract class Entity<Props = unknown> {
     this.props = props;
     this._id = id ?? new UniqueEntityID();
   }
+
+  public get values() {
+    return this.props;
+  }
 }

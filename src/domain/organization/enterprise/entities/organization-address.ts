@@ -19,10 +19,6 @@ export interface OrganizationAddressProps {
 }
 
 export class OrganizationAddress extends Entity<OrganizationAddressProps> {
-  public get values() {
-    return this.props;
-  }
-
   public static create(props: Optional<OrganizationAddressProps, "createdAt" | "updatedAt">, id?: UniqueEntityID) {
     return new OrganizationAddress(
       {

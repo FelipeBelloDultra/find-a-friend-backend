@@ -21,9 +21,9 @@ describe("[GET] Show organization profile controller", () => {
     expect(sut.statusCode).toEqual(200);
     expect(sut.body).toEqual(
       expect.objectContaining({
-        email: organization.email,
-        name: organization.name,
-        phone: organization.phone,
+        email: organization.values.email,
+        name: organization.values.name,
+        phone: organization.values.phone,
         id: organization.id.toValue(),
       }),
     );

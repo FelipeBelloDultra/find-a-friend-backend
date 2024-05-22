@@ -14,7 +14,7 @@ export class InMemoryOrganizationRepository implements OrganizationRepository {
   }
 
   public async findByEmail(email: string): Promise<Organization | null> {
-    const organization = this.organizations.find((organization) => organization.email === email);
+    const organization = this.organizations.find((organization) => organization.values.email === email);
 
     if (!organization) return null;
 

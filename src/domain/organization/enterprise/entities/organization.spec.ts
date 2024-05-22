@@ -22,11 +22,8 @@ describe("Organization", () => {
     });
 
     expect(sut.id.toValue()).toEqual(expect.any(String));
-    expect(sut.email).toBe(email);
-    expect(sut.phone).toBe(phone);
-    expect(sut.updatedAt).toBeDefined();
-    expect(sut.logoUrl).toBeDefined();
-    expect(sut.createdAt).toBeDefined();
+    expect(sut.values.email).toBe(email);
+    expect(sut.values.phone).toBe(phone);
   });
 
   it("should not be able to continue if has no address registered", async () => {

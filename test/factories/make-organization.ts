@@ -42,7 +42,7 @@ export async function makeAndAuthenticateOrganization(fastifyInstance: FastifyIn
   });
 
   const authResponse = await supertest(fastifyInstance.server).post("/api/session").send({
-    email: organization.email,
+    email: organization.values.email,
     password: "123456",
   });
 

@@ -26,15 +26,15 @@ export class AuthenticateOrganization
       return left(new InvalidCredentials());
     }
 
-    const doesPasswordMatch = await org.password.comparePassword(input.password);
+    const doesPasswordMatch = await org.values.password.comparePassword(input.password);
     if (!doesPasswordMatch) {
       return left(new InvalidCredentials());
     }
 
     return right({
-      email: org.email,
+      email: org.values.email,
       id: org.id.toValue(),
-      name: org.name,
+      name: org.values.name,
     });
   }
 }

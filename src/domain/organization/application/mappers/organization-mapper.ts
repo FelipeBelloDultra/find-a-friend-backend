@@ -27,10 +27,10 @@ export class OrganizationMapper {
   }
 
   public static toPersistence(organizationToPersistence: Organization): DatabaseOrganization {
-    const { id, name, email, logoUrl, password, phone, createdAt, updatedAt } = organizationToPersistence;
+    const { name, email, logoUrl, password, phone, createdAt, updatedAt } = organizationToPersistence.values;
 
     return {
-      id: id.toValue(),
+      id: organizationToPersistence.id.toValue(),
       email: email,
       name: name,
       logo_url: logoUrl,

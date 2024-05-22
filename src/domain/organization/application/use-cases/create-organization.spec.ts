@@ -27,7 +27,7 @@ describe("Create organization", () => {
     });
 
     expect(result.isRight()).toBe(true);
-    expect(inMemoryOrganizationRepository.organizations[0].email).toEqual(org.email);
+    expect(inMemoryOrganizationRepository.organizations[0].values.email).toEqual(org.email);
   });
 
   it("should not create a new organization if email already exists", async () => {
@@ -37,7 +37,7 @@ describe("Create organization", () => {
     const result = await sut.execute({
       ...orgData,
       password: "password",
-      email: createdOrg.email,
+      email: createdOrg.values.email,
     });
 
     expect(result.isLeft()).toBe(true);
@@ -55,6 +55,6 @@ describe("Create organization", () => {
       phone: org.phone,
     });
 
-    expect(inMemoryOrganizationRepository.organizations[0].password).not.toEqual(PASSWORD);
+    expect(inMemoryOrganizationRepository.organizations[0].values.password).not.toEqual(PASSWORD);
   });
 });

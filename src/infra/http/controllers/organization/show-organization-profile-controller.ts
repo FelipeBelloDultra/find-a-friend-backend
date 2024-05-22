@@ -13,12 +13,12 @@ export async function showOrganizationProfileController(request: FastifyRequest,
 
     return reply.status(200).send({
       id: organization.id.toValue(),
-      name: organization.name,
-      email: organization.email,
-      logo_url: organization.logoUrl,
-      phone: organization.phone,
+      name: organization.values.name,
+      email: organization.values.email,
+      logo_url: organization.values.logoUrl,
+      phone: organization.values.phone,
       profile_is_completed: organization.canContinue(),
-      created_at: organization.createdAt,
+      created_at: organization.values.createdAt,
     });
   }
 
