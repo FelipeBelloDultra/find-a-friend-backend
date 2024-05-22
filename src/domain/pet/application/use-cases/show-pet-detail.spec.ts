@@ -1,18 +1,18 @@
 import { InMemoryPetRepository } from "test/repository/in-memory-pet-repository";
-import { InMemoryOrganizationRepository } from "test/repository/in-memory-organization-repository";
 import { makePetEntity } from "test/factories/make-pet";
+import { InMemoryOrganizationAddressRepository } from "test/repository/in-memory-organization-address-repository";
 
 import { PetNotFound } from "./errors/pet-not-found";
 import { ShowPetDetail } from "./show-pet-detail";
 
 let sut: ShowPetDetail;
-let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
+let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
 let inMemoryPetRepository: InMemoryPetRepository;
 
 describe("Show pet details", () => {
   beforeEach(() => {
-    inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
-    inMemoryPetRepository = new InMemoryPetRepository(inMemoryOrganizationRepository);
+    inMemoryOrganizationAddressRepository = new InMemoryOrganizationAddressRepository();
+    inMemoryPetRepository = new InMemoryPetRepository(inMemoryOrganizationAddressRepository);
     sut = new ShowPetDetail(inMemoryPetRepository);
   });
 

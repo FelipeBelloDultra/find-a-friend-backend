@@ -40,7 +40,7 @@ export class AdoptPet implements UseCase<AdoptPetInput, AdoptPetOutput> {
       return left(new PetNotFound());
     }
 
-    const petIsFromSameOrganization = organization.id.equals(pet.organizationId);
+    const petIsFromSameOrganization = organization.id.equals(pet.values.organizationId);
 
     if (!petIsFromSameOrganization || !organization.canContinue()) {
       return left(new NotAllowed());

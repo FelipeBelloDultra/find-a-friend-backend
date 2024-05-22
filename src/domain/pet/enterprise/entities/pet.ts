@@ -17,46 +17,6 @@ export interface PetProps {
 }
 
 export class Pet extends Entity<PetProps> {
-  public get updatedAt() {
-    return this.props.updatedAt;
-  }
-
-  public get createdAt() {
-    return this.props.createdAt;
-  }
-
-  public get organizationId() {
-    return this.props.organizationId;
-  }
-
-  public get organizationAddressId() {
-    return this.props.organizationAddressId;
-  }
-
-  public get energyLevel() {
-    return this.props.energyLevel;
-  }
-
-  public get size() {
-    return this.props.size;
-  }
-
-  public get environment() {
-    return this.props.environment;
-  }
-
-  public get adopted() {
-    return this.props.adopted;
-  }
-
-  public get about() {
-    return this.props.about;
-  }
-
-  public get name() {
-    return this.props.name;
-  }
-
   public adopt() {
     this.props.adopted = true;
     this.props.updatedAt = new Date();

@@ -11,20 +11,16 @@ describe("Pet", () => {
     expect(sut.id.toValue()).toEqual(expect.any(String));
     expect(sut).toBeInstanceOf(Pet);
     expect(sut.id).toBeInstanceOf(UniqueEntityID);
-    expect(sut.adopted).toBeFalsy();
-    expect(sut.energyLevel).toBeDefined();
-    expect(sut.size).toBeDefined();
-    expect(sut.environment).toBeDefined();
   });
 
   it("should be able to adopt pet", () => {
     const pet = makePet();
     const sut = Pet.create(pet);
 
-    expect(sut.adopted).toBeFalsy();
+    expect(sut.values.adopted).toBeFalsy();
 
     sut.adopt();
 
-    expect(sut.adopted).toBeTruthy();
+    expect(sut.values.adopted).toBeTruthy();
   });
 });

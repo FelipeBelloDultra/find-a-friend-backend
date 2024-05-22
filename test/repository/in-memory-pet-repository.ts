@@ -30,11 +30,11 @@ export class InMemoryPetRepository implements PetRepository {
     });
 
     const pets = this.pets
-      .filter((pet) => orgsByCity.some((orgAddress) => orgAddress.id.equals(pet.organizationAddressId)))
-      .filter((pet) => (params.adopted ? pet.adopted === params.adopted : true))
-      .filter((pet) => (params.size ? pet.size === params.size : true))
-      .filter((pet) => (params.energyLevel ? pet.energyLevel === params.energyLevel : true))
-      .filter((pet) => (params.environment ? pet.environment === params.environment : true));
+      .filter((pet) => orgsByCity.some((orgAddress) => orgAddress.id.equals(pet.values.organizationAddressId)))
+      .filter((pet) => (params.adopted ? pet.values.adopted === params.adopted : true))
+      .filter((pet) => (params.size ? pet.values.size === params.size : true))
+      .filter((pet) => (params.energyLevel ? pet.values.energyLevel === params.energyLevel : true))
+      .filter((pet) => (params.environment ? pet.values.environment === params.environment : true));
 
     const SKIP = (page - 1) * limit;
     const TAKE = page * limit;

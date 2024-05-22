@@ -30,16 +30,16 @@ export class PetMapper {
 
   public static toPersistence(petToPersistence: Pet): DatabasePet {
     return {
-      about: petToPersistence.about,
-      adopted: petToPersistence.adopted,
-      energy_level: petToPersistence.energyLevel,
-      environment: petToPersistence.environment,
-      name: petToPersistence.name,
-      size: petToPersistence.size,
-      created_at: petToPersistence.createdAt,
-      updated_at: petToPersistence.updatedAt,
-      organization_id: petToPersistence.organizationId.toValue(),
-      organization_address_id: petToPersistence.organizationAddressId.toValue(),
+      about: petToPersistence.values.about,
+      adopted: petToPersistence.values.adopted,
+      energy_level: petToPersistence.values.energyLevel,
+      environment: petToPersistence.values.environment,
+      name: petToPersistence.values.name,
+      size: petToPersistence.values.size,
+      created_at: petToPersistence.values.createdAt,
+      updated_at: petToPersistence.values.updatedAt,
+      organization_id: petToPersistence.values.organizationId.toValue(),
+      organization_address_id: petToPersistence.values.organizationAddressId.toValue(),
       id: petToPersistence.id.toValue(),
     };
   }

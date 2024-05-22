@@ -6,7 +6,7 @@ import { App } from "~/infra/http/app";
 
 let app: App;
 
-describe.only("[POST] Create organization address", () => {
+describe("[POST] Create organization address", () => {
   beforeAll(async () => {
     app = new App();
     await app.start();

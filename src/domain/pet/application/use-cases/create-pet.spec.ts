@@ -39,7 +39,7 @@ describe("Create pet", () => {
     });
 
     expect(result.isRight()).toBeTruthy();
-    expect(inMemoryPetRepository.pets[0].organizationId.equals(org.id)).toBeTruthy();
+    expect(inMemoryPetRepository.pets[0].values.organizationId.equals(org.id)).toBeTruthy();
   });
 
   it("should not be able to create a pet with one organization if organization does not exists", async () => {
