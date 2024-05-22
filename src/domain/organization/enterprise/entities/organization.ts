@@ -1,4 +1,4 @@
-import { Entity } from "~/core/entity/entity";
+import { AggregateRoot } from "~/core/entity/aggregate-root";
 
 import type { UniqueEntityID } from "~/core/entity/unique-entity-id";
 import type { Optional } from "~/core/types/optional";
@@ -15,13 +15,18 @@ export interface OrganizationProps {
   updatedAt: Date;
 }
 
-export class Organization extends Entity<OrganizationProps> {
+export class Organization extends AggregateRoot<OrganizationProps> {
   public canContinue() {
     return this.values.profileCompleted;
   }
 
   public completeProfile() {
     this.profileCompleted = true;
+    this.updatedAt = new Date();
+  }
+
+  private set updatedAt(date: Date) {
+    this.props.updatedAt = date;
   }
 
   private set profileCompleted(profileCompleted: boolean) {

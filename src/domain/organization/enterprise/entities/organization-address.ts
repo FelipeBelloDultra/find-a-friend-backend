@@ -1,4 +1,5 @@
-import { Entity } from "~/core/entity/entity";
+import { AggregateRoot } from "~/core/entity/aggregate-root";
+import { OrganizationAddressCreatedEvent } from "~/domain/organization/enterprise/events/organization-address-created-event";
 
 import type { UniqueEntityID } from "~/core/entity/unique-entity-id";
 import type { Optional } from "~/core/types/optional";
@@ -18,9 +19,9 @@ export interface OrganizationAddressProps {
   updatedAt: Date;
 }
 
-export class OrganizationAddress extends Entity<OrganizationAddressProps> {
+export class OrganizationAddress extends AggregateRoot<OrganizationAddressProps> {
   public static create(props: Optional<OrganizationAddressProps, "createdAt" | "updatedAt">, id?: UniqueEntityID) {
-    return new OrganizationAddress(
+    const organizationAddress = new OrganizationAddress(
       {
         ...props,
         createdAt: props.createdAt ?? new Date(),
@@ -28,5 +29,13 @@ export class OrganizationAddress extends Entity<OrganizationAddressProps> {
       },
       id,
     );
+
+    const isNewOrganizationAddress = !id;
+
+    if (isNewOrganizationAddress) {
+      organizationAddress.addDomainEvent(new OrganizationAddressCreatedEvent(organizationAddress));
+    }
+
+    return organizationAddress;
   }
 }

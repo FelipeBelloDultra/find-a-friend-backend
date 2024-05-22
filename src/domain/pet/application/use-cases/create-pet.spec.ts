@@ -7,6 +7,8 @@ import { makePet } from "test/factories/make-pet";
 import { InMemoryOrganizationAddressRepository } from "test/repository/in-memory-organization-address-repository";
 import { makeOrganizationAddressEntity } from "test/factories/make-organization-address";
 import { OrganizationAddressNotFound } from "~/domain/organization/application/use-cases/errors/organization-address-not-found";
+import { OnOrganizationAddressCreated } from "~/domain/organization/application/subscribers/on-organization-address-created";
+import { CompleteOrganizationProfile } from "~/domain/organization/application/use-cases/complete-organization-profile";
 
 import { CreatePet } from "./create-pet";
 
@@ -15,23 +17,28 @@ let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
 let inMemoryPetRepository: InMemoryPetRepository;
 let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
 
+let completeOrganizationProfile: CompleteOrganizationProfile;
+
 describe("Create pet", () => {
   beforeEach(() => {
     inMemoryOrganizationAddressRepository = new InMemoryOrganizationAddressRepository();
     inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
     inMemoryPetRepository = new InMemoryPetRepository(inMemoryOrganizationAddressRepository);
     sut = new CreatePet(inMemoryOrganizationRepository, inMemoryOrganizationAddressRepository, inMemoryPetRepository);
+
+    completeOrganizationProfile = new CompleteOrganizationProfile(inMemoryOrganizationRepository);
+
+    new OnOrganizationAddressCreated(completeOrganizationProfile);
   });
 
-  // TODO: fix it with events
-  it.skip("should be able to create a pet with one organization", async () => {
+  it("should be able to create a pet with one organization", async () => {
     const org = await makeOrganizationEntity();
     const pet = makePet();
     const organizationAddress = makeOrganizationAddressEntity({
       organizationId: org.id,
     });
-    await inMemoryOrganizationAddressRepository.create(organizationAddress);
     await inMemoryOrganizationRepository.create(org);
+    await inMemoryOrganizationAddressRepository.create(organizationAddress);
 
     const result = await sut.execute({
       ...pet,
