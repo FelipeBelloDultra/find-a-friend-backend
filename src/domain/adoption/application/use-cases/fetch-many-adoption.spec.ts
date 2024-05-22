@@ -12,7 +12,7 @@ describe("Fetch many adoptions", () => {
     sut = new FetchManyAdoption(inMemoryAdoptionRepository);
   });
 
-  it("should return all adoptions from organzation in first page", async () => {
+  it("should return all adoptions from organization in first page", async () => {
     const adoption = makeAdoptionEntity();
 
     for (let i = 0; i < 11; i++) {
@@ -20,7 +20,7 @@ describe("Fetch many adoptions", () => {
     }
 
     const result = await sut.execute({
-      organizationId: adoption.organizationId.toValue(),
+      organizationId: adoption.values.organizationId.toValue(),
       limit: 10,
       page: 1,
     });
@@ -29,7 +29,7 @@ describe("Fetch many adoptions", () => {
     expect(result.value.adoptions.length).toBe(10);
   });
 
-  it("should return all adoptions from organzation in second page", async () => {
+  it("should return all adoptions from organization in second page", async () => {
     const adoption = makeAdoptionEntity();
 
     for (let i = 0; i < 12; i++) {
@@ -37,7 +37,7 @@ describe("Fetch many adoptions", () => {
     }
 
     const result = await sut.execute({
-      organizationId: adoption.organizationId.toValue(),
+      organizationId: adoption.values.organizationId.toValue(),
       limit: 10,
       page: 2,
     });

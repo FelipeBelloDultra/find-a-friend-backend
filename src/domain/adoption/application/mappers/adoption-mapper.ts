@@ -27,13 +27,13 @@ export class AdoptionMapper {
 
   public static toPersistence(fromDomainAdoption: Adoption): DatabaseAdoption {
     return {
-      adopter_email: fromDomainAdoption.adopterEmail,
-      adopter_name: fromDomainAdoption.adopterName,
-      adopter_phone: fromDomainAdoption.adopterPhone,
-      created_at: fromDomainAdoption.createdAt,
+      adopter_email: fromDomainAdoption.values.adopterEmail,
+      adopter_name: fromDomainAdoption.values.adopterName,
+      adopter_phone: fromDomainAdoption.values.adopterPhone,
+      created_at: fromDomainAdoption.values.createdAt,
       id: fromDomainAdoption.id.toValue(),
-      pet_id: fromDomainAdoption.petId.toValue(),
-      organization_id: fromDomainAdoption.organizationId.toValue(),
+      pet_id: fromDomainAdoption.values.petId.toValue(),
+      organization_id: fromDomainAdoption.values.organizationId.toValue(),
     };
   }
 }
