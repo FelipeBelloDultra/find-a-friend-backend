@@ -3,7 +3,6 @@ import { Entity } from "~/core/entity/entity";
 import type { UniqueEntityID } from "~/core/entity/unique-entity-id";
 import type { Optional } from "~/core/types/optional";
 import type { Password } from "./value-object/password";
-import type { Address } from "./value-object/address";
 
 export interface OrganizationProps {
   name: string;
@@ -11,7 +10,7 @@ export interface OrganizationProps {
   password: Password;
   logoUrl: string;
   phone: string;
-  address: Address | null;
+  totalAddresses: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -45,28 +44,30 @@ export class Organization extends Entity<OrganizationProps> {
     return this.props.password;
   }
 
-  public get address(): Address | null {
-    return this.props.address;
-  }
-
-  public set address(address: Address) {
-    this.props.address = address;
-    this.updated();
-  }
-
-  private updated() {
-    this.props.updatedAt = new Date();
-  }
-
   public canContinue() {
-    return this.address !== null;
+    return this.totalAddresses > 0;
   }
 
-  public static create(props: Optional<OrganizationProps, "createdAt" | "address" | "updatedAt">, id?: UniqueEntityID) {
+  public increaseAddressCounter() {
+    this.totalAddress = this.totalAddresses + 1;
+  }
+
+  private set totalAddress(total: number) {
+    this.props.totalAddresses = total;
+  }
+
+  private get totalAddresses() {
+    return this.props.totalAddresses;
+  }
+
+  public static create(
+    props: Optional<OrganizationProps, "createdAt" | "updatedAt" | "totalAddresses">,
+    id?: UniqueEntityID,
+  ) {
     return new Organization(
       {
         ...props,
-        address: props.address ?? null,
+        totalAddresses: props.totalAddresses ?? 0,
         createdAt: props.createdAt ?? new Date(),
         updatedAt: props.updatedAt ?? new Date(),
       },
