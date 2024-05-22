@@ -41,7 +41,7 @@ export class InMemoryOrganizationRepository implements OrganizationRepository {
 
     const reducedOrganizationAddresses = this.organizationAddressRepository.organizationAddresses.reduce(
       (acc, orgAddress) => {
-        if (orgAddress.organizationId.equals(organization.id)) {
+        if (orgAddress.values.organizationId.equals(organization.id)) {
           acc++;
         }
 

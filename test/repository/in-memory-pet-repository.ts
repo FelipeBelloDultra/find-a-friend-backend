@@ -24,7 +24,7 @@ export class InMemoryPetRepository implements PetRepository {
 
   public async findAll(params: FindAllPetsFilters, { limit, page }: PaginationRepository): Promise<Pet[]> {
     const orgsByCity = this.organizationAddressRepository.organizationAddresses.filter((organizationAddresses) => {
-      if (organizationAddresses.city === params.city) {
+      if (organizationAddresses.values.city === params.city) {
         return organizationAddresses;
       }
     });

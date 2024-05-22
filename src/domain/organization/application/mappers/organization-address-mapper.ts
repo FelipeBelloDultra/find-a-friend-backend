@@ -31,7 +31,6 @@ export class OrganizationAddressMapper {
   public static toPersistence(organizationAddressToPersistence: OrganizationAddress): DatabaseOrganizationAddress {
     const {
       organizationId,
-      id,
       city,
       number,
       complement,
@@ -43,11 +42,11 @@ export class OrganizationAddressMapper {
       zipcode,
       createdAt,
       updatedAt,
-    } = organizationAddressToPersistence;
+    } = organizationAddressToPersistence.values;
 
     return {
       organization_id: organizationId.toValue(),
-      id: id.toValue(),
+      id: organizationAddressToPersistence.id.toValue(),
       city,
       complement,
       latitude: new Prisma.Decimal(latitude),

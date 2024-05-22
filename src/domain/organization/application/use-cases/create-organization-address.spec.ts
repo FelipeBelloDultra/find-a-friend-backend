@@ -28,7 +28,9 @@ describe("Create organization address", () => {
     });
 
     expect(result.isRight()).toBe(true);
-    expect(inMemoryOrganizationAddressRepository.organizationAddresses[0].organizationId).toEqual(organization.id);
+    expect(inMemoryOrganizationAddressRepository.organizationAddresses[0].values.organizationId).toEqual(
+      organization.id,
+    );
     expect(inMemoryOrganizationAddressRepository.organizationAddresses.length).toEqual(1);
   });
 

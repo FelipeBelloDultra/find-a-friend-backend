@@ -1,7 +1,7 @@
 import { makeAdoptionEntity } from "test/factories/make-adoption";
 import { InMemoryAdoptionRepository } from "test/repository/in-memory-adoption-repository";
 
-import { FetchManyAdoption } from "./fetch-many-adotion";
+import { FetchManyAdoption } from "./fetch-many-adoption";
 
 let sut: FetchManyAdoption;
 let inMemoryAdoptionRepository: InMemoryAdoptionRepository;

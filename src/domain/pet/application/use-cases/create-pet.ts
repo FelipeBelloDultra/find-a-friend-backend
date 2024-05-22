@@ -42,7 +42,7 @@ export class CreatePet implements UseCase<CreatePetInput, CreatePetOutput> {
       return left(new OrganizationAddressNotFound());
     }
 
-    if (!organization.canContinue() || !organizationAddress.organizationId.equals(organization.id)) {
+    if (!organization.canContinue() || !organizationAddress.values.organizationId.equals(organization.id)) {
       return left(new NotAllowed());
     }
 

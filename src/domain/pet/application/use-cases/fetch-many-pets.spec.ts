@@ -45,7 +45,7 @@ describe("Fetch many pets", () => {
     await inMemoryOrganizationAddressRepository.create(organizationAddress);
 
     const result = await sut.execute({
-      city: organizationAddress.city,
+      city: organizationAddress.values.city,
       page: 1,
       limit: 20,
     });
@@ -59,7 +59,7 @@ describe("Fetch many pets", () => {
     await inMemoryOrganizationAddressRepository.create(organizationAddress);
 
     const result = await sut.execute({
-      city: organizationAddress.city,
+      city: organizationAddress.values.city,
       page: 2,
       limit: 20,
     });
@@ -71,7 +71,7 @@ describe("Fetch many pets", () => {
 
   it("should return an empty array if does not find some city", async () => {
     const result = await sut.execute({
-      city: organizationAddress.city,
+      city: organizationAddress.values.city,
       page: 1,
       limit: 20,
     });
