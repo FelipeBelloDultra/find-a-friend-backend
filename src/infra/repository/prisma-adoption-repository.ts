@@ -51,4 +51,16 @@ export class PrismaAdoptionRepository implements AdoptionRepository {
 
     return adoption;
   }
+
+  public async findByCode(code: string): Promise<Adoption | null> {
+    const adoption = await DatabaseConnection.query.adoption.findUnique({
+      where: {
+        adoption_code: code,
+      },
+    });
+
+    if (!adoption) return null;
+
+    return AdoptionMapper.toDomain(adoption);
+  }
 }

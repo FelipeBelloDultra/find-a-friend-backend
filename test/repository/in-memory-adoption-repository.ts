@@ -35,4 +35,12 @@ export class InMemoryAdoptionRepository implements AdoptionRepository {
 
     return adoption;
   }
+
+  public async findByCode(code: string): Promise<Adoption | null> {
+    const adoption = this.adoptions.find((adoption) => adoption.values.adoptionCode.toValue() === code);
+
+    if (!adoption) return null;
+
+    return adoption;
+  }
 }

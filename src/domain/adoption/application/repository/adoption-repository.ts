@@ -8,4 +8,5 @@ export interface AdoptionRepository {
   create: (adoption: Adoption) => Promise<Adoption>;
   findAll: (filters: FindAllAdoptionsFilters, paginationParams: PaginationRepository) => Promise<Array<Adoption>>;
   save: (adoption: Adoption) => Promise<Adoption>;
+  findByCode: (code: string) => Promise<Adoption | null>;
 }
