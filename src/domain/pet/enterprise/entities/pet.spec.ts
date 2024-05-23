@@ -15,12 +15,16 @@ describe("Pet", () => {
 
   it("should be able to adopt pet", () => {
     const pet = makePet();
+
     const sut = Pet.create(pet);
 
-    expect(sut.values.adopted).toBeFalsy();
+    sut.intentionToAdopt();
+    expect(sut.values.adoptionStatus.value).toBe("PENDING");
 
-    sut.adopt();
+    sut.cancelAdoption();
+    expect(sut.values.adoptionStatus.value).toBe("NOT_ADOPTED");
 
-    expect(sut.values.adopted).toBeTruthy();
+    sut.completeAdoption();
+    expect(sut.values.adoptionStatus.value).toBe("ADOPTED");
   });
 });

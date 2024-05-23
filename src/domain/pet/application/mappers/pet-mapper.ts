@@ -1,5 +1,6 @@
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
 import { Pet } from "~/domain/pet/enterprise/entities/pet";
+import { AdoptionStatus } from "~/domain/pet/enterprise/entities/value-object/adoption-status";
 
 import type { Pet as DatabasePet } from "@prisma/client";
 
@@ -8,17 +9,18 @@ export class PetMapper {
     const organizationId = new UniqueEntityID(fromPersistence.organization_id);
     const organizationAddressId = new UniqueEntityID(fromPersistence.organization_address_id);
     const id = new UniqueEntityID(fromPersistence.id);
+    const adoptionStatus = AdoptionStatus.create(fromPersistence.adoption_status);
 
     const pet = Pet.create(
       {
         about: fromPersistence.about,
         energyLevel: fromPersistence.energy_level,
-        environment: fromPersistence.environment,
+        environmentSize: fromPersistence.environment_size,
         name: fromPersistence.name,
         size: fromPersistence.size,
         organizationId,
         organizationAddressId,
-        adopted: fromPersistence.adopted,
+        adoptionStatus,
         createdAt: fromPersistence.created_at,
         updatedAt: fromPersistence.updated_at,
       },
@@ -31,9 +33,9 @@ export class PetMapper {
   public static toPersistence(petToPersistence: Pet): DatabasePet {
     return {
       about: petToPersistence.values.about,
-      adopted: petToPersistence.values.adopted,
+      adoption_status: petToPersistence.values.adoptionStatus.value,
       energy_level: petToPersistence.values.energyLevel,
-      environment: petToPersistence.values.environment,
+      environment_size: petToPersistence.values.environmentSize,
       name: petToPersistence.values.name,
       size: petToPersistence.values.size,
       created_at: petToPersistence.values.createdAt,
