@@ -1,6 +1,7 @@
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
 
 import { Adoption } from "../../enterprise/entities/adoption";
+import { ExpiresAt } from "../../enterprise/entities/value-object/expires-at";
 
 import type { Adoption as DatabaseAdoption } from "@prisma/client";
 
@@ -10,6 +11,7 @@ export class AdoptionMapper {
     const organizationId = new UniqueEntityID(toPersistence.organization_id);
     const adoptionCode = new UniqueEntityID(toPersistence.adoption_code);
     const id = new UniqueEntityID(toPersistence.id);
+    const expiresAt = ExpiresAt.create(toPersistence.expires_at);
 
     const adoption = Adoption.create(
       {
@@ -18,7 +20,7 @@ export class AdoptionMapper {
         adopterPhone: toPersistence.adopter_phone,
         createdAt: toPersistence.created_at,
         confirmedAt: toPersistence.confirmed_at,
-        expiresAt: toPersistence.expires_at,
+        expiresAt,
         adoptionCode,
         petId,
         organizationId,
@@ -40,7 +42,7 @@ export class AdoptionMapper {
       organization_id: fromDomainAdoption.values.organizationId.toValue(),
       adoption_code: fromDomainAdoption.values.adoptionCode.toValue(),
       confirmed_at: fromDomainAdoption.values.confirmedAt,
-      expires_at: fromDomainAdoption.values.expiresAt,
+      expires_at: fromDomainAdoption.values.expiresAt.value,
     };
   }
 }

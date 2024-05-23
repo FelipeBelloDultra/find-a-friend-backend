@@ -25,4 +25,14 @@ export class InMemoryAdoptionRepository implements AdoptionRepository {
 
     return adoptions.slice(SKIP, TAKE);
   }
+
+  public async save(adoption: Adoption): Promise<Adoption> {
+    const adoptionIndex = this.adoptions.findIndex(({ id }) => adoption.id.equals(id));
+
+    if (adoptionIndex !== -1) {
+      this.adoptions[adoptionIndex] = adoption;
+    }
+
+    return adoption;
+  }
 }

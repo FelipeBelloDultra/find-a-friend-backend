@@ -7,4 +7,5 @@ export interface FindAllAdoptionsFilters {
 export interface AdoptionRepository {
   create: (adoption: Adoption) => Promise<Adoption>;
   findAll: (filters: FindAllAdoptionsFilters, paginationParams: PaginationRepository) => Promise<Array<Adoption>>;
+  save: (adoption: Adoption) => Promise<Adoption>;
 }

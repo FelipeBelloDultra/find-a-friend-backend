@@ -43,7 +43,7 @@ export class InMemoryPetRepository implements PetRepository {
   }
 
   public async save(pet: Pet): Promise<Pet> {
-    const petIndex = this.pets.findIndex(({ id }) => id === pet.id);
+    const petIndex = this.pets.findIndex(({ id }) => pet.id.equals(id));
 
     if (petIndex !== -1) {
       this.pets[petIndex] = pet;

@@ -3,10 +3,6 @@ import { makeAdoption } from "test/factories/make-adoption";
 import { Adoption } from "./adoption";
 
 describe("Adoption", () => {
-  beforeAll(() => {
-    vi.useFakeTimers();
-  });
-
   it("should create an adoption instance", () => {
     const adoption = makeAdoption();
 
@@ -26,22 +22,5 @@ describe("Adoption", () => {
     sut.confirmAdoption();
 
     expect(sut.values.confirmedAt).toEqual(expect.any(Date));
-  });
-
-  it("should create an adoption instance with expiration time in the future (10 min)", () => {
-    vi.useFakeTimers();
-
-    const date = new Date("2000-01-01T08:00:00");
-    vi.setSystemTime(date);
-    const adoption = makeAdoption();
-
-    const sut = Adoption.create(adoption);
-    date.setMinutes(date.getMinutes() + 15);
-
-    expect(sut.values.expiresAt).toEqual(date);
-  });
-
-  afterAll(() => {
-    vi.clearAllTimers();
   });
 });

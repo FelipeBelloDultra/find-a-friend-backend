@@ -40,4 +40,15 @@ export class PrismaAdoptionRepository implements AdoptionRepository {
 
     return adoptions.map((adoption) => AdoptionMapper.toDomain(adoption));
   }
+
+  public async save(adoption: Adoption): Promise<Adoption> {
+    await DatabaseConnection.query.adoption.update({
+      where: {
+        id: adoption.id.toValue(),
+      },
+      data: AdoptionMapper.toPersistence(adoption),
+    });
+
+    return adoption;
+  }
 }
