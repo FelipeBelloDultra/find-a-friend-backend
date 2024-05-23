@@ -13,6 +13,18 @@ services:
             - find-a-friend-network
         depends_on:
             - postgres_db
+            - redis
+
+    api-queue-worker:
+        container_name: find-a-friend-api-queue-worker
+        build:
+            dockerfile: Dockerfile
+            target: base
+        entrypoint: sh -c "npm run dev:queue"
+        networks:
+            - find-a-friend-network
+        depends_on:
+            - api
 
     postgres_db:
         image: bitnami/postgresql:16.2.0
