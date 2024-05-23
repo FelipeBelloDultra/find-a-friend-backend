@@ -69,22 +69,28 @@ enum PetEnergyLevel {
   HIGH
 }
 
-enum PetEnvironment {
+enum PetEnvironmentSize {
   SMALL
   MEDIUM
   LARGE
 }
 
+enum PetAdoptionStatus {
+  PENDING
+  ADOPTED
+  NOT_ADOPTED
+}
+
 model Pet {
-  id           String         @id
-  name         String
-  about        String
-  adopted      Boolean        @default(false)
-  size         PetSize
-  energy_level PetEnergyLevel
-  environment  PetEnvironment
-  created_at   DateTime       @default(now())
-  updated_at   DateTime       @default(now()) @updatedAt
+  id               String             @id
+  name             String
+  about            String
+  adoption_status  PetAdoptionStatus  @default(NOT_ADOPTED)
+  size             PetSize
+  energy_level     PetEnergyLevel
+  environment_size PetEnvironmentSize
+  created_at       DateTime           @default(now())
+  updated_at       DateTime           @default(now()) @updatedAt
 
   organization_id String
   Organization    Organization @relation(fields: [organization_id], references: [id])
