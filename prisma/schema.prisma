@@ -98,11 +98,14 @@ model Pet {
 }
 
 model Adoption {
-  id            String   @id
-  adopter_email String   @unique
+  id            String    @id
+  adopter_email String
   adopter_name  String
   adopter_phone String
-  created_at    DateTime @default(now())
+  adoption_code String    @unique @default(uuid())
+  created_at    DateTime  @default(now())
+  expires_at    DateTime
+  confirmed_at  DateTime?
 
   pet_id String
   Pet    Pet    @relation(fields: [pet_id], references: [id])

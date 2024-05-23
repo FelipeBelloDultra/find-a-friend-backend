@@ -8,6 +8,7 @@ export class AdoptionMapper {
   public static toDomain(toPersistence: DatabaseAdoption): Adoption {
     const petId = new UniqueEntityID(toPersistence.pet_id);
     const organizationId = new UniqueEntityID(toPersistence.organization_id);
+    const adoptionCode = new UniqueEntityID(toPersistence.adoption_code);
     const id = new UniqueEntityID(toPersistence.id);
 
     const adoption = Adoption.create(
@@ -16,6 +17,9 @@ export class AdoptionMapper {
         adopterName: toPersistence.adopter_name,
         adopterPhone: toPersistence.adopter_phone,
         createdAt: toPersistence.created_at,
+        confirmedAt: toPersistence.confirmed_at,
+        expiresAt: toPersistence.expires_at,
+        adoptionCode,
         petId,
         organizationId,
       },
@@ -34,6 +38,9 @@ export class AdoptionMapper {
       id: fromDomainAdoption.id.toValue(),
       pet_id: fromDomainAdoption.values.petId.toValue(),
       organization_id: fromDomainAdoption.values.organizationId.toValue(),
+      adoption_code: fromDomainAdoption.values.adoptionCode.toValue(),
+      confirmed_at: fromDomainAdoption.values.confirmedAt,
+      expires_at: fromDomainAdoption.values.expiresAt,
     };
   }
 }
