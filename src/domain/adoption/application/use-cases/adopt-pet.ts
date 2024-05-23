@@ -4,6 +4,8 @@ import { PetNotFound } from "~/domain/pet/application/use-cases/errors/pet-not-f
 import { OrganizationNotFound } from "~/domain/organization/application/use-cases/errors/organization-not-found";
 import { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
 
+import { ExpiresAt } from "../../enterprise/entities/value-object/expires-at";
+
 import type { UseCase } from "~/application/use-case";
 import type { Either } from "~/core/either";
 import type { PetRepository } from "~/domain/pet/application/repository/pet-repository";
@@ -54,6 +56,7 @@ export class AdoptPet implements UseCase<AdoptPetInput, AdoptPetOutput> {
       adopterEmail: input.adopterEmail,
       adopterPhone: input.adopterPhone,
       organizationId: organization.id,
+      expiresAt: ExpiresAt.create(),
     });
 
     await Promise.all([this.adoptionRepository.create(adoption), this.petRepository.save(pet)]);

@@ -21,6 +21,10 @@ export class Adoption extends Entity<AdoptionProps> {
     return new UniqueEntityID();
   }
 
+  public wasConfirmed() {
+    return !!this.values.confirmedAt;
+  }
+
   public confirmAdoption() {
     this.props.confirmedAt = new Date();
     // this.addDomainEvent(new AdoptionConfirmed(this.id)); // TODO: add domain event when an adoption is confirmed

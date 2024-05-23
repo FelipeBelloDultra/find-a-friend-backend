@@ -23,4 +23,16 @@ describe("Adoption", () => {
 
     expect(sut.values.confirmedAt).toEqual(expect.any(Date));
   });
+
+  it("should verify if one adoption was done", () => {
+    const adoption = makeAdoption();
+
+    const sut = Adoption.create(adoption);
+
+    expect(sut.wasConfirmed()).toBeFalsy();
+
+    sut.confirmAdoption();
+
+    expect(sut.wasConfirmed()).toBeTruthy();
+  });
 });
