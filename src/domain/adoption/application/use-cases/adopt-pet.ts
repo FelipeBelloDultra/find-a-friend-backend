@@ -6,6 +6,7 @@ import { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
 
 import { ExpiresAt } from "../../enterprise/entities/value-object/expires-at";
 
+import type { QueueProvider } from "~/application/providers/queue/queue-provider";
 import type { UseCase } from "~/application/use-case";
 import type { Either } from "~/core/either";
 import type { PetRepository } from "~/domain/pet/application/repository/pet-repository";
@@ -29,6 +30,7 @@ export class AdoptPet implements UseCase<AdoptPetInput, AdoptPetOutput> {
     private readonly adoptionRepository: AdoptionRepository,
     private readonly organizationRepository: OrganizationRepository,
     private readonly petRepository: PetRepository,
+    private readonly sendAdoptionVerificationCodeQueue: QueueProvider,
   ) {}
 
   public async execute(input: AdoptPetInput): AdoptPetOutput {
@@ -59,7 +61,17 @@ export class AdoptPet implements UseCase<AdoptPetInput, AdoptPetOutput> {
       expiresAt: ExpiresAt.create(),
     });
 
-    await Promise.all([this.adoptionRepository.create(adoption), this.petRepository.save(pet)]);
+    await Promise.all([
+      this.adoptionRepository.create(adoption),
+      this.petRepository.save(pet),
+      this.sendAdoptionVerificationCodeQueue.addJob({
+        petName: pet.values.name,
+        adopterName: adoption.values.adopterName,
+        adopterEmail: adoption.values.adopterEmail,
+        adoptionCode: adoption.values.adoptionCode.toValue(),
+        codeExpiresAt: ExpiresAt.EXPIRATION_IN_MINUTES,
+      }),
+    ]);
 
     return right({
       adoption: adoption,

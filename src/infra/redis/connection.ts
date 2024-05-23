@@ -6,6 +6,7 @@ export class RedisConnection {
   public static client = new Redis({
     host: env.REDIS_HOST,
     port: env.REDIS_PORT,
+    maxRetriesPerRequest: null,
   });
 
   public static disconnect() {

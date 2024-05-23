@@ -1,6 +1,6 @@
 import { Queue, Worker } from "bullmq";
 
-import { RedisConnection } from "../redis/connection";
+import { RedisConnection } from "~/infra/redis/connection";
 
 import type { Processor } from "bullmq";
 import type { QueueProvider } from "~/application/providers/queue/queue-provider";
@@ -35,8 +35,18 @@ export class BullQueueProvider implements QueueProvider {
         duration: 1000,
       },
     })
-      .on("completed", console.log)
-      .on("active", console.log)
-      .on("failed", console.log);
+      .on("completed", (job) => {
+        process.stdout.write(`${this.queueName} - [${job.name}-${job.id || "UNDEFINED"}] - completed\n`);
+      })
+      .on("active", (job) => {
+        process.stdout.write(`${this.queueName} - [${job.name}-${job.id || "UNDEFINED"}] - active\n`);
+      })
+      .on("failed", (job) => {
+        process.stdout.write(
+          `${this.queueName} - [${job?.name || "NOT_NAMED"}-${
+            job?.id || "UNDEFINED"
+          }] - failed - ${job?.failedReason}\n`,
+        );
+      });
   }
 }

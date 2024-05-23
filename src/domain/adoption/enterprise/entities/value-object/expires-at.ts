@@ -1,4 +1,5 @@
 export class ExpiresAt {
+  public static EXPIRATION_IN_MINUTES = 15;
   public readonly value: Date;
 
   private constructor(value: Date) {
@@ -12,10 +13,8 @@ export class ExpiresAt {
   }
 
   private static setAdoptionExpiresDate() {
-    const EXPIRATION_IN_MINUTES = 15;
-
     const expiresTime = new Date();
-    expiresTime.setMinutes(expiresTime.getMinutes() + EXPIRATION_IN_MINUTES);
+    expiresTime.setMinutes(expiresTime.getMinutes() + ExpiresAt.EXPIRATION_IN_MINUTES);
 
     return expiresTime;
   }
