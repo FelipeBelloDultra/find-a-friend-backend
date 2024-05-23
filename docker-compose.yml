@@ -26,6 +26,15 @@ services:
         networks:
             - find-a-friend-network
 
+    redis:
+        image: bitnami/redis:7.0.15
+        ports:
+            - 6379:6379
+        environment:
+            - ALLOW_EMPTY_PASSWORD=true
+        networks:
+            - find-a-friend-network
+
 volumes:
     postgresql_data:
         driver: local
