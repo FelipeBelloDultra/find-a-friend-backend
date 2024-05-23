@@ -48,7 +48,7 @@ export class AdoptPet implements UseCase<AdoptPetInput, AdoptPetOutput> {
       return left(new NotAllowed());
     }
 
-    pet.adopt();
+    pet.intentionToAdopt();
 
     const adoption = Adoption.create({
       petId: pet.id,

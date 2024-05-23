@@ -1,6 +1,6 @@
 import { AdoptionStatus } from "./adoption-status";
 
-describe.only("AdoptionStatus", () => {
+describe("AdoptionStatus", () => {
   it("should create a new AdoptionStatus instance with default value", () => {
     const sut = AdoptionStatus.create();
 
