@@ -10,7 +10,7 @@
     "build": "tsup",
     "start:server": "node dist/infra/http/server.js",
     "dev:server:watch": "tsx --watch src/infra/http/server.ts",
-    "dev:queue": "tsx --watch src/infra/http/server.ts",
+    "dev:queue": "tsx --watch src/infra/queue/worker.ts",
     "test": "vitest run -c vitest.config.mts",
     "test:watch": "vitest -c vitest.config.mts",
     "test:ui": "vitest --ui -c vitest.config.mts",
@@ -30,8 +30,11 @@
     "@fastify/rate-limit": "^9.1.0",
     "@prisma/client": "^5.13.0",
     "bcrypt": "^5.1.1",
+    "bullmq": "^5.7.11",
     "dotenv": "^16.4.5",
     "fastify": "^4.27.0",
+    "ioredis": "^5.4.1",
+    "nodemailer": "^6.9.13",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -39,6 +42,7 @@
     "@tsconfig/node20": "^20.1.4",
     "@types/bcrypt": "^5.0.2",
     "@types/node": "^20.12.11",
+    "@types/nodemailer": "^6.4.15",
     "@types/supertest": "^6.0.2",
     "@typescript-eslint/eslint-plugin": "^7.8.0",
     "@typescript-eslint/parser": "^7.8.0",

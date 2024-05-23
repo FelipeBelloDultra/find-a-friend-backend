@@ -130,3 +130,7 @@ dist
 .pnp.*
 
 requirements.md
+
+**/tmp/**
+
+!.gitkeep
