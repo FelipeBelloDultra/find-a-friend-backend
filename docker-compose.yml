@@ -20,7 +20,9 @@ services:
         build:
             dockerfile: Dockerfile
             target: base
-        entrypoint: sh -c "npm run dev:queue"
+        volumes:
+            - ./:/home/node/app
+        entrypoint: sh -c "npm ci && npm run dev:queue"
         networks:
             - find-a-friend-network
         depends_on:

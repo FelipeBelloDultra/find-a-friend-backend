@@ -18,6 +18,7 @@ const ENVIRONMENT_SCHEMA = z.object({
   MAIL_FROM_NAME: z.string().default("FindAFriend"),
   REDIS_HOST: z.string().default("redis"),
   REDIS_PORT: z.coerce.number().default(6379),
+  MAIL_DRIVER: z.enum(["local", "smtp"]).default("local"),
 });
 
 const parsedEnv = ENVIRONMENT_SCHEMA.safeParse(process.env);
