@@ -9,6 +9,7 @@ import { makePetEntity } from "test/factories/make-pet";
 import { makeAdoption } from "test/factories/make-adoption";
 import { InMemoryOrganizationAddressRepository } from "test/repository/in-memory-organization-address-repository";
 import { makeOrganizationAddressEntity } from "test/factories/make-organization-address";
+import { FakeQueueProvider } from "test/providers/fake-queue-provider";
 
 import { AdoptPet } from "./adopt-pet";
 
@@ -23,6 +24,7 @@ let inMemoryPetRepository: InMemoryPetRepository;
 let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
 let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
 let inMemoryAdoptionRepository: InMemoryAdoptionRepository;
+let fakeQueueProvider: FakeQueueProvider;
 let organizationAddress: OrganizationAddress;
 let organization: Organization;
 let pet: Pet;
@@ -37,12 +39,18 @@ describe("Adopt pet", () => {
       organizationId: organization.id,
     });
 
+    fakeQueueProvider = new FakeQueueProvider();
     inMemoryOrganizationAddressRepository = new InMemoryOrganizationAddressRepository();
     inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
     inMemoryPetRepository = new InMemoryPetRepository(inMemoryOrganizationAddressRepository);
     inMemoryAdoptionRepository = new InMemoryAdoptionRepository();
 
-    sut = new AdoptPet(inMemoryAdoptionRepository, inMemoryOrganizationRepository, inMemoryPetRepository);
+    sut = new AdoptPet(
+      inMemoryAdoptionRepository,
+      inMemoryOrganizationRepository,
+      inMemoryPetRepository,
+      fakeQueueProvider,
+    );
   });
 
   it("should be able to adopt a pet", async () => {

@@ -3,6 +3,7 @@ import "dotenv/config";
 import { z } from "zod";
 
 const ENVIRONMENT_SCHEMA = z.object({
+  FRONTEND_URL: z.string().default("http://localhost:5173"),
   PASSWORD_SALT: z.coerce.number().default(6),
   DATABASE_URL: z.string(),
   HTTP_SERVER_PORT: z.coerce.number().default(3000),
