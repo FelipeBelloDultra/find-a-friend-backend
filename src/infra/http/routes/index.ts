@@ -1,3 +1,4 @@
 import { organizationRoutes } from "./organization-routes";
+import { petRoutes } from "./pet-routes";
 
-export const ROUTES = [organizationRoutes] as const;
+export const ROUTES = [organizationRoutes, petRoutes] as const;

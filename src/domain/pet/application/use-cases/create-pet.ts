@@ -4,6 +4,8 @@ import { NotAllowed } from "~/core/errors/not-allowed";
 import { Pet } from "~/domain/pet/enterprise/entities/pet";
 import { OrganizationAddressNotFound } from "~/domain/organization/application/use-cases/errors/organization-address-not-found";
 
+import { AdoptionStatus } from "../../enterprise/entities/value-object/adoption-status";
+
 import type { OrganizationAddressRepository } from "~/domain/organization/application/repository/organization-address-repository";
 import type { Either } from "~/core/either";
 import type { UseCase } from "~/application/use-case";
@@ -17,7 +19,7 @@ interface CreatePetInput {
   about: string;
   size: "SMALL" | "MEDIUM" | "LARGE";
   energyLevel: "LOW" | "MODERATE" | "MEDIUM" | "HIGH";
-  environment: "SMALL" | "MEDIUM" | "LARGE";
+  environmentSize: "SMALL" | "MEDIUM" | "LARGE";
 }
 type OnLeft = OrganizationNotFound | OrganizationAddressNotFound | NotAllowed;
 type OnRight = { pet: Pet };
@@ -49,7 +51,8 @@ export class CreatePet implements UseCase<CreatePetInput, CreatePetOutput> {
     const pet = Pet.create({
       about: input.about,
       energyLevel: input.energyLevel,
-      environment: input.environment,
+      adoptionStatus: AdoptionStatus.create(),
+      environmentSize: input.environmentSize,
       name: input.name,
       size: input.size,
       organizationId: organization.id,

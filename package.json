@@ -10,6 +10,7 @@
     "build": "tsup",
     "start:server": "node dist/infra/http/server.js",
     "dev:server:watch": "tsx --watch src/infra/http/server.ts",
+    "dev:server": "tsx src/infra/http/server.ts",
     "dev:queue": "tsx src/infra/queue/worker.ts",
     "test": "vitest run -c vitest.config.mts",
     "test:watch": "vitest -c vitest.config.mts",
