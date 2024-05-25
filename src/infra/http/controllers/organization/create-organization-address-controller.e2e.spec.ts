@@ -22,7 +22,13 @@ describe("[POST] Create organization address", () => {
       .send(makeOrganizationAddress());
 
     expect(sut.statusCode).toEqual(201);
-    expect(sut.body).toEqual({});
+    expect(sut.body).toEqual(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          organization_address_id: expect.any(String),
+        }),
+      }),
+    );
   });
 
   afterAll(async () => {

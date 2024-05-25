@@ -21,10 +21,12 @@ describe("[GET] Show organization profile controller", () => {
     expect(sut.statusCode).toEqual(200);
     expect(sut.body).toEqual(
       expect.objectContaining({
-        email: organization.values.email,
-        name: organization.values.name,
-        phone: organization.values.phone,
-        id: organization.id.toValue(),
+        data: expect.objectContaining({
+          email: organization.values.email,
+          name: organization.values.name,
+          phone: organization.values.phone,
+          id: organization.id.toValue(),
+        }),
       }),
     );
   });
@@ -38,7 +40,13 @@ describe("[GET] Show organization profile controller", () => {
     const sut = await supertest(app.instance.server).get("/api/auth/me").set("Authorization", `Bearer ${token}`).send();
 
     expect(sut.statusCode).toEqual(404);
-    expect(sut.body).toEqual({ message: "Organization not found." });
+    expect(sut.body).toEqual(
+      expect.objectContaining({
+        error: expect.objectContaining({
+          message: "Organization not found.",
+        }),
+      }),
+    );
   });
 
   it("should not be able show authenticated organization profile if JWT is wrong", async () => {
@@ -48,7 +56,13 @@ describe("[GET] Show organization profile controller", () => {
       .send();
 
     expect(sut.statusCode).toEqual(401);
-    expect(sut.body).toEqual({ message: "Unauthorized." });
+    expect(sut.body).toEqual(
+      expect.objectContaining({
+        error: expect.objectContaining({
+          message: "Unauthorized.",
+        }),
+      }),
+    );
   });
 
   afterAll(async () => {

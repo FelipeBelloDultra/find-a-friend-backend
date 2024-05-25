@@ -24,7 +24,13 @@ describe("[POST] Create organization controller", () => {
     });
 
     expect(sut.status).toBe(201);
-    expect(sut.body).toEqual({});
+    expect(sut.body).toEqual(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          organization_id: expect.any(String),
+        }),
+      }),
+    );
   });
 
   it("should not be able to create an organization with same email", async () => {
@@ -46,12 +52,16 @@ describe("[POST] Create organization controller", () => {
     });
 
     expect(sut.status).toBe(409);
-    expect(sut.body).toStrictEqual({
-      message: "Email already used.",
-      issues: {
-        email: "Email already used.",
-      },
-    });
+    expect(sut.body).toEqual(
+      expect.objectContaining({
+        error: expect.objectContaining({
+          message: "Email already used.",
+          issues: {
+            email: "Email already used.",
+          },
+        }),
+      }),
+    );
   });
 
   afterAll(async () => {

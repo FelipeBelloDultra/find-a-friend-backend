@@ -46,7 +46,7 @@ export async function makeAndAuthenticateOrganizationRequest(fastifyInstance: Fa
     password: "123456",
   });
 
-  const { token } = authResponse.body;
+  const { data } = authResponse.body;
 
-  return { token, organization };
+  return { token: data.token, organization };
 }

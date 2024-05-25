@@ -39,7 +39,13 @@ describe("[POST] Create pet controller", () => {
     });
 
     expect(sut.status).toEqual(201);
-    expect(sut.body).toEqual({});
+    expect(sut.body).toEqual(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          pet_id: expect.any(String),
+        }),
+      }),
+    );
   });
 
   afterAll(async () => {

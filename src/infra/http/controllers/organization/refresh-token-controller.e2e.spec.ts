@@ -31,9 +31,13 @@ describe("[PATCH] Refresh token controller", () => {
     const sut = await supertest(app.instance.server).patch("/api/refresh-token").set("Cookie", cookies).send();
 
     expect(sut.status).toEqual(200);
-    expect(sut.body).toEqual({
-      token: expect.any(String),
-    });
+    expect(sut.body).toEqual(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          token: expect.any(String),
+        }),
+      }),
+    );
     expect(sut.get("Set-Cookie")).toEqual([expect.stringContaining("refreshToken=")]);
   });
 

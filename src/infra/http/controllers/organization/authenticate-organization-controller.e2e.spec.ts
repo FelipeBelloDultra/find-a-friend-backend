@@ -28,9 +28,13 @@ describe("[POST] Authenticate organization controller", () => {
     });
 
     expect(sut.status).toBe(200);
-    expect(sut.body).toEqual({
-      token: expect.any(String),
-    });
+    expect(sut.body).toEqual(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          token: expect.any(String),
+        }),
+      }),
+    );
     expect(sut.headers["set-cookie"]).toEqual([expect.stringContaining("refreshToken")]);
   });
 
@@ -41,9 +45,13 @@ describe("[POST] Authenticate organization controller", () => {
     });
 
     expect(sut.status).toBe(401);
-    expect(sut.body).toEqual({
-      message: "Invalid credentials.",
-    });
+    expect(sut.body).toEqual(
+      expect.objectContaining({
+        error: expect.objectContaining({
+          message: "Invalid credentials.",
+        }),
+      }),
+    );
   });
 
   it("should not be able authenticate organization with wrong password", async () => {
@@ -62,9 +70,13 @@ describe("[POST] Authenticate organization controller", () => {
     });
 
     expect(sut.status).toBe(401);
-    expect(sut.body).toEqual({
-      message: "Invalid credentials.",
-    });
+    expect(sut.body).toEqual(
+      expect.objectContaining({
+        error: expect.objectContaining({
+          message: "Invalid credentials.",
+        }),
+      }),
+    );
   });
 
   afterAll(async () => {
