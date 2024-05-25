@@ -1,3 +1,4 @@
+import type { FetchManyAdoptionsQuery } from "~/domain/adoption/application/query/queries";
 import type { PaginationRepository } from "~/application/repository/pagination-repository";
 import type {
   AdoptionRepository,
@@ -17,8 +18,24 @@ export class InMemoryAdoptionRepository implements AdoptionRepository {
   public async findAll(
     { organizationId }: FindAllAdoptionsFilters,
     { limit, page }: PaginationRepository,
-  ): Promise<Array<Adoption>> {
-    const adoptions = this.adoptions.filter((adoption) => adoption.values.organizationId.toValue() === organizationId);
+  ): Promise<Array<FetchManyAdoptionsQuery>> {
+    const adoptions = this.adoptions
+      .filter((adoption) => adoption.values.organizationId.toValue() === organizationId)
+      .map((adoption) => ({
+        id: adoption.id.toValue(),
+        adopter_email: adoption.values.adopterEmail,
+        adopter_name: adoption.values.adopterName,
+        adopter_phone: adoption.values.adopterPhone,
+        created_at: adoption.values.createdAt,
+        expires_at: adoption.values.expiresAt.value,
+        confirmed_at: adoption.values.confirmedAt || null,
+        Pet: {
+          adoption_status: "PENDING",
+          id: "",
+          name: "",
+          updated_at: new Date(),
+        },
+      }));
 
     const SKIP = (page - 1) * limit;
     const TAKE = page * limit;

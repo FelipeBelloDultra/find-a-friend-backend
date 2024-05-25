@@ -2,6 +2,7 @@ import { AdoptionMapper } from "~/domain/adoption/application/mappers/adoption-m
 
 import { DatabaseConnection } from "../database/connection";
 
+import type { FetchManyAdoptionsQuery } from "~/domain/adoption/application/query/queries";
 import type { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
 import type { PaginationRepository } from "~/application/repository/pagination-repository";
 import type {
@@ -21,13 +22,30 @@ export class PrismaAdoptionRepository implements AdoptionRepository {
   public async findAll(
     filters: FindAllAdoptionsFilters,
     { limit, page }: PaginationRepository,
-  ): Promise<Array<Adoption>> {
+  ): Promise<Array<FetchManyAdoptionsQuery>> {
     const SKIP = (page - 1) * limit;
     const TAKE = page * limit;
 
     const adoptions = await DatabaseConnection.query.adoption.findMany({
       take: TAKE,
       skip: SKIP,
+      select: {
+        id: true,
+        adopter_email: true,
+        adopter_name: true,
+        adopter_phone: true,
+        confirmed_at: true,
+        expires_at: true,
+        created_at: true,
+        Pet: {
+          select: {
+            id: true,
+            updated_at: true,
+            name: true,
+            adoption_status: true,
+          },
+        },
+      },
       orderBy: [
         {
           created_at: "desc",
@@ -38,7 +56,7 @@ export class PrismaAdoptionRepository implements AdoptionRepository {
       },
     });
 
-    return adoptions.map((adoption) => AdoptionMapper.toDomain(adoption));
+    return adoptions;
   }
 
   public async save(adoption: Adoption): Promise<Adoption> {
