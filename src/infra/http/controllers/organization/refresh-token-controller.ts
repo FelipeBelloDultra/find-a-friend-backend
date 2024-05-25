@@ -1,10 +1,12 @@
+import { HttpPresenter } from "~/infra/http/http-presenter";
+
 import type { FastifyReply, FastifyRequest } from "fastify";
 
 export async function refreshTokenController(request: FastifyRequest, reply: FastifyReply) {
   const isRefreshTokenFilled = !!request.cookies["refreshToken"];
 
   if (!isRefreshTokenFilled) {
-    return reply.status(401).send({
+    return HttpPresenter.unauthorized(reply, {
       message: "Unauthorized.",
     });
   }
@@ -30,15 +32,15 @@ export async function refreshTokenController(request: FastifyRequest, reply: Fas
     },
   );
 
-  return reply
-    .setCookie("refreshToken", refreshToken, {
+  return HttpPresenter.ok(
+    reply.setCookie("refreshToken", refreshToken, {
       path: "/",
       secure: true,
       sameSite: true,
       httpOnly: true,
-    })
-    .status(200)
-    .send({
+    }),
+    {
       token,
-    });
+    },
+  );
 }

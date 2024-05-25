@@ -5,6 +5,8 @@ import { OrganizationNotFound } from "~/domain/organization/application/use-case
 import { OrganizationAddressNotFound } from "~/domain/organization/application/use-cases/errors/organization-address-not-found";
 import { NotAllowed } from "~/core/errors/not-allowed";
 
+import { HttpPresenter } from "../../http-presenter";
+
 import type { FastifyReply, FastifyRequest } from "fastify";
 
 export async function createPetController(request: FastifyRequest, reply: FastifyReply) {
@@ -31,23 +33,25 @@ export async function createPetController(request: FastifyRequest, reply: Fastif
   });
 
   if (result.isRight()) {
-    return reply.status(201).send();
+    return HttpPresenter.created(reply, {
+      pet_id: result.value.pet.id.toValue(),
+    });
   }
 
   if (result.value instanceof OrganizationNotFound) {
-    return reply.status(404).send({
+    return HttpPresenter.notFound(reply, {
       message: "Organization not found.",
     });
   }
 
   if (result.value instanceof OrganizationAddressNotFound) {
-    return reply.status(404).send({
+    return HttpPresenter.notFound(reply, {
       message: "Organization address not found.",
     });
   }
 
   if (result.value instanceof NotAllowed) {
-    return reply.status(403).send({
+    return HttpPresenter.forbidden(reply, {
       message: "Not allowed.",
     });
   }

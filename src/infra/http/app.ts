@@ -12,6 +12,7 @@ import { DatabaseConnection } from "../database/connection";
 import { Subscribers } from "../subscribers";
 
 import { ROUTES } from "./routes";
+import { HttpPresenter } from "./http-presenter";
 
 export class App {
   private readonly RATE_LIMIT_TIME_WINDOW = 1000 * 60 * 1; // milliseconds * seconds * minutes
@@ -66,25 +67,25 @@ export class App {
   private setErrorHandler() {
     this.instance.setErrorHandler((error, _, reply) => {
       if (!error.statusCode || error.statusCode === 500) {
-        return reply.status(500).send({
+        return HttpPresenter.internal(reply, {
           message: "Internal server error.",
         });
       }
 
       if (error.statusCode === 429) {
-        return reply.status(429).send({
+        return HttpPresenter.tooManyRequests(reply, {
           message: "Too many requests.",
         });
       }
 
       if (error instanceof ZodError) {
-        return reply.status(422).send({
+        return HttpPresenter.unprocessableEntity(reply, {
           message: "Validation error.",
           issues: error.flatten().fieldErrors,
         });
       }
 
-      return reply.status(error.statusCode).send({
+      return HttpPresenter.unknown(reply, error.statusCode, {
         message: error.message,
       });
     });

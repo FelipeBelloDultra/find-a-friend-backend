@@ -1,5 +1,6 @@
 import { OrganizationNotFound } from "~/domain/organization/application/use-cases/errors/organization-not-found";
 import { makeShowOrganizationProfile } from "~/domain/organization/application/use-cases/factories/make-show-organization-profile";
+import { HttpPresenter } from "~/infra/http/http-presenter";
 
 import type { FastifyReply, FastifyRequest } from "fastify";
 
@@ -11,7 +12,7 @@ export async function showOrganizationProfileController(request: FastifyRequest,
   if (result.isRight()) {
     const { organization } = result.value;
 
-    return reply.status(200).send({
+    return HttpPresenter.ok(reply, {
       id: organization.id.toValue(),
       name: organization.values.name,
       email: organization.values.email,
@@ -23,7 +24,7 @@ export async function showOrganizationProfileController(request: FastifyRequest,
   }
 
   if (result.isLeft() && result.value instanceof OrganizationNotFound) {
-    return reply.status(404).send({
+    return HttpPresenter.notFound(reply, {
       message: "Organization not found.",
     });
   }

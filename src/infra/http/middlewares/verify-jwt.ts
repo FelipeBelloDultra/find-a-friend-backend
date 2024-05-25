@@ -1,3 +1,5 @@
+import { HttpPresenter } from "../http-presenter";
+
 import type { FastifyReply, FastifyRequest } from "fastify";
 
 export async function verifyJwt(request: FastifyRequest, reply: FastifyReply) {
@@ -12,7 +14,7 @@ export async function verifyJwt(request: FastifyRequest, reply: FastifyReply) {
       onlyCookie: false,
     });
   } catch (err) {
-    return reply.status(401).send({
+    return HttpPresenter.unauthorized(reply, {
       message: "Unauthorized.",
     });
   }

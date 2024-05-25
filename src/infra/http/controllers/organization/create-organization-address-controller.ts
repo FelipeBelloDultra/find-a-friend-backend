@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { OrganizationNotFound } from "~/domain/organization/application/use-cases/errors/organization-not-found";
 import { makeCreateOrganizationAddress } from "~/domain/organization/application/use-cases/factories/make-create-organization-address";
+import { HttpPresenter } from "~/infra/http/http-presenter";
 
 import type { FastifyReply, FastifyRequest } from "fastify";
 
@@ -36,11 +37,13 @@ export async function createOrganizationAddressController(request: FastifyReques
   });
 
   if (result.isRight()) {
-    return reply.status(201).send();
+    return HttpPresenter.created(reply, {
+      organization_address_id: result.value.organizationAddress.id.toValue(),
+    });
   }
 
   if (result.isLeft() && result.value instanceof OrganizationNotFound) {
-    return reply.status(404).send({
+    return HttpPresenter.notFound(reply, {
       message: "Organization not found.",
     });
   }

@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { InvalidCredentials } from "~/domain/organization/application/use-cases/errors/invalid-credentials";
 import { makeAuthenticateOrganization } from "~/domain/organization/application/use-cases/factories/make-authenticate-organization";
+import { HttpPresenter } from "~/infra/http/http-presenter";
 
 import type { FastifyReply, FastifyRequest } from "fastify";
 
@@ -39,21 +40,19 @@ export async function authenticateOrganizationController(request: FastifyRequest
       },
     );
 
-    return reply
-      .status(200)
-      .setCookie("refreshToken", refreshToken, {
+    return HttpPresenter.ok(
+      reply.setCookie("refreshToken", refreshToken, {
         path: "/",
         secure: true,
         sameSite: true,
         httpOnly: true,
-      })
-      .send({
-        token,
-      });
+      }),
+      { token },
+    );
   }
 
   if (result.isLeft() && result.value instanceof InvalidCredentials) {
-    return reply.status(401).send({
+    return HttpPresenter.unauthorized(reply, {
       message: "Invalid credentials.",
     });
   }

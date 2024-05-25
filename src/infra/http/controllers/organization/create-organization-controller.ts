@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { makeCreateOrganization } from "~/domain/organization/application/use-cases/factories/make-create-organization";
 import { OrganizationAlreadyExists } from "~/domain/organization/application/use-cases/errors/organization-already-exists";
+import { HttpPresenter } from "~/infra/http/http-presenter";
 
 import type { FastifyReply, FastifyRequest } from "fastify";
 
@@ -27,11 +28,13 @@ export async function createOrganizationController(request: FastifyRequest, repl
   });
 
   if (result.isRight()) {
-    return reply.status(201).send();
+    return HttpPresenter.created(reply, {
+      organization_id: result.value.organization.id.toValue(),
+    });
   }
 
   if (result.isLeft() && result.value instanceof OrganizationAlreadyExists) {
-    return reply.status(409).send({
+    return HttpPresenter.conflict(reply, {
       message: "Email already used.",
       issues: {
         email: "Email already used.",
