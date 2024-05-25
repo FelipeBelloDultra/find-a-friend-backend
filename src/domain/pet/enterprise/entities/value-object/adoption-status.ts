@@ -1,9 +1,9 @@
-type AdoptionStatusValue = "PENDING" | "ADOPTED" | "NOT_ADOPTED";
+export type PetAdoptionStatusValue = "PENDING" | "ADOPTED" | "NOT_ADOPTED";
 
 export class AdoptionStatus {
-  public value: AdoptionStatusValue;
+  public value: PetAdoptionStatusValue;
 
-  private constructor(value: AdoptionStatusValue) {
+  private constructor(value: PetAdoptionStatusValue) {
     this.value = value;
   }
 
@@ -19,7 +19,7 @@ export class AdoptionStatus {
     this.value = "NOT_ADOPTED";
   }
 
-  public static create(value?: AdoptionStatusValue) {
+  public static create(value?: PetAdoptionStatusValue) {
     const status = value ?? "NOT_ADOPTED";
 
     return new AdoptionStatus(status);

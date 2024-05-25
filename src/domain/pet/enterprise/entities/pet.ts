@@ -4,15 +4,19 @@ import type { AdoptionStatus } from "./value-object/adoption-status";
 import type { UniqueEntityID } from "~/core/entity/unique-entity-id";
 import type { Optional } from "~/core/types/optional";
 
+export type PetSize = "SMALL" | "MEDIUM" | "LARGE";
+export type PetEnvironmentSize = "SMALL" | "MEDIUM" | "LARGE";
+export type PetEnergyLevel = "LOW" | "MODERATE" | "MEDIUM" | "HIGH";
+
 export interface PetProps {
   organizationId: UniqueEntityID;
   organizationAddressId: UniqueEntityID;
   name: string;
   about: string;
   adoptionStatus: AdoptionStatus;
-  size: "SMALL" | "MEDIUM" | "LARGE";
-  energyLevel: "LOW" | "MODERATE" | "MEDIUM" | "HIGH";
-  environmentSize: "SMALL" | "MEDIUM" | "LARGE";
+  size: PetSize;
+  energyLevel: PetEnergyLevel;
+  environmentSize: PetEnvironmentSize;
   createdAt: Date;
   updatedAt: Date;
 }

@@ -6,6 +6,7 @@ import { OrganizationAddressNotFound } from "~/domain/organization/application/u
 
 import { AdoptionStatus } from "../../enterprise/entities/value-object/adoption-status";
 
+import type { PetEnergyLevel, PetEnvironmentSize, PetSize } from "~/domain/pet/enterprise/entities/pet";
 import type { OrganizationAddressRepository } from "~/domain/organization/application/repository/organization-address-repository";
 import type { Either } from "~/core/either";
 import type { UseCase } from "~/application/use-case";
@@ -17,9 +18,9 @@ interface CreatePetInput {
   organizationAddressId: string;
   name: string;
   about: string;
-  size: "SMALL" | "MEDIUM" | "LARGE";
-  energyLevel: "LOW" | "MODERATE" | "MEDIUM" | "HIGH";
-  environmentSize: "SMALL" | "MEDIUM" | "LARGE";
+  size: PetSize;
+  energyLevel: PetEnergyLevel;
+  environmentSize: PetEnvironmentSize;
 }
 type OnLeft = OrganizationNotFound | OrganizationAddressNotFound | NotAllowed;
 type OnRight = { pet: Pet };

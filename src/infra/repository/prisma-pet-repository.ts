@@ -39,7 +39,16 @@ export class PrismaPetRepository implements PetRepository {
   }
 
   public async findAll(
-    { city, adoptionStatus, energyLevel, environment, size, organizationAddressId, organizationId }: FindAllPetsFilters,
+    {
+      city,
+      adoptionStatus,
+      energyLevel,
+      environment,
+      size,
+      organizationAddressId,
+      organizationId,
+      state,
+    }: FindAllPetsFilters,
     { limit, page }: PaginationRepository,
   ): Promise<Array<FetchManyPetsQuery>> {
     const SKIP = (page - 1) * limit;
@@ -75,6 +84,7 @@ export class PrismaPetRepository implements PetRepository {
         organization_id: organizationId,
         OrganizationAddress: {
           city,
+          state,
         },
       },
     });

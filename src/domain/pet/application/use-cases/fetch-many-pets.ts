@@ -1,5 +1,6 @@
 import { right } from "~/core/either";
 
+import type { PetEnergyLevel, PetEnvironmentSize, PetSize } from "~/domain/pet/enterprise/entities/pet";
 import type { FetchManyPetsQuery } from "../query/queries";
 import type { UseCase } from "~/application/use-case";
 import type { Either } from "~/core/either";
@@ -7,9 +8,10 @@ import type { PetRepository } from "~/domain/pet/application/repository/pet-repo
 
 interface FetchManyPetsInput {
   city: string;
-  size?: "SMALL" | "MEDIUM" | "LARGE";
-  energyLevel?: "LOW" | "MODERATE" | "MEDIUM" | "HIGH";
-  environment?: "SMALL" | "MEDIUM" | "LARGE";
+  state: string;
+  size?: PetSize;
+  energyLevel?: PetEnergyLevel;
+  environment?: PetEnvironmentSize;
   page: number;
   limit: number;
 }
@@ -29,6 +31,7 @@ export class FetchManyPets implements UseCase<FetchManyPetsInput, FetchManyPetsO
     const pets = await this.petRepository.findAll(
       {
         city: input.city,
+        state: input.state,
         size: input.size,
         energyLevel: input.energyLevel,
         environment: input.environment,

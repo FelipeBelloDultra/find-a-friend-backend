@@ -46,6 +46,7 @@ describe("Fetch many pets", () => {
 
     const result = await sut.execute({
       city: organizationAddress.values.city,
+      state: organizationAddress.values.state,
       page: 1,
       limit: 20,
     });
@@ -60,6 +61,7 @@ describe("Fetch many pets", () => {
 
     const result = await sut.execute({
       city: organizationAddress.values.city,
+      state: organizationAddress.values.state,
       page: 2,
       limit: 20,
     });
@@ -72,6 +74,7 @@ describe("Fetch many pets", () => {
   it("should return an empty array if does not find some city", async () => {
     const result = await sut.execute({
       city: organizationAddress.values.city,
+      state: organizationAddress.values.state,
       page: 1,
       limit: 20,
     });

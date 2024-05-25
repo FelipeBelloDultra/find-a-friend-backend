@@ -1,13 +1,15 @@
+import type { PetAdoptionStatusValue } from "~/domain/pet/enterprise/entities/value-object/adoption-status";
 import type { FetchManyPetsQuery } from "../query/queries";
 import type { PaginationRepository } from "~/application/repository/pagination-repository";
-import type { Pet } from "~/domain/pet/enterprise/entities/pet";
+import type { Pet, PetEnergyLevel, PetEnvironmentSize, PetSize } from "~/domain/pet/enterprise/entities/pet";
 
 export interface FindAllPetsFilters {
   city?: string;
-  size?: "SMALL" | "MEDIUM" | "LARGE";
-  energyLevel?: "LOW" | "MODERATE" | "MEDIUM" | "HIGH";
-  environment?: "SMALL" | "MEDIUM" | "LARGE";
-  adoptionStatus?: "PENDING" | "ADOPTED" | "NOT_ADOPTED";
+  state?: string;
+  size?: PetSize;
+  energyLevel?: PetEnergyLevel;
+  environment?: PetEnvironmentSize;
+  adoptionStatus?: PetAdoptionStatusValue;
   organizationId?: string;
   organizationAddressId?: string;
 }
