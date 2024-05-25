@@ -1,9 +1,9 @@
 import { right } from "~/core/either";
 
+import type { FetchManyAdoptionsQuery } from "../query/queries";
 import type { UseCase } from "~/application/use-case";
 import type { Either } from "~/core/either";
 import type { AdoptionRepository } from "~/domain/adoption/application/repository/adoption-repository";
-import type { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
 
 interface FetchManyAdoptionInput {
   organizationId: string;
@@ -11,7 +11,7 @@ interface FetchManyAdoptionInput {
   limit: number;
 }
 type OnLeft = never;
-type OnRight = { adoptions: Array<Adoption> };
+type OnRight = { adoptions: Array<FetchManyAdoptionsQuery> };
 
 type FetchManyAdoptionOutput = Promise<Either<OnLeft, OnRight>>;
 
