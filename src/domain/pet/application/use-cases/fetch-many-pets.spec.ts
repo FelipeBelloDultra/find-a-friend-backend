@@ -29,7 +29,7 @@ describe("Fetch many pets", () => {
     });
 
     inMemoryOrganizationAddressRepository = new InMemoryOrganizationAddressRepository();
-    inMemoryOrganizationRepository = new InMemoryOrganizationRepository(inMemoryOrganizationAddressRepository);
+    inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
     inMemoryPetRepository = new InMemoryPetRepository(inMemoryOrganizationAddressRepository);
 
     await inMemoryOrganizationRepository.create(organization);

@@ -1,21 +1,24 @@
 import { right } from "~/core/either";
 
+import type { FetchManyPetsQuery } from "../query/queries";
 import type { UseCase } from "~/application/use-case";
 import type { Either } from "~/core/either";
 import type { PetRepository } from "~/domain/pet/application/repository/pet-repository";
-import type { Pet } from "~/domain/pet/enterprise/entities/pet";
 
 interface FetchManyPetsInput {
   city: string;
   size?: "SMALL" | "MEDIUM" | "LARGE";
   energyLevel?: "LOW" | "MODERATE" | "MEDIUM" | "HIGH";
   environment?: "SMALL" | "MEDIUM" | "LARGE";
-  adopted?: boolean;
   page: number;
   limit: number;
 }
 type OnLeft = never;
-type OnRight = { pets: Array<Pet> };
+type OnRight = {
+  pets: Array<
+    Omit<FetchManyPetsQuery, "about" | "environment_size" | "size" | "adoption_status" | "created_at" | "updated_at">
+  >;
+};
 
 type FetchManyPetsOutput = Promise<Either<OnLeft, OnRight>>;
 
@@ -29,7 +32,7 @@ export class FetchManyPets implements UseCase<FetchManyPetsInput, FetchManyPetsO
         size: input.size,
         energyLevel: input.energyLevel,
         environment: input.environment,
-        adopted: input.adopted,
+        adoptionStatus: "NOT_ADOPTED",
       },
       {
         limit: input.limit,
@@ -38,7 +41,13 @@ export class FetchManyPets implements UseCase<FetchManyPetsInput, FetchManyPetsO
     );
 
     return right({
-      pets,
+      pets: pets.map((pet) => ({
+        id: pet.id,
+        organization_address_id: pet.organization_address_id,
+        name: pet.name,
+        energy_level: pet.energy_level,
+        organization_id: pet.organization_id,
+      })),
     });
   }
 }
