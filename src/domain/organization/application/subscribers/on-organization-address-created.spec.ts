@@ -17,7 +17,7 @@ describe("On organization address created", () => {
     inMemoryOrganizationAddressRepository = new InMemoryOrganizationAddressRepository();
     completeOrganizationProfile = new CompleteOrganizationProfile(inMemoryOrganizationRepository);
 
-    new OnOrganizationAddressCreated(completeOrganizationProfile);
+    new OnOrganizationAddressCreated(completeOrganizationProfile).listen();
   });
 
   it("should set the organization profile to true", async () => {

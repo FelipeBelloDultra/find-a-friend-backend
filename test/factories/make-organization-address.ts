@@ -2,6 +2,7 @@ import { faker } from "@faker-js/faker";
 
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
 import { OrganizationAddress } from "~/domain/organization/enterprise/entities/organization-address";
+import { PrismaOrganizationAddressRepository } from "~/infra/repository/prisma-organization-address-repository";
 
 import type { OrganizationAddressProps } from "~/domain/organization/enterprise/entities/organization-address";
 
@@ -30,4 +31,16 @@ export function makeOrganizationAddressEntity(override: Partial<OrganizationAddr
   );
 
   return address;
+}
+
+export async function makeOrganizationAddressRequest(organizationId: UniqueEntityID) {
+  const organizationAddress = makeOrganizationAddressEntity({
+    organizationId,
+  });
+
+  const prismaOrganizationAddressRepository = new PrismaOrganizationAddressRepository();
+
+  await prismaOrganizationAddressRepository.create(organizationAddress);
+
+  return { organizationAddress };
 }

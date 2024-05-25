@@ -28,7 +28,7 @@ describe("Create pet", () => {
 
     completeOrganizationProfile = new CompleteOrganizationProfile(inMemoryOrganizationRepository);
 
-    new OnOrganizationAddressCreated(completeOrganizationProfile);
+    new OnOrganizationAddressCreated(completeOrganizationProfile).listen();
   });
 
   it("should be able to create a pet with one organization", async () => {

@@ -2,7 +2,7 @@ import supertest from "supertest";
 
 import { DatabaseConnection } from "~/infra/database/connection";
 import { App } from "~/infra/http/app";
-import { makeAndAuthenticateOrganization } from "test/factories/make-organization";
+import { makeAndAuthenticateOrganizationRequest } from "test/factories/make-organization";
 
 let app: App;
 
@@ -14,7 +14,7 @@ describe("[GET] Show organization profile controller", () => {
   });
 
   it("should be able show authenticated organization profile", async () => {
-    const { token, organization } = await makeAndAuthenticateOrganization(app.instance);
+    const { token, organization } = await makeAndAuthenticateOrganizationRequest(app.instance);
 
     const sut = await supertest(app.instance.server).get("/api/auth/me").set("Authorization", `Bearer ${token}`).send();
 
@@ -30,7 +30,7 @@ describe("[GET] Show organization profile controller", () => {
   });
 
   it("should not be able show authenticated organization profile if organization does not exists", async () => {
-    const { token, organization } = await makeAndAuthenticateOrganization(app.instance);
+    const { token, organization } = await makeAndAuthenticateOrganizationRequest(app.instance);
     await DatabaseConnection.query.organization.delete({
       where: { id: organization.id.toValue() },
     });

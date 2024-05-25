@@ -32,7 +32,7 @@ export async function makeOrganizationEntity(override: Partial<OrganizationProps
   return organization;
 }
 
-export async function makeAndAuthenticateOrganization(fastifyInstance: FastifyInstance) {
+export async function makeAndAuthenticateOrganizationRequest(fastifyInstance: FastifyInstance) {
   const organization = await makeOrganizationEntity({
     password: await Password.create("123456"),
   });

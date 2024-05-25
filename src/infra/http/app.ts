@@ -9,6 +9,7 @@ import { ZodError } from "zod";
 import { env } from "~/config/env";
 
 import { DatabaseConnection } from "../database/connection";
+import { Subscribers } from "../subscribers";
 
 import { ROUTES } from "./routes";
 
@@ -56,6 +57,8 @@ export class App {
     this.registerPlugins();
     this.registerRoutes();
     this.setErrorHandler();
+
+    Subscribers.setup();
 
     return this.instance;
   }

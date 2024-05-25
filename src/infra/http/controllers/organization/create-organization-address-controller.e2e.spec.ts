@@ -1,6 +1,6 @@
 import supertest from "supertest";
 
-import { makeAndAuthenticateOrganization } from "test/factories/make-organization";
+import { makeAndAuthenticateOrganizationRequest } from "test/factories/make-organization";
 import { makeOrganizationAddress } from "test/factories/make-organization-address";
 import { App } from "~/infra/http/app";
 
@@ -14,7 +14,7 @@ describe("[POST] Create organization address", () => {
   });
 
   it("should be able create an organization address", async () => {
-    const { token } = await makeAndAuthenticateOrganization(app.instance);
+    const { token } = await makeAndAuthenticateOrganizationRequest(app.instance);
 
     const sut = await supertest(app.instance.server)
       .post("/api/orgs/address")

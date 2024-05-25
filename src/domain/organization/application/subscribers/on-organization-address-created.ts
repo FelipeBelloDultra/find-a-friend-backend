@@ -6,15 +6,17 @@ import type { CompleteOrganizationProfile } from "../use-cases/complete-organiza
 import type { EventHandler } from "~/core/events/event-handler";
 
 export class OnOrganizationAddressCreated implements EventHandler {
-  public constructor(private readonly completeOrganizationProfile: CompleteOrganizationProfile) {
-    this.setupSubscriptions();
-  }
+  public constructor(private readonly completeOrganizationProfile: CompleteOrganizationProfile) {}
 
   public setupSubscriptions(): void {
     DomainEvents.register(
       this.completeOrganizationProfileOnAddAddress.bind(this),
       OrganizationAddressCreatedEvent.name,
     );
+  }
+
+  public listen(): void {
+    this.setupSubscriptions();
   }
 
   private async completeOrganizationProfileOnAddAddress({ organizationAddress }: OrganizationAddressCreatedEvent) {
