@@ -5,6 +5,12 @@ import type { QueueJob } from "~/application/providers/queue/queue-provider";
 
 const mailProvider = new NodemailerMailProvider();
 
-[new SendAdoptionVerificationCodeJob(mailProvider)].forEach((job: QueueJob) => {
-  job.listen();
-});
+export class Worker {
+  private static jobs: Array<QueueJob> = [new SendAdoptionVerificationCodeJob(mailProvider)];
+
+  public static start() {
+    this.jobs.forEach((job) => {
+      job.listen();
+    });
+  }
+}
