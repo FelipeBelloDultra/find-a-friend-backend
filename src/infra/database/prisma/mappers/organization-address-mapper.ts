@@ -1,7 +1,9 @@
-import { type OrganizationAddress as DatabaseOrganizationAddress, Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
 import { OrganizationAddress } from "~/domain/organization/enterprise/entities/organization-address";
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
+
+import type { OrganizationAddress as DatabaseOrganizationAddress } from "@prisma/client";
 
 export class OrganizationAddressMapper {
   public static toDomain(fromPersistence: DatabaseOrganizationAddress): OrganizationAddress {

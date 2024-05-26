@@ -5,12 +5,12 @@ import type { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
 export interface FindAllAdoptionsFilters {
   organizationId: string;
 }
-export interface AdoptionRepository {
-  create: (adoption: Adoption) => Promise<Adoption>;
-  findAll: (
+export abstract class AdoptionRepository {
+  public abstract create: (adoption: Adoption) => Promise<Adoption>;
+  public abstract findAll: (
     filters: FindAllAdoptionsFilters,
     paginationParams: PaginationRepository,
   ) => Promise<Array<FetchManyAdoptionsQuery>>;
-  save: (adoption: Adoption) => Promise<Adoption>;
-  findByCode: (code: string) => Promise<Adoption | null>;
+  public abstract save: (adoption: Adoption) => Promise<Adoption>;
+  public abstract findByCode: (code: string) => Promise<Adoption | null>;
 }

@@ -1,9 +1,9 @@
 import { right } from "~/core/either";
 
+import type { AdoptionRepository } from "~/domain/adoption/application/repository/adoption-repository";
 import type { FetchManyAdoptionsQuery } from "../query/queries";
 import type { UseCase } from "~/application/use-case";
 import type { Either } from "~/core/either";
-import type { AdoptionRepository } from "~/domain/adoption/application/repository/adoption-repository";
 
 interface FetchManyAdoptionInput {
   organizationId: string;

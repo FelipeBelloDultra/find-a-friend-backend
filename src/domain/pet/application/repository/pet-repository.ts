@@ -14,9 +14,12 @@ export interface FindAllPetsFilters {
   organizationAddressId?: string;
 }
 
-export interface PetRepository {
-  create: (pet: Pet) => Promise<Pet>;
-  findById: (id: string) => Promise<Pet | null>;
-  save: (pet: Pet) => Promise<Pet>;
-  findAll: (filters: FindAllPetsFilters, paginationParams: PaginationRepository) => Promise<Array<FetchManyPetsQuery>>;
+export abstract class PetRepository {
+  public abstract create: (pet: Pet) => Promise<Pet>;
+  public abstract findById: (id: string) => Promise<Pet | null>;
+  public abstract save: (pet: Pet) => Promise<Pet>;
+  public abstract findAll: (
+    filters: FindAllPetsFilters,
+    paginationParams: PaginationRepository,
+  ) => Promise<Array<FetchManyPetsQuery>>;
 }
