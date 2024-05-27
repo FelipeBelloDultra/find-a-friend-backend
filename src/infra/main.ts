@@ -1,36 +1,34 @@
-import fastifyJwt from "@fastify/jwt";
-import fastifyCookie from "@fastify/cookie";
-import fastifyHelmet from "@fastify/helmet";
+// import fastifyCookie from "@fastify/cookie";
+import * as cookieParser from "cookie-parser";
+import helmet from "helmet";
 import { NestFactory } from "@nestjs/core";
-import { FastifyAdapter, NestFastifyApplication } from "@nestjs/platform-fastify";
 
 import { env } from "~/config/env";
 
 import { AppModule } from "./app.module";
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
-
+  const app = await NestFactory.create(AppModule);
+  app.setGlobalPrefix("/api");
   app.enableCors({
     origin: [env.HTTP_FRONTEND_ALLOWED],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH"],
   });
-  await app.register(fastifyHelmet);
-  await app.register(fastifyJwt, {
-    secret: env.JWT_SECRET_KEY,
-    cookie: {
-      cookieName: "refreshToken",
-      signed: false,
-    },
-    sign: {
-      expiresIn: "10m",
-    },
-  });
-  await app.register(fastifyCookie);
+  app.use(helmet());
+  app.use(cookieParser());
 
-  await app.listen(env.HTTP_SERVER_PORT);
-
+  app.listen(env.HTTP_SERVER_PORT);
+  // await app.register(fastifyJwt, {
+  //   secret: env.JWT_SECRET_KEY,
+  //   cookie: {
+  //     cookieName: "refreshToken",
+  //     signed: false,
+  //   },
+  //   sign: {
+  //     expiresIn: "10m",
+  //   },
+  // });
   // if (!error.statusCode || error.statusCode === 500) {
   //   return HttpPresenter.internal(reply, {
   //     message: "Internal server error.",

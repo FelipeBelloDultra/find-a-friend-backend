@@ -1,6 +1,6 @@
 import { BadRequestException, Body, Controller, HttpCode, Post, Res, UnauthorizedException } from "@nestjs/common";
 import { z } from "zod";
-import { FastifyReply } from "fastify";
+import { Response } from "express";
 
 import { InvalidCredentials } from "~/domain/organization/application/use-cases/errors/invalid-credentials";
 import { AuthenticateOrganization } from "~/domain/organization/application/use-cases/authenticate-organization";
@@ -16,13 +16,13 @@ const bodyValidationPipe = new ZodValidationPipe(authenticateOrganizationBodySch
 
 type AuthenticateOrganizationSchema = z.infer<typeof authenticateOrganizationBodySchema>;
 
-@Controller("/api/session")
+@Controller("/session")
 export class AuthenticateOrganizationController {
   public constructor(private readonly authenticateOrganization: AuthenticateOrganization) {}
 
   @Post()
   @HttpCode(200)
-  public async create(@Body(bodyValidationPipe) body: AuthenticateOrganizationSchema, @Res() response: FastifyReply) {
+  public async create(@Body(bodyValidationPipe) body: AuthenticateOrganizationSchema, @Res() response: Response) {
     const { email, password } = body;
 
     const result = await this.authenticateOrganization.execute({
@@ -33,25 +33,26 @@ export class AuthenticateOrganizationController {
     if (result.isRight()) {
       const { email, id } = result.value;
 
-      const token = await response.jwtSign(
-        { email },
-        {
-          sign: {
-            sub: id,
-          },
-        },
-      );
-      const refreshToken = await response.jwtSign(
-        { email },
-        {
-          sign: {
-            sub: id,
-            expiresIn: "7d",
-          },
-        },
-      );
+      // const token = await response.jwtSign(
+      //   { email },
+      //   {
+      //     sign: {
+      //       sub: id,
+      //     },
+      //   },
+      // );
+      // const refreshToken = await response.jwtSign(
+      //   { email },
+      //   {
+      //     sign: {
+      //       sub: id,
+      //       expiresIn: "7d",
+      //     },
+      //   },
+      // );
+      // TODO: Move this rule to use case
 
-      response.setCookie("refreshToken", refreshToken, {
+      response.cookie("refreshToken", "TOKEN", {
         path: "/",
         secure: true,
         sameSite: true,
@@ -61,7 +62,7 @@ export class AuthenticateOrganizationController {
         status: "success",
         error: {},
         data: {
-          token,
+          token: { email, id },
         },
       };
     }

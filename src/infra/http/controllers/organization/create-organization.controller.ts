@@ -21,7 +21,7 @@ const bodyValidationPipe = new ZodValidationPipe(createOrganizationBodySchema);
 
 type CreateOrganizationSchema = z.infer<typeof createOrganizationBodySchema>;
 
-@Controller("/api/orgs")
+@Controller("/orgs")
 export class CreateOrganizationController {
   public constructor(private readonly createOrganization: CreateOrganization) {}
 
@@ -37,22 +37,14 @@ export class CreateOrganizationController {
       phone,
     });
 
-    if (result.isRight()) {
+    if (result.isLeft()) {
       // TODO: Create presenter
-      return {
-        status: "success",
-        error: {},
-        data: {
-          organization_id: result.value.organization.id.toValue(),
-        },
-      };
-    }
-
-    switch (result.value.constructor) {
-      case OrganizationAlreadyExists:
-        throw new ConflictException("Email already used.");
-      default:
-        throw new BadRequestException(result.value.message); // TODO: Fix default error
+      switch (result.value.constructor) {
+        case OrganizationAlreadyExists:
+          throw new ConflictException("Email already used.");
+        default:
+          throw new BadRequestException(result.value.message); // TODO: Fix default error
+      }
     }
   }
 }
