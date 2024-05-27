@@ -11,7 +11,7 @@ export class ShowOrganizationProfileController {
 
   @Get()
   @HttpCode(200)
-  public async create(@CurrentUser() user: UserPayload) {
+  public async handle(@CurrentUser() user: UserPayload) {
     const authenticatedId = user.sub;
 
     const result = await this.showOrganizationProfile.execute({

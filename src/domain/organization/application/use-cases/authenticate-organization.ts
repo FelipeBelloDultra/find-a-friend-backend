@@ -3,7 +3,7 @@ import { Injectable } from "@nestjs/common";
 import { Either, left, right } from "~/core/either";
 import { UseCase } from "~/application/use-case";
 import { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
-import { Encrypter } from "~/domain/organization/application/cryptography/encrypter";
+import { Encrypter } from "~/application/cryptography/encrypter";
 
 import { InvalidCredentials } from "./errors/invalid-credentials";
 

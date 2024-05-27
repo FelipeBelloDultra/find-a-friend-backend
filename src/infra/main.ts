@@ -9,6 +9,7 @@ import { AppModule } from "./app.module";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
   app.setGlobalPrefix("/api");
   app.enableCors({
     origin: [env.HTTP_FRONTEND_ALLOWED],
@@ -19,16 +20,7 @@ async function bootstrap() {
   app.use(cookieParser());
 
   app.listen(env.HTTP_SERVER_PORT);
-  // await app.register(fastifyJwt, {
-  //   secret: env.JWT_SECRET_KEY,
-  //   cookie: {
-  //     cookieName: "refreshToken",
-  //     signed: false,
-  //   },
-  //   sign: {
-  //     expiresIn: "10m",
-  //   },
-  // });
+
   // if (!error.statusCode || error.statusCode === 500) {
   //   return HttpPresenter.internal(reply, {
   //     message: "Internal server error.",

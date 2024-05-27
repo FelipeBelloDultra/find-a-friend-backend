@@ -29,7 +29,7 @@ export class CreateOrganizationController {
 
   @Post()
   @HttpCode(201)
-  public async create(@Body(bodyValidationPipe) body: CreateOrganizationSchema) {
+  public async handle(@Body(bodyValidationPipe) body: CreateOrganizationSchema) {
     const { email, name, password, phone } = body;
 
     const result = await this.createOrganization.execute({

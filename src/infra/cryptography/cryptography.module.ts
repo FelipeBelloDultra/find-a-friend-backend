@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 
-import { Encrypter } from "~/domain/organization/application/cryptography/encrypter";
+import { Encrypter } from "~/application/cryptography/encrypter";
 
 import { JwtEncrypter } from "./jwt-encrypter";
 

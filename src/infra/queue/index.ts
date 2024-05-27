@@ -1,3 +1,3 @@
-import { Worker } from "./worker";
+// import { Worker } from "./worker";
 
-Worker.start();
+// Worker.start();

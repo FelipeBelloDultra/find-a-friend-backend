@@ -24,7 +24,7 @@ export class AuthenticateOrganizationController {
 
   @Post()
   @HttpCode(200)
-  public async create(@Body(bodyValidationPipe) body: AuthenticateOrganizationSchema, @Res() response: Response) {
+  public async handle(@Body(bodyValidationPipe) body: AuthenticateOrganizationSchema, @Res() response: Response) {
     const { email, password } = body;
 
     const result = await this.authenticateOrganization.execute({
