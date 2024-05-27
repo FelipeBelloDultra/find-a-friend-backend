@@ -4,6 +4,7 @@ import { Response } from "express";
 
 import { InvalidCredentials } from "~/domain/organization/application/use-cases/errors/invalid-credentials";
 import { AuthenticateOrganization } from "~/domain/organization/application/use-cases/authenticate-organization";
+import { Public } from "~/infra/auth/public";
 
 import { ZodValidationPipe } from "../../pipes/zod-validation-pipe";
 
@@ -17,6 +18,7 @@ const bodyValidationPipe = new ZodValidationPipe(authenticateOrganizationBodySch
 type AuthenticateOrganizationSchema = z.infer<typeof authenticateOrganizationBodySchema>;
 
 @Controller("/session")
+@Public()
 export class AuthenticateOrganizationController {
   public constructor(private readonly authenticateOrganization: AuthenticateOrganization) {}
 
@@ -31,40 +33,21 @@ export class AuthenticateOrganizationController {
     });
 
     if (result.isRight()) {
-      const { email, id } = result.value;
+      const { accessToken, refreshToken } = result.value;
 
-      // const token = await response.jwtSign(
-      //   { email },
-      //   {
-      //     sign: {
-      //       sub: id,
-      //     },
-      //   },
-      // );
-      // const refreshToken = await response.jwtSign(
-      //   { email },
-      //   {
-      //     sign: {
-      //       sub: id,
-      //       expiresIn: "7d",
-      //     },
-      //   },
-      // );
-      // TODO: Move this rule to use case
-
-      response.cookie("refreshToken", "TOKEN", {
+      response.cookie("refreshToken", refreshToken, {
         path: "/",
         secure: true,
         sameSite: true,
         httpOnly: true,
       });
-      return {
+      return response.json({
         status: "success",
         error: {},
         data: {
-          token: { email, id },
+          token: accessToken,
         },
-      };
+      });
     }
 
     switch (result.value.constructor) {

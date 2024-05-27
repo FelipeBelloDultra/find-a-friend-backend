@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { OrganizationAlreadyExists } from "~/domain/organization/application/use-cases/errors/organization-already-exists";
 import { CreateOrganization } from "~/domain/organization/application/use-cases/create-organization";
+import { Public } from "~/infra/auth/public";
 
 import { ZodValidationPipe } from "../../pipes/zod-validation-pipe";
 
@@ -22,6 +23,7 @@ const bodyValidationPipe = new ZodValidationPipe(createOrganizationBodySchema);
 type CreateOrganizationSchema = z.infer<typeof createOrganizationBodySchema>;
 
 @Controller("/orgs")
+@Public()
 export class CreateOrganizationController {
   public constructor(private readonly createOrganization: CreateOrganization) {}
 

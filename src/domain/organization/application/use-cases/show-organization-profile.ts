@@ -1,3 +1,5 @@
+import { Injectable } from "@nestjs/common";
+
 import { Either, left, right } from "~/core/either";
 import { UseCase } from "~/application/use-case";
 import { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
@@ -13,6 +15,7 @@ type OnRight = { organization: Organization };
 
 type ShowOrganizationProfileOutput = Promise<Either<OnLeft, OnRight>>;
 
+@Injectable()
 export class ShowOrganizationProfile implements UseCase<ShowOrganizationProfileInput, ShowOrganizationProfileOutput> {
   public constructor(private readonly organizationRepository: OrganizationRepository) {}
 
