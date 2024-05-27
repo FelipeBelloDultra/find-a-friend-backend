@@ -1,4 +1,4 @@
-import type { Organization } from "~/domain/organization/enterprise/entities/organization";
+import { Organization } from "~/domain/organization/enterprise/entities/organization";
 
 export abstract class OrganizationRepository {
   public abstract create: (organization: Organization) => Promise<Organization>;

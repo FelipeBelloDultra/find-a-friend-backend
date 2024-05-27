@@ -1,8 +1,6 @@
-import { right } from "~/core/either";
-
-import type { UseCase } from "~/application/use-case";
-import type { Either } from "~/core/either";
-import type { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
+import { Either, right } from "~/core/either";
+import { UseCase } from "~/application/use-case";
+import { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
 
 interface CompleteOrganizationProfileInput {
   organizationId: string;

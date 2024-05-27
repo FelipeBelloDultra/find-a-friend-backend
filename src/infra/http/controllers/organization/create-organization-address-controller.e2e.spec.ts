@@ -2,6 +2,7 @@ import supertest from "supertest";
 
 import { makeAndAuthenticateOrganizationRequest } from "test/factories/make-organization";
 import { makeOrganizationAddress } from "test/factories/make-organization-address";
+
 import { App } from "~/infra/http/app";
 
 let app: App;

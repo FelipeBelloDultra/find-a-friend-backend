@@ -1,6 +1,7 @@
 import supertest from "supertest";
 
 import { makeOrganization } from "test/factories/make-organization";
+
 import { App } from "~/infra/http/app";
 
 let app: App;

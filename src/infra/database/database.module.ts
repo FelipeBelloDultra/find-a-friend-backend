@@ -5,12 +5,11 @@ import { OrganizationRepository } from "~/domain/organization/application/reposi
 import { OrganizationAddressRepository } from "~/domain/organization/application/repository/organization-address-repository";
 import { PetRepository } from "~/domain/pet/application/repository/pet-repository";
 
-import { PrismaOrganizationRepository } from "../repository/prisma-organization-repository";
-import { PrismaAdoptionRepository } from "../repository/prisma-adoption-repository";
-import { PrismaOrganizationAddressRepository } from "../repository/prisma-organization-address-repository";
-import { PrismaPetRepository } from "../repository/prisma-pet-repository";
-
 import { PrismaService } from "./prisma/prisma.service";
+import { PrismaOrganizationRepository } from "./prisma/repositories/prisma-organization-repository";
+import { PrismaAdoptionRepository } from "./prisma/repositories/prisma-adoption-repository";
+import { PrismaOrganizationAddressRepository } from "./prisma/repositories/prisma-organization-address-repository";
+import { PrismaPetRepository } from "./prisma/repositories/prisma-pet-repository";
 
 @Module({
   providers: [

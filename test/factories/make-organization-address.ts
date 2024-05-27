@@ -1,10 +1,12 @@
 import { faker } from "@faker-js/faker";
 
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
-import { OrganizationAddress } from "~/domain/organization/enterprise/entities/organization-address";
-import { PrismaOrganizationAddressRepository } from "~/infra/repository/prisma-organization-address-repository";
+import {
+  OrganizationAddress,
+  OrganizationAddressProps,
+} from "~/domain/organization/enterprise/entities/organization-address";
 
-import type { OrganizationAddressProps } from "~/domain/organization/enterprise/entities/organization-address";
+import { PrismaOrganizationAddressRepository } from "~/infra/repository/prisma-organization-address-repository";
 
 export function makeOrganizationAddress() {
   return {

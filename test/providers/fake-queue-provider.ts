@@ -1,4 +1,4 @@
-import type { QueueProvider } from "~/application/providers/queue/queue-provider";
+import { QueueProvider } from "~/application/providers/queue/queue-provider";
 
 export class FakeQueueProvider implements QueueProvider {
   public async addJob<JobDataType>(_: JobDataType): Promise<void> {}

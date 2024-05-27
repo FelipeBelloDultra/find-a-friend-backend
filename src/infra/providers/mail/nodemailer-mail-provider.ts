@@ -2,13 +2,11 @@ import { createReadStream, createWriteStream } from "node:fs";
 import { join, resolve } from "node:path";
 import { randomUUID } from "node:crypto";
 
-import nodemailer from "nodemailer";
+import nodemailer, { Transporter } from "nodemailer";
 import Handlebars from "handlebars";
 
 import { env } from "~/config/env";
-
-import type { Transporter } from "nodemailer";
-import type { MailProvider, SendAdoptionCodeMailData, SendMailData } from "~/application/providers/mail/mail-provider";
+import { MailProvider, SendAdoptionCodeMailData, SendMailData } from "~/application/providers/mail/mail-provider";
 
 enum MailTemplates {
   VerifyAdoptionCode = "verify-adoption-code.hbs.hbs",

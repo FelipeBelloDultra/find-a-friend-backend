@@ -1,6 +1,7 @@
-import type { FetchManyAdoptionsQuery } from "../query/queries";
-import type { PaginationRepository } from "~/application/repository/pagination-repository";
-import type { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
+import { PaginationRepository } from "~/application/repository/pagination-repository";
+import { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
+
+import { FetchManyAdoptionsQuery } from "../query/queries";
 
 export interface FindAllAdoptionsFilters {
   organizationId: string;

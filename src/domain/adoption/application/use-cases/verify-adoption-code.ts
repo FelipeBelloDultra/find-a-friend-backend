@@ -1,14 +1,12 @@
-import { left, right } from "~/core/either";
+import { Either, left, right } from "~/core/either";
 import { PetNotFound } from "~/domain/pet/application/use-cases/errors/pet-not-found";
+import { PetRepository } from "~/domain/pet/application/repository/pet-repository";
+import { UseCase } from "~/application/use-case";
+import { AdoptionRepository } from "~/domain/adoption/application/repository/adoption-repository";
+import { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
 
-import { AdoptionNotFound } from "./errors/adoption-not-found";
 import { AdoptionCodeExpired } from "./errors/adoption-code-expired";
-
-import type { PetRepository } from "~/domain/pet/application/repository/pet-repository";
-import type { UseCase } from "~/application/use-case";
-import type { Either } from "~/core/either";
-import type { AdoptionRepository } from "~/domain/adoption/application/repository/adoption-repository";
-import type { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
+import { AdoptionNotFound } from "./errors/adoption-not-found";
 
 interface VerifyAdoptionCodeInput {
   adoptionCode: string;

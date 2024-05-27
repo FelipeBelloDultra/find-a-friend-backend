@@ -1,8 +1,8 @@
+import { Pet as DatabasePet } from "@prisma/client";
+
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
 import { Pet } from "~/domain/pet/enterprise/entities/pet";
 import { AdoptionStatus } from "~/domain/pet/enterprise/entities/value-object/adoption-status";
-
-import type { Pet as DatabasePet } from "@prisma/client";
 
 export class PetMapper {
   public static toDomain(fromPersistence: DatabasePet): Pet {

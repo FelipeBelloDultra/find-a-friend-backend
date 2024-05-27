@@ -1,12 +1,11 @@
 import { Injectable } from "@nestjs/common";
 
 import { DomainEvents } from "~/core/events/domain-events";
+import { OrganizationAddress } from "~/domain/organization/enterprise/entities/organization-address";
+import { OrganizationAddressRepository } from "~/domain/organization/application/repository/organization-address-repository";
 
 import { OrganizationAddressMapper } from "../mappers/organization-address-mapper";
-
-import type { PrismaService } from "../prisma.service";
-import type { OrganizationAddress } from "~/domain/organization/enterprise/entities/organization-address";
-import type { OrganizationAddressRepository } from "~/domain/organization/application/repository/organization-address-repository";
+import { PrismaService } from "../prisma.service";
 
 @Injectable()
 export class PrismaOrganizationAddressRepository implements OrganizationAddressRepository {

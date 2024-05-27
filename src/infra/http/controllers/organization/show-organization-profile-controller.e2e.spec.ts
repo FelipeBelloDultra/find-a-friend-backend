@@ -1,8 +1,9 @@
 import supertest from "supertest";
 
+import { makeAndAuthenticateOrganizationRequest } from "test/factories/make-organization";
+
 import { DatabaseConnection } from "~/infra/database/connection";
 import { App } from "~/infra/http/app";
-import { makeAndAuthenticateOrganizationRequest } from "test/factories/make-organization";
 
 let app: App;
 

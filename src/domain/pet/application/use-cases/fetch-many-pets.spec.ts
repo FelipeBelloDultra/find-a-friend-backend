@@ -4,12 +4,11 @@ import { InMemoryOrganizationRepository } from "test/repository/in-memory-organi
 import { InMemoryPetRepository } from "test/repository/in-memory-pet-repository";
 import { InMemoryOrganizationAddressRepository } from "test/repository/in-memory-organization-address-repository";
 import { makeOrganizationAddressEntity } from "test/factories/make-organization-address";
+import { Pet } from "~/domain/pet/enterprise/entities/pet";
+import { OrganizationAddress } from "~/domain/organization/enterprise/entities/organization-address";
+import { Organization } from "~/domain/organization/enterprise/entities/organization";
 
 import { FetchManyPets } from "./fetch-many-pets";
-
-import type { Pet } from "~/domain/pet/enterprise/entities/pet";
-import type { OrganizationAddress } from "~/domain/organization/enterprise/entities/organization-address";
-import type { Organization } from "~/domain/organization/enterprise/entities/organization";
 
 let sut: FetchManyPets;
 let inMemoryPetRepository: InMemoryPetRepository;

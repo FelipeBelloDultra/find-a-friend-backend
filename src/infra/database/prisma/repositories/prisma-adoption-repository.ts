@@ -1,15 +1,15 @@
 import { Injectable } from "@nestjs/common";
 
-import { AdoptionMapper } from "../mappers/adoption-mapper";
-
-import type { PrismaService } from "../prisma.service";
-import type { FetchManyAdoptionsQuery } from "~/domain/adoption/application/query/queries";
-import type { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
-import type { PaginationRepository } from "~/application/repository/pagination-repository";
-import type {
+import { FetchManyAdoptionsQuery } from "~/domain/adoption/application/query/queries";
+import { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
+import { PaginationRepository } from "~/application/repository/pagination-repository";
+import {
   AdoptionRepository,
   FindAllAdoptionsFilters,
 } from "~/domain/adoption/application/repository/adoption-repository";
+
+import { PrismaService } from "../prisma.service";
+import { AdoptionMapper } from "../mappers/adoption-mapper";
 
 @Injectable()
 export class PrismaAdoptionRepository implements AdoptionRepository {

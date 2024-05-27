@@ -1,8 +1,8 @@
+import { Adoption as DatabaseAdoption } from "@prisma/client";
+
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
 import { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
 import { ExpiresAt } from "~/domain/adoption/enterprise/entities/value-object/expires-at";
-
-import type { Adoption as DatabaseAdoption } from "@prisma/client";
 
 export class AdoptionMapper {
   public static toDomain(toPersistence: DatabaseAdoption): Adoption {

@@ -1,17 +1,14 @@
-import { left, right } from "~/core/either";
+import { Either, left, right } from "~/core/either";
 import { OrganizationNotFound } from "~/domain/organization/application/use-cases/errors/organization-not-found";
 import { NotAllowed } from "~/core/errors/not-allowed";
-import { Pet } from "~/domain/pet/enterprise/entities/pet";
+import { Pet, PetEnergyLevel, PetEnvironmentSize, PetSize } from "~/domain/pet/enterprise/entities/pet";
 import { OrganizationAddressNotFound } from "~/domain/organization/application/use-cases/errors/organization-address-not-found";
+import { OrganizationAddressRepository } from "~/domain/organization/application/repository/organization-address-repository";
+import { UseCase } from "~/application/use-case";
+import { PetRepository } from "~/domain/pet/application/repository/pet-repository";
+import { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
 
 import { AdoptionStatus } from "../../enterprise/entities/value-object/adoption-status";
-
-import type { PetEnergyLevel, PetEnvironmentSize, PetSize } from "~/domain/pet/enterprise/entities/pet";
-import type { OrganizationAddressRepository } from "~/domain/organization/application/repository/organization-address-repository";
-import type { Either } from "~/core/either";
-import type { UseCase } from "~/application/use-case";
-import type { PetRepository } from "~/domain/pet/application/repository/pet-repository";
-import type { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
 
 interface CreatePetInput {
   organizationId: string;

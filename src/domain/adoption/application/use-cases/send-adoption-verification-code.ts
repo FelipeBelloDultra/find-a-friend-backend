@@ -1,11 +1,9 @@
-import { right } from "~/core/either";
+import { Either, right } from "~/core/either";
 import { env } from "~/config/env";
+import { MailProvider } from "~/application/providers/mail/mail-provider";
+import { UseCase } from "~/application/use-case";
 
 import { ExpiresAt } from "../../enterprise/entities/value-object/expires-at";
-
-import type { MailProvider } from "~/application/providers/mail/mail-provider";
-import type { UseCase } from "~/application/use-case";
-import type { Either } from "~/core/either";
 
 interface SendAdoptionVerificationCodeInput {
   petName: string;

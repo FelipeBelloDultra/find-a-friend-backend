@@ -18,7 +18,7 @@
     "@typescript-eslint/consistent-type-imports": [
       "warn",
       {
-        "prefer": "type-imports",
+        "prefer": "no-type-imports",
         "disallowTypeAnnotations": true,
         "fixStyle": "separate-type-imports"
       }

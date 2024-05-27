@@ -1,13 +1,13 @@
-import { left, right } from "~/core/either";
+import { Injectable } from "@nestjs/common";
+
+import { Either, left, right } from "~/core/either";
 import { Organization } from "~/domain/organization/enterprise/entities/organization";
 import { Password } from "~/domain/organization/enterprise/entities/value-object/password";
 import { env } from "~/config/env";
+import { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
+import { UseCase } from "~/application/use-case";
 
 import { OrganizationAlreadyExists } from "./errors/organization-already-exists";
-
-import type { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
-import type { Either } from "~/core/either";
-import type { UseCase } from "~/application/use-case";
 
 interface CreateOrganizationInput {
   name: string;
@@ -19,7 +19,7 @@ type OnLeft = OrganizationAlreadyExists;
 type OnRight = { organization: Organization };
 
 type CreateOrganizationOutput = Promise<Either<OnLeft, OnRight>>;
-
+@Injectable()
 export class CreateOrganization implements UseCase<CreateOrganizationInput, CreateOrganizationOutput> {
   public constructor(private readonly organizationRepository: OrganizationRepository) {}
 

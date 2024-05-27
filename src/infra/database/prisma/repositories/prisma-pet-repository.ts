@@ -1,12 +1,12 @@
 import { Injectable } from "@nestjs/common";
 
-import { PetMapper } from "../mappers/pet-mapper";
+import { FetchManyPetsQuery } from "~/domain/pet/application/query/queries";
+import { Pet } from "~/domain/pet/enterprise/entities/pet";
+import { PaginationRepository } from "~/application/repository/pagination-repository";
+import { FindAllPetsFilters, PetRepository } from "~/domain/pet/application/repository/pet-repository";
 
-import type { PrismaService } from "../prisma.service";
-import type { FetchManyPetsQuery } from "~/domain/pet/application/query/queries";
-import type { Pet } from "~/domain/pet/enterprise/entities/pet";
-import type { PaginationRepository } from "~/application/repository/pagination-repository";
-import type { FindAllPetsFilters, PetRepository } from "~/domain/pet/application/repository/pet-repository";
+import { PrismaService } from "../prisma.service";
+import { PetMapper } from "../mappers/pet-mapper";
 
 @Injectable()
 export class PrismaPetRepository implements PetRepository {

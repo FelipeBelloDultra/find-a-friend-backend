@@ -1,10 +1,9 @@
-import { right } from "~/core/either";
+import { Either, right } from "~/core/either";
+import { PetEnergyLevel, PetEnvironmentSize, PetSize } from "~/domain/pet/enterprise/entities/pet";
+import { UseCase } from "~/application/use-case";
+import { PetRepository } from "~/domain/pet/application/repository/pet-repository";
 
-import type { PetEnergyLevel, PetEnvironmentSize, PetSize } from "~/domain/pet/enterprise/entities/pet";
-import type { FetchManyPetsQuery } from "../query/queries";
-import type { UseCase } from "~/application/use-case";
-import type { Either } from "~/core/either";
-import type { PetRepository } from "~/domain/pet/application/repository/pet-repository";
+import { FetchManyPetsQuery } from "../query/queries";
 
 interface FetchManyPetsInput {
   city: string;

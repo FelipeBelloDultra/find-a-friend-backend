@@ -1,9 +1,8 @@
 import { SendAdoptionVerificationCode } from "~/domain/adoption/application/use-cases/send-adoption-verification-code";
+import { QueueJob } from "~/application/providers/queue/queue-provider";
+import { MailProvider } from "~/application/providers/mail/mail-provider";
 
 import { BullQueueProvider } from "../bullmq-queue-provider";
-
-import type { QueueJob } from "~/application/providers/queue/queue-provider";
-import type { MailProvider } from "~/application/providers/mail/mail-provider";
 
 const JOB_NAME = "send-adoption-verification-code";
 

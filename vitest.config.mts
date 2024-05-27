@@ -6,6 +6,7 @@ export default defineConfig({
   test: {
     globals: true,
     coverage: {
+      provider: "v8",
       include: [
         "src/domain/**/enterprise/**",
         "src/domain/**/application/{subscribers,use-cases}/**",

@@ -2,10 +2,9 @@ import { BadRequestException, Body, ConflictException, Controller, HttpCode, Pos
 import { z } from "zod";
 
 import { OrganizationAlreadyExists } from "~/domain/organization/application/use-cases/errors/organization-already-exists";
+import { CreateOrganization } from "~/domain/organization/application/use-cases/create-organization";
 
 import { ZodValidationPipe } from "../../pipes/zod-validation-pipe";
-
-import type { CreateOrganization } from "~/domain/organization/application/use-cases/create-organization";
 
 const createOrganizationBodySchema = z.object({
   name: z.string().min(5).max(255),

@@ -1,8 +1,8 @@
 import { Entity } from "~/core/entity/entity";
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
+import { Optional } from "~/core/types/optional";
 
-import type { ExpiresAt } from "./value-object/expires-at";
-import type { Optional } from "~/core/types/optional";
+import { ExpiresAt } from "./value-object/expires-at";
 
 export interface AdoptionProps {
   petId: UniqueEntityID;

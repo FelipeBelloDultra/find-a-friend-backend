@@ -1,6 +1,6 @@
-import { HttpPresenter } from "~/infra/http/http-presenter";
+import { FastifyReply, FastifyRequest } from "fastify";
 
-import type { FastifyReply, FastifyRequest } from "fastify";
+import { HttpPresenter } from "~/infra/http/http-presenter";
 
 export async function refreshTokenController(request: FastifyRequest, reply: FastifyReply) {
   const isRefreshTokenFilled = !!request.cookies["refreshToken"];

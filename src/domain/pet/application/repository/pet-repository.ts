@@ -1,7 +1,8 @@
-import type { PetAdoptionStatusValue } from "~/domain/pet/enterprise/entities/value-object/adoption-status";
-import type { FetchManyPetsQuery } from "../query/queries";
-import type { PaginationRepository } from "~/application/repository/pagination-repository";
-import type { Pet, PetEnergyLevel, PetEnvironmentSize, PetSize } from "~/domain/pet/enterprise/entities/pet";
+import { PetAdoptionStatusValue } from "~/domain/pet/enterprise/entities/value-object/adoption-status";
+import { PaginationRepository } from "~/application/repository/pagination-repository";
+import { Pet, PetEnergyLevel, PetEnvironmentSize, PetSize } from "~/domain/pet/enterprise/entities/pet";
+
+import { FetchManyPetsQuery } from "../query/queries";
 
 export interface FindAllPetsFilters {
   city?: string;

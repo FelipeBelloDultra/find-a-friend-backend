@@ -1,9 +1,8 @@
 import { DomainEvents } from "~/core/events/domain-events";
 
 import { AggregateRoot } from "../entity/aggregate-root";
-
-import type { DomainEvent } from "../events/domain-event";
-import type { UniqueEntityID } from "../entity/unique-entity-id";
+import { DomainEvent } from "../events/domain-event";
+import { UniqueEntityID } from "../entity/unique-entity-id";
 
 class CustomAggregate extends AggregateRoot<null> {
   public static create() {

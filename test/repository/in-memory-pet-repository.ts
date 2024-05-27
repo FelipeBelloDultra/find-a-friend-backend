@@ -1,8 +1,9 @@
-import type { FetchManyPetsQuery } from "~/domain/pet/application/query/queries";
-import type { InMemoryOrganizationAddressRepository } from "./in-memory-organization-address-repository";
-import type { PaginationRepository } from "~/application/repository/pagination-repository";
-import type { FindAllPetsFilters, PetRepository } from "~/domain/pet/application/repository/pet-repository";
-import type { Pet } from "~/domain/pet/enterprise/entities/pet";
+import { FetchManyPetsQuery } from "~/domain/pet/application/query/queries";
+import { PaginationRepository } from "~/application/repository/pagination-repository";
+import { FindAllPetsFilters, PetRepository } from "~/domain/pet/application/repository/pet-repository";
+import { Pet } from "~/domain/pet/enterprise/entities/pet";
+
+import { InMemoryOrganizationAddressRepository } from "./in-memory-organization-address-repository";
 
 export class InMemoryPetRepository implements PetRepository {
   public readonly pets: Array<Pet> = [];

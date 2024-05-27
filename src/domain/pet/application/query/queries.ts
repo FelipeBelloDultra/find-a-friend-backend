@@ -1,5 +1,5 @@
-import type { PetAdoptionStatusValue } from "~/domain/pet/enterprise/entities/value-object/adoption-status";
-import type { PetEnergyLevel, PetEnvironmentSize, PetSize } from "~/domain/pet/enterprise/entities/pet";
+import { PetAdoptionStatusValue } from "~/domain/pet/enterprise/entities/value-object/adoption-status";
+import { PetEnergyLevel, PetEnvironmentSize, PetSize } from "~/domain/pet/enterprise/entities/pet";
 
 export interface FetchManyPetsQuery {
   id: string;

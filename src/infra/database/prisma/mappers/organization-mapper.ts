@@ -1,8 +1,8 @@
+import { Organization as DatabaseOrganization } from "@prisma/client";
+
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
 import { Organization } from "~/domain/organization/enterprise/entities/organization";
 import { Password } from "~/domain/organization/enterprise/entities/value-object/password";
-
-import type { Organization as DatabaseOrganization } from "@prisma/client";
 
 export class OrganizationMapper {
   public static async toDomain(fromPersistence: DatabaseOrganization): Promise<Organization> {

@@ -1,6 +1,6 @@
-import type { UniqueEntityID } from "~/core/entity/unique-entity-id";
-import type { DomainEvent } from "~/core/events/domain-event";
-import type { OrganizationAddress } from "~/domain/organization/enterprise/entities/organization-address";
+import { UniqueEntityID } from "~/core/entity/unique-entity-id";
+import { DomainEvent } from "~/core/events/domain-event";
+import { OrganizationAddress } from "~/domain/organization/enterprise/entities/organization-address";
 
 export class OrganizationAddressCreatedEvent implements DomainEvent {
   public ocurredAt: Date;

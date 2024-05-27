@@ -1,7 +1,6 @@
 import { DomainEvents } from "~/core/events/domain-events";
-
-import type { OrganizationAddress } from "~/domain/organization/enterprise/entities/organization-address";
-import type { OrganizationAddressRepository } from "~/domain/organization/application/repository/organization-address-repository";
+import { OrganizationAddress } from "~/domain/organization/enterprise/entities/organization-address";
+import { OrganizationAddressRepository } from "~/domain/organization/application/repository/organization-address-repository";
 
 export class InMemoryOrganizationAddressRepository implements OrganizationAddressRepository {
   public readonly organizationAddresses: Array<OrganizationAddress> = [];

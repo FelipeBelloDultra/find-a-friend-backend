@@ -1,6 +1,6 @@
-import { HttpPresenter } from "../http-presenter";
+import { FastifyReply, FastifyRequest } from "fastify";
 
-import type { FastifyReply, FastifyRequest } from "fastify";
+import { HttpPresenter } from "../http-presenter";
 
 export async function verifyJwt(request: FastifyRequest, reply: FastifyReply) {
   try {

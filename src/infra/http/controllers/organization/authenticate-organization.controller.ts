@@ -1,12 +1,11 @@
 import { BadRequestException, Body, Controller, HttpCode, Post, Res, UnauthorizedException } from "@nestjs/common";
 import { z } from "zod";
+import { FastifyReply } from "fastify";
 
 import { InvalidCredentials } from "~/domain/organization/application/use-cases/errors/invalid-credentials";
+import { AuthenticateOrganization } from "~/domain/organization/application/use-cases/authenticate-organization";
 
 import { ZodValidationPipe } from "../../pipes/zod-validation-pipe";
-
-import type { FastifyReply } from "fastify";
-import type { AuthenticateOrganization } from "~/domain/organization/application/use-cases/authenticate-organization";
 
 const authenticateOrganizationBodySchema = z.object({
   email: z.string().email().max(255),

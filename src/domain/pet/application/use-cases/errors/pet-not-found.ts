@@ -1,4 +1,4 @@
-import type { UseCaseError } from "~/application/errors/use-case-error";
+import { UseCaseError } from "~/application/errors/use-case-error";
 
 export class PetNotFound extends Error implements UseCaseError {
   public constructor() {

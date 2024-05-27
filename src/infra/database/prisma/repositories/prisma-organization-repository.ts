@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
 
-import { OrganizationMapper } from "../mappers/organization-mapper";
+import { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
+import { Organization } from "~/domain/organization/enterprise/entities/organization";
 
-import type { PrismaService } from "../prisma.service";
-import type { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
-import type { Organization } from "~/domain/organization/enterprise/entities/organization";
+import { OrganizationMapper } from "../mappers/organization-mapper";
+import { PrismaService } from "../prisma.service";
 
 @Injectable()
 export class PrismaOrganizationRepository implements OrganizationRepository {

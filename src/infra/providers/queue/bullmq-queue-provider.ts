@@ -1,9 +1,7 @@
-import { Queue, Worker } from "bullmq";
+import { Processor, Queue, Worker } from "bullmq";
 
 import { RedisConnection } from "~/infra/redis/connection";
-
-import type { Processor } from "bullmq";
-import type { QueueProvider } from "~/application/providers/queue/queue-provider";
+import { QueueProvider } from "~/application/providers/queue/queue-provider";
 
 export class BullQueueProvider implements QueueProvider {
   private readonly queue: Queue;

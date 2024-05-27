@@ -1,10 +1,10 @@
-import { left, right } from "~/core/either";
+import { Injectable } from "@nestjs/common";
+
+import { Either, left, right } from "~/core/either";
+import { UseCase } from "~/application/use-case";
+import { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
 
 import { InvalidCredentials } from "./errors/invalid-credentials";
-
-import type { UseCase } from "~/application/use-case";
-import type { Either } from "~/core/either";
-import type { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
 
 interface AuthenticateOrganizationInput {
   email: string;
@@ -15,6 +15,7 @@ type OnRight = { id: string; email: string; name: string };
 
 type AuthenticateOrganizationOutput = Promise<Either<OnLeft, OnRight>>;
 
+@Injectable()
 export class AuthenticateOrganization
   implements UseCase<AuthenticateOrganizationInput, AuthenticateOrganizationOutput>
 {

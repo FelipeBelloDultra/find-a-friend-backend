@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type { AggregateRoot } from "../entity/aggregate-root";
-import type { UniqueEntityID } from "../entity/unique-entity-id";
-import type { DomainEvent } from "./domain-event";
+import { AggregateRoot } from "../entity/aggregate-root";
+import { UniqueEntityID } from "../entity/unique-entity-id";
+
+import { DomainEvent } from "./domain-event";
 
 type DomainEventCallback = (event: any) => void;
 
