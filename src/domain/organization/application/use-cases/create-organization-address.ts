@@ -1,3 +1,5 @@
+import { Injectable } from "@nestjs/common";
+
 import { Either, left, right } from "~/core/either";
 import { UseCase } from "~/application/use-case";
 import { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
@@ -24,6 +26,7 @@ type OnRight = { organizationAddress: OrganizationAddress };
 
 type CreateOrganizationAddressOutput = Promise<Either<OnLeft, OnRight>>;
 
+@Injectable()
 export class CreateOrganizationAddress
   implements UseCase<CreateOrganizationAddressInput, CreateOrganizationAddressOutput>
 {
