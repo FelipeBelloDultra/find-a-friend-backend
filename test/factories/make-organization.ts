@@ -1,13 +1,8 @@
-import supertest from "supertest";
 import { faker } from "@faker-js/faker";
-import { FastifyInstance } from "fastify";
 
 import { Organization, OrganizationProps } from "~/domain/organization/enterprise/entities/organization";
 import { Password } from "~/domain/organization/enterprise/entities/value-object/password";
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
-
-import { DatabaseConnection } from "~/infra/database/connection";
-import { OrganizationMapper } from "~/domain/organization/application/mappers/organization-mapper";
 
 export async function makeOrganization() {
   return {
@@ -31,21 +26,21 @@ export async function makeOrganizationEntity(override: Partial<OrganizationProps
   return organization;
 }
 
-export async function makeAndAuthenticateOrganizationRequest(fastifyInstance: FastifyInstance) {
-  const organization = await makeOrganizationEntity({
-    password: await Password.create("123456"),
-  });
+// export async function makeAndAuthenticateOrganizationRequest(fastifyInstance: FastifyInstance) {
+//   const organization = await makeOrganizationEntity({
+//     password: await Password.create("123456"),
+//   });
 
-  await DatabaseConnection.query.organization.create({
-    data: OrganizationMapper.toPersistence(organization),
-  });
+//   await DatabaseConnection.query.organization.create({
+//     data: OrganizationMapper.toPersistence(organization),
+//   });
 
-  const authResponse = await supertest(fastifyInstance.server).post("/api/session").send({
-    email: organization.values.email,
-    password: "123456",
-  });
+//   const authResponse = await supertest(fastifyInstance.server).post("/api/session").send({
+//     email: organization.values.email,
+//     password: "123456",
+//   });
 
-  const { data } = authResponse.body;
+//   const { data } = authResponse.body;
 
-  return { token: data.token, organization };
-}
+//   return { token: data.token, organization };
+// }

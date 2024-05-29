@@ -6,8 +6,6 @@ import {
   OrganizationAddressProps,
 } from "~/domain/organization/enterprise/entities/organization-address";
 
-import { PrismaOrganizationAddressRepository } from "~/infra/repository/prisma-organization-address-repository";
-
 export function makeOrganizationAddress() {
   return {
     organizationId: new UniqueEntityID(),
@@ -35,14 +33,14 @@ export function makeOrganizationAddressEntity(override: Partial<OrganizationAddr
   return address;
 }
 
-export async function makeOrganizationAddressRequest(organizationId: UniqueEntityID) {
-  const organizationAddress = makeOrganizationAddressEntity({
-    organizationId,
-  });
+// export async function makeOrganizationAddressRequest(organizationId: UniqueEntityID) {
+//   const organizationAddress = makeOrganizationAddressEntity({
+//     organizationId,
+//   });
 
-  const prismaOrganizationAddressRepository = new PrismaOrganizationAddressRepository();
+//   const prismaOrganizationAddressRepository = new PrismaOrganizationAddressRepository();
 
-  await prismaOrganizationAddressRepository.create(organizationAddress);
+//   await prismaOrganizationAddressRepository.create(organizationAddress);
 
-  return { organizationAddress };
-}
+//   return { organizationAddress };
+// }
