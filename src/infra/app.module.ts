@@ -3,6 +3,7 @@ import { ThrottlerModule } from "@nestjs/throttler";
 
 import { HttpModule } from "./http/http.module";
 import { AuthModule } from "./auth/auth.module";
+import { QueueModule } from "./queue/queue.module";
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { AuthModule } from "./auth/auth.module";
         limit: 100,
       },
     ]),
+    QueueModule,
     AuthModule,
     HttpModule,
   ],

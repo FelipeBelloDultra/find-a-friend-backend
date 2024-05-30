@@ -1,6 +1,5 @@
-export interface QueueProvider {
-  addJob: <JobDataType>(jobData: JobDataType) => Promise<void>;
-  process: <ProcessDataType>(processFunction: (job: { data: ProcessDataType }) => Promise<void>) => void;
+export abstract class QueueProvider {
+  public abstract addJob: <JobDataType>(jobData: JobDataType) => Promise<void>;
 }
 
 export interface QueueJob {

@@ -1,15 +1,17 @@
+import { Injectable } from "@nestjs/common";
+
 import { Either, left, right } from "~/core/either";
 import { NotAllowed } from "~/core/errors/not-allowed";
 import { PetNotFound } from "~/domain/pet/application/use-cases/errors/pet-not-found";
 import { OrganizationNotFound } from "~/domain/organization/application/use-cases/errors/organization-not-found";
 import { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
-import { QueueProvider } from "~/application/providers/queue/queue-provider";
 import { UseCase } from "~/application/use-case";
 import { PetRepository } from "~/domain/pet/application/repository/pet-repository";
 import { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
 import { AdoptionRepository } from "~/domain/adoption/application/repository/adoption-repository";
 
 import { ExpiresAt } from "../../enterprise/entities/value-object/expires-at";
+import { SendVerificationCode } from "../jobs/send-verification-code";
 
 interface AdoptPetInput {
   petId: string;
@@ -23,12 +25,13 @@ type OnRight = { adoption: Adoption };
 
 type AdoptPetOutput = Promise<Either<OnLeft, OnRight>>;
 
+@Injectable()
 export class AdoptPet implements UseCase<AdoptPetInput, AdoptPetOutput> {
   public constructor(
     private readonly adoptionRepository: AdoptionRepository,
     private readonly organizationRepository: OrganizationRepository,
     private readonly petRepository: PetRepository,
-    private readonly sendAdoptionVerificationCodeQueue: QueueProvider,
+    private readonly sendAdoptionVerificationCodeQueue: SendVerificationCode,
   ) {}
 
   public async execute(input: AdoptPetInput): AdoptPetOutput {
