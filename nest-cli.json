@@ -4,6 +4,7 @@
   "sourceRoot": "src",
   "entryFile": "infra/main",
   "compilerOptions": {
+    "assets": ["**/*.hbs"],
     "deleteOutDir": true
   }
 }

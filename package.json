@@ -24,6 +24,7 @@
     "lint:fix": "eslint --fix --ext .ts src/ test/"
   },
   "dependencies": {
+    "@nestjs-modules/mailer": "2.0.2",
     "@nestjs/bull": "10.1.1",
     "@nestjs/common": "10.3.8",
     "@nestjs/config": "3.2.2",
