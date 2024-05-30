@@ -1,35 +1,61 @@
+import cookieParser from "cookie-parser";
+import { INestApplication } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
+import { Test } from "@nestjs/testing";
 import supertest from "supertest";
 
-import { makeOrganization } from "test/factories/make-organization";
+import { makeOrganization, OrganizationFactory } from "test/factories/make-organization";
+import { AppModule } from "~/infra/app.module";
+import { DatabaseModule } from "~/infra/database/database.module";
 
-import { App } from "~/infra/http/app";
+describe.only("Refresh token [E2E]", () => {
+  let app: INestApplication;
+  let jwt: JwtService;
+  let organizationFactory: OrganizationFactory;
 
-let app: App;
-
-describe("[PATCH] Refresh token controller", () => {
   beforeAll(async () => {
-    app = new App();
-    await app.start();
-    await app.instance.ready();
+    const moduleRef = await Test.createTestingModule({
+      imports: [AppModule, DatabaseModule],
+      providers: [OrganizationFactory],
+    }).compile();
+
+    app = moduleRef.createNestApplication();
+
+    organizationFactory = moduleRef.get(OrganizationFactory);
+    jwt = moduleRef.get(JwtService);
+
+    app.use(cookieParser());
+
+    await app.init();
   });
 
-  it("should be able refresh token", async () => {
+  it("[PATCH] /api/refresh-token", async () => {
+    const password = "password";
     const org = await makeOrganization();
-    await supertest(app.instance.server).post("/api/orgs").send({
-      email: org.email,
-      logoUrl: org.logoUrl,
-      name: org.name,
-      password: "123456",
-      phone: org.phone,
+    const email = org.email;
+
+    const createdOrg = await organizationFactory.makePrismaOrganization(org);
+
+    const authResponse = await supertest(app.getHttpServer()).post("/session").send({
+      email,
+      password,
     });
 
-    const authResponse = await supertest(app.instance.server).post("/api/session").send({
-      email: org.email,
-      password: "123456",
-    });
-    const cookies = authResponse.get("Set-Cookie") as Array<string>;
+    const cookies = authResponse.get("Set-Cookie");
+    const token = jwt.sign(
+      {
+        sub: createdOrg.id.toValue(),
+      },
+      {
+        expiresIn: "10m",
+      },
+    );
 
-    const sut = await supertest(app.instance.server).patch("/api/refresh-token").set("Cookie", cookies).send();
+    const sut = await supertest(app.getHttpServer())
+      .patch("/refresh-token")
+      .set("Cookie", cookies)
+      .set("Authorization", `Bearer ${token}`)
+      .send();
 
     expect(sut.status).toEqual(200);
     expect(sut.body).toEqual(
@@ -43,6 +69,6 @@ describe("[PATCH] Refresh token controller", () => {
   });
 
   afterAll(async () => {
-    await app.disconnect();
+    await app.close();
   });
 });
