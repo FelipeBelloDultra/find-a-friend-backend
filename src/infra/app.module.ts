@@ -5,6 +5,7 @@ import { MailerModule } from "@nestjs-modules/mailer";
 import { HttpModule } from "./http/http.module";
 import { AuthModule } from "./auth/auth.module";
 import { QueueModule } from "./queue/queue.module";
+import { EventsModule } from "./events/events.module";
 
 @Module({
   imports: [
@@ -18,10 +19,7 @@ import { QueueModule } from "./queue/queue.module";
     QueueModule,
     AuthModule,
     HttpModule,
+    EventsModule,
   ],
 })
-export class AppModule {
-  public test() {
-    console.log(this);
-  }
-}
+export class AppModule {}

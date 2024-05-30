@@ -5,17 +5,15 @@ import { OrganizationAddressCreatedEvent } from "../../enterprise/events/organiz
 import { CompleteOrganizationProfile } from "../use-cases/complete-organization-profile";
 
 export class OnOrganizationAddressCreated implements EventHandler {
-  public constructor(private readonly completeOrganizationProfile: CompleteOrganizationProfile) {}
+  public constructor(private readonly completeOrganizationProfile: CompleteOrganizationProfile) {
+    this.setupSubscriptions();
+  }
 
   public setupSubscriptions(): void {
     DomainEvents.register(
       this.completeOrganizationProfileOnAddAddress.bind(this),
       OrganizationAddressCreatedEvent.name,
     );
-  }
-
-  public listen(): void {
-    this.setupSubscriptions();
   }
 
   private async completeOrganizationProfileOnAddAddress({ organizationAddress }: OrganizationAddressCreatedEvent) {
