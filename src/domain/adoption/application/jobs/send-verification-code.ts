@@ -1,3 +1,3 @@
-import { QueueProvider } from "~/application/providers/queue/queue-provider";
+import { QueueProvider } from "~/application/queue/queue-provider";
 
 export abstract class SendVerificationCode extends QueueProvider {}

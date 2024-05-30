@@ -9,7 +9,7 @@ import { makePetEntity } from "test/factories/make-pet";
 import { makeAdoption } from "test/factories/make-adoption";
 import { InMemoryOrganizationAddressRepository } from "test/repository/in-memory-organization-address-repository";
 import { makeOrganizationAddressEntity } from "test/factories/make-organization-address";
-import { FakeQueueProvider } from "test/providers/fake-queue-provider";
+import { FakeQueueProvider } from "test/queue/fake-queue-provider";
 import { OrganizationAddress } from "~/domain/organization/enterprise/entities/organization-address";
 import { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
 import { Pet } from "~/domain/pet/enterprise/entities/pet";

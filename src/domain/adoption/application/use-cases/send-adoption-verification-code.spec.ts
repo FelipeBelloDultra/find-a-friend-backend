@@ -1,21 +1,21 @@
-import { FakeMailProvider } from "test/providers/fake-mail-provider";
 import { env } from "~/config/env";
+import { FakeSendAdoptionCodeMail } from "test/mail/fake-send-adoption-code-mail";
 
 import { ExpiresAt } from "../../enterprise/entities/value-object/expires-at";
 
 import { SendAdoptionVerificationCode } from "./send-adoption-verification-code";
 
-let fakeMailProvider: FakeMailProvider;
+let fakeSendAdoptionCodeMail: FakeSendAdoptionCodeMail;
 let sut: SendAdoptionVerificationCode;
 
 describe("Send adoption verification code", () => {
   beforeEach(() => {
-    fakeMailProvider = new FakeMailProvider();
-    sut = new SendAdoptionVerificationCode(fakeMailProvider);
+    fakeSendAdoptionCodeMail = new FakeSendAdoptionCodeMail();
+    sut = new SendAdoptionVerificationCode(fakeSendAdoptionCodeMail);
   });
 
   it("should send the validation code", async () => {
-    const spyMailProvider_sendAdoptionVerificationCode = vi.spyOn(fakeMailProvider, "sendAdoptionCodeMail");
+    const spyMailProvider_send = vi.spyOn(fakeSendAdoptionCodeMail, "send");
     const code = "code-example";
     const link = `${env.FRONTEND_URL}/auth/adoption/${code}/confirmation`;
 
@@ -27,8 +27,8 @@ describe("Send adoption verification code", () => {
       petName: "test",
     });
 
-    expect(spyMailProvider_sendAdoptionVerificationCode).toHaveBeenCalledTimes(1);
-    expect(spyMailProvider_sendAdoptionVerificationCode).toHaveBeenCalledWith(
+    expect(spyMailProvider_send).toHaveBeenCalledTimes(1);
+    expect(spyMailProvider_send).toHaveBeenCalledWith(
       expect.objectContaining({
         confirmationLink: link,
       }),
