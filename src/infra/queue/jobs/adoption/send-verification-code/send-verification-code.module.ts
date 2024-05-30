@@ -3,6 +3,8 @@ import { Module } from "@nestjs/common";
 
 import { SendVerificationCode } from "~/domain/adoption/application/jobs/send-verification-code";
 import { SendAdoptionVerificationCode } from "~/domain/adoption/application/use-cases/send-adoption-verification-code";
+import { SendAdoptionCodeMail } from "~/domain/adoption/application/mail/send-adoption-code-mail";
+import { SendAdoptionCodeMailService } from "~/infra/mail/send-adoption-code-mail.service";
 
 import { SendVerificationCodeService } from "./send-verification-code.service";
 import { SendVerificationCodeConsumer } from "./send-verification-code.consumer";
@@ -14,6 +16,10 @@ import { SendVerificationCodeConsumer } from "./send-verification-code.consumer"
     }),
   ],
   providers: [
+    {
+      provide: SendAdoptionCodeMail,
+      useClass: SendAdoptionCodeMailService,
+    },
     {
       provide: SendVerificationCode,
       useClass: SendVerificationCodeService,

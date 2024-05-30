@@ -1,12 +1,10 @@
 import { MailerService } from "@nestjs-modules/mailer";
-import { Injectable } from "@nestjs/common";
 
 import {
   SendAdoptionCodeMail,
   SendAdoptionCodeMailData,
 } from "~/domain/adoption/application/mail/send-adoption-code-mail";
 
-@Injectable()
 export class SendAdoptionCodeMailService implements SendAdoptionCodeMail {
   public constructor(private readonly mailerService: MailerService) {}
 

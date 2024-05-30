@@ -5,9 +5,6 @@ import { MailerModule } from "@nestjs-modules/mailer";
 import { HandlebarsAdapter } from "@nestjs-modules/mailer/dist/adapters/handlebars.adapter";
 
 import { env } from "~/config/env";
-import { SendAdoptionCodeMail } from "~/domain/adoption/application/mail/send-adoption-code-mail";
-
-import { SendAdoptionCodeMailService } from "./send-adoption-code-mail.service";
 
 @Module({
   imports: [
@@ -32,12 +29,6 @@ import { SendAdoptionCodeMailService } from "./send-adoption-code-mail.service";
         },
       },
     }),
-  ],
-  providers: [
-    {
-      provide: SendAdoptionCodeMail,
-      useClass: SendAdoptionCodeMailService,
-    },
   ],
 })
 export class MailModule {}
