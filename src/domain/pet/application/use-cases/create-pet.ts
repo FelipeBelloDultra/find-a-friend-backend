@@ -4,7 +4,6 @@ import { NotAllowed } from "~/core/errors/not-allowed";
 import { Pet, PetEnergyLevel, PetEnvironmentSize, PetSize } from "~/domain/pet/enterprise/entities/pet";
 import { OrganizationAddressNotFound } from "~/domain/organization/application/use-cases/errors/organization-address-not-found";
 import { OrganizationAddressRepository } from "~/domain/organization/application/repository/organization-address-repository";
-import { UseCase } from "~/application/use-case";
 import { PetRepository } from "~/domain/pet/application/repository/pet-repository";
 import { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
 
@@ -19,19 +18,17 @@ interface CreatePetInput {
   energyLevel: PetEnergyLevel;
   environmentSize: PetEnvironmentSize;
 }
-type OnLeft = OrganizationNotFound | OrganizationAddressNotFound | NotAllowed;
-type OnRight = { pet: Pet };
 
-type CreatePetOutput = Promise<Either<OnLeft, OnRight>>;
+type CreatePetOutput = Either<OrganizationNotFound | OrganizationAddressNotFound | NotAllowed, { pet: Pet }>;
 
-export class CreatePet implements UseCase<CreatePetInput, CreatePetOutput> {
+export class CreatePet {
   public constructor(
     private readonly organizationRepository: OrganizationRepository,
     private readonly organizationAddressRepository: OrganizationAddressRepository,
     private readonly petRepository: PetRepository,
   ) {}
 
-  public async execute(input: CreatePetInput): CreatePetOutput {
+  public async execute(input: CreatePetInput): Promise<CreatePetOutput> {
     const organization = await this.organizationRepository.findById(input.organizationId);
     if (!organization) {
       return left(new OrganizationNotFound());

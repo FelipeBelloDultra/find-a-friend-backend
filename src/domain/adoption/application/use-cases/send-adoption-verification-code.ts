@@ -2,7 +2,6 @@ import { Injectable } from "@nestjs/common";
 
 import { Either, right } from "~/core/either";
 import { env } from "~/config/env";
-import { UseCase } from "~/application/use-case";
 
 import { SendAdoptionCodeMail } from "../mail/send-adoption-code-mail";
 import { ExpiresAt } from "../../enterprise/entities/value-object/expires-at";
@@ -14,18 +13,14 @@ interface SendAdoptionVerificationCodeInput {
   adoptionCode: string;
   codeExpiresAt: number;
 }
-type OnLeft = never;
-type OnRight = void;
 
-type SendAdoptionVerificationCodeOutput = Promise<Either<OnLeft, OnRight>>;
+type SendAdoptionVerificationCodeOutput = Either<never, void>;
 
 @Injectable()
-export class SendAdoptionVerificationCode
-  implements UseCase<SendAdoptionVerificationCodeInput, SendAdoptionVerificationCodeOutput>
-{
+export class SendAdoptionVerificationCode {
   public constructor(private readonly sendAdoptionCodeMail: SendAdoptionCodeMail) {}
 
-  public async execute(input: SendAdoptionVerificationCodeInput): SendAdoptionVerificationCodeOutput {
+  public async execute(input: SendAdoptionVerificationCodeInput): Promise<SendAdoptionVerificationCodeOutput> {
     const link = `${env.FRONTEND_URL}/auth/adoption/${input.adoptionCode}/confirmation`;
 
     await this.sendAdoptionCodeMail.send({

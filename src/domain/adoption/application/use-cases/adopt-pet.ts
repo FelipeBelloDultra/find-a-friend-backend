@@ -5,7 +5,6 @@ import { NotAllowed } from "~/core/errors/not-allowed";
 import { PetNotFound } from "~/domain/pet/application/use-cases/errors/pet-not-found";
 import { OrganizationNotFound } from "~/domain/organization/application/use-cases/errors/organization-not-found";
 import { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
-import { UseCase } from "~/application/use-case";
 import { PetRepository } from "~/domain/pet/application/repository/pet-repository";
 import { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
 import { AdoptionRepository } from "~/domain/adoption/application/repository/adoption-repository";
@@ -20,13 +19,11 @@ interface AdoptPetInput {
   adopterName: string;
   adopterPhone: string;
 }
-type OnLeft = PetNotFound | OrganizationNotFound | NotAllowed;
-type OnRight = { adoption: Adoption };
 
-type AdoptPetOutput = Promise<Either<OnLeft, OnRight>>;
+type AdoptPetOutput = Either<PetNotFound | OrganizationNotFound | NotAllowed, { adoption: Adoption }>;
 
 @Injectable()
-export class AdoptPet implements UseCase<AdoptPetInput, AdoptPetOutput> {
+export class AdoptPet {
   public constructor(
     private readonly adoptionRepository: AdoptionRepository,
     private readonly organizationRepository: OrganizationRepository,
@@ -34,7 +31,7 @@ export class AdoptPet implements UseCase<AdoptPetInput, AdoptPetOutput> {
     private readonly sendAdoptionVerificationCodeQueue: SendVerificationCode,
   ) {}
 
-  public async execute(input: AdoptPetInput): AdoptPetOutput {
+  public async execute(input: AdoptPetInput): Promise<AdoptPetOutput> {
     const organization = await this.organizationRepository.findById(input.organizationId);
     if (!organization) {
       return left(new OrganizationNotFound());

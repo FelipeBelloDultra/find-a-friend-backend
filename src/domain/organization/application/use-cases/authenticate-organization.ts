@@ -1,7 +1,6 @@
 import { Injectable } from "@nestjs/common";
 
 import { Either, left, right } from "~/core/either";
-import { UseCase } from "~/application/use-case";
 import { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
 import { Encrypter } from "~/application/cryptography/encrypter";
 
@@ -11,21 +10,17 @@ interface AuthenticateOrganizationInput {
   email: string;
   password: string;
 }
-type OnLeft = InvalidCredentials;
-type OnRight = { accessToken: string; refreshToken: string };
 
-type AuthenticateOrganizationOutput = Promise<Either<OnLeft, OnRight>>;
+type AuthenticateOrganizationOutput = Either<InvalidCredentials, { accessToken: string; refreshToken: string }>;
 
 @Injectable()
-export class AuthenticateOrganization
-  implements UseCase<AuthenticateOrganizationInput, AuthenticateOrganizationOutput>
-{
+export class AuthenticateOrganization {
   public constructor(
     private readonly organizationRepository: OrganizationRepository,
     private readonly encrypter: Encrypter,
   ) {}
 
-  public async execute(input: AuthenticateOrganizationInput): AuthenticateOrganizationOutput {
+  public async execute(input: AuthenticateOrganizationInput): Promise<AuthenticateOrganizationOutput> {
     const org = await this.organizationRepository.findByEmail(input.email);
     if (!org) {
       return left(new InvalidCredentials());
