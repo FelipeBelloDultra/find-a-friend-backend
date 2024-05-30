@@ -31,11 +31,11 @@ class DatabaseSetupTesting {
   }
 }
 
-beforeEach(async () => {
+beforeAll(async () => {
   execSync("npm run db:migrate:deploy");
 });
 
-afterEach(async () => {
+afterAll(async () => {
   await DatabaseSetupTesting.DB_CONNECTION.$executeRawUnsafe(
     `DROP SCHEMA IF EXISTS "${DatabaseSetupTesting.SCHEMA_NAME_ID}" CASCADE`,
   );

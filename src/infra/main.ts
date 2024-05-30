@@ -1,5 +1,4 @@
-// import fastifyCookie from "@fastify/cookie";
-import * as cookieParser from "cookie-parser";
+import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import { NestFactory } from "@nestjs/core";
 

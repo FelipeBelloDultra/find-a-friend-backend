@@ -20,4 +20,8 @@ import { QueueModule } from "./queue/queue.module";
     HttpModule,
   ],
 })
-export class AppModule {}
+export class AppModule {
+  public test() {
+    console.log(this);
+  }
+}

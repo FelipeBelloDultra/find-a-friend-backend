@@ -1,10 +1,13 @@
 import { faker } from "@faker-js/faker";
+import { Injectable } from "@nestjs/common";
 
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
 import {
   OrganizationAddress,
   OrganizationAddressProps,
 } from "~/domain/organization/enterprise/entities/organization-address";
+import { OrganizationAddressMapper } from "~/infra/database/prisma/mappers/organization-address-mapper";
+import { PrismaService } from "~/infra/database/prisma/prisma.service";
 
 export function makeOrganizationAddress() {
   return {
@@ -33,14 +36,17 @@ export function makeOrganizationAddressEntity(override: Partial<OrganizationAddr
   return address;
 }
 
-// export async function makeOrganizationAddressRequest(organizationId: UniqueEntityID) {
-//   const organizationAddress = makeOrganizationAddressEntity({
-//     organizationId,
-//   });
+@Injectable()
+export class OrganizationAddressFactory {
+  public constructor(private prisma: PrismaService) {}
 
-//   const prismaOrganizationAddressRepository = new PrismaOrganizationAddressRepository();
+  public async makePrismaOrganization(data: Partial<OrganizationAddressProps> = {}): Promise<OrganizationAddress> {
+    const organizationAddress = makeOrganizationAddressEntity(data);
 
-//   await prismaOrganizationAddressRepository.create(organizationAddress);
+    await this.prisma.organizationAddress.create({
+      data: OrganizationAddressMapper.toPersistence(organizationAddress),
+    });
 
-//   return { organizationAddress };
-// }
+    return organizationAddress;
+  }
+}
