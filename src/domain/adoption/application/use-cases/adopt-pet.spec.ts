@@ -18,17 +18,17 @@ import { Right } from "~/core/either";
 
 import { AdoptPet } from "./adopt-pet";
 
-let sut: AdoptPet;
-let inMemoryPetRepository: InMemoryPetRepository;
-let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
-let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
-let inMemoryAdoptionRepository: InMemoryAdoptionRepository;
-let fakeQueueProvider: FakeQueueProvider;
-let organizationAddress: OrganizationAddress;
-let organization: Organization;
-let pet: Pet;
-
 describe("Adopt pet", () => {
+  let sut: AdoptPet;
+  let inMemoryPetRepository: InMemoryPetRepository;
+  let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
+  let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
+  let inMemoryAdoptionRepository: InMemoryAdoptionRepository;
+  let fakeQueueProvider: FakeQueueProvider;
+  let organizationAddress: OrganizationAddress;
+  let organization: Organization;
+  let pet: Pet;
+
   beforeEach(async () => {
     organization = await makeOrganizationEntity();
     organizationAddress = makeOrganizationAddressEntity({

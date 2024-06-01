@@ -5,11 +5,11 @@ import { InMemoryOrganizationAddressRepository } from "test/repository/in-memory
 import { PetNotFound } from "./errors/pet-not-found";
 import { ShowPetDetail } from "./show-pet-detail";
 
-let sut: ShowPetDetail;
-let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
-let inMemoryPetRepository: InMemoryPetRepository;
-
 describe("Show pet details", () => {
+  let sut: ShowPetDetail;
+  let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
+  let inMemoryPetRepository: InMemoryPetRepository;
+
   beforeEach(() => {
     inMemoryOrganizationAddressRepository = new InMemoryOrganizationAddressRepository();
     inMemoryPetRepository = new InMemoryPetRepository(inMemoryOrganizationAddressRepository);

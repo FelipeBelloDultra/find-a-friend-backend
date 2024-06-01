@@ -9,12 +9,12 @@ import { VerifyAdoptionCode } from "./verify-adoption-code";
 import { AdoptionNotFound } from "./errors/adoption-not-found";
 import { AdoptionCodeExpired } from "./errors/adoption-code-expired";
 
-let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
-let inMemoryPetRepository: InMemoryPetRepository;
-let inMemoryAdoptionRepository: InMemoryAdoptionRepository;
-let sut: VerifyAdoptionCode;
-
 describe("Verify adoption code", () => {
+  let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
+  let inMemoryPetRepository: InMemoryPetRepository;
+  let inMemoryAdoptionRepository: InMemoryAdoptionRepository;
+  let sut: VerifyAdoptionCode;
+
   beforeEach(() => {
     inMemoryOrganizationAddressRepository = new InMemoryOrganizationAddressRepository();
     inMemoryAdoptionRepository = new InMemoryAdoptionRepository();

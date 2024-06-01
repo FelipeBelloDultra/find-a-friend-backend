@@ -6,11 +6,11 @@ import { makeOrganizationEntity } from "test/factories/make-organization";
 import { CreateOrganizationAddress } from "./create-organization-address";
 import { OrganizationNotFound } from "./errors/organization-not-found";
 
-let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
-let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
-let sut: CreateOrganizationAddress;
-
 describe("Create organization address", () => {
+  let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
+  let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
+  let sut: CreateOrganizationAddress;
+
   beforeEach(() => {
     inMemoryOrganizationAddressRepository = new InMemoryOrganizationAddressRepository();
     inMemoryOrganizationRepository = new InMemoryOrganizationRepository();

@@ -6,10 +6,10 @@ import { Right } from "~/core/either";
 import { OrganizationNotFound } from "./errors/organization-not-found";
 import { ShowOrganizationProfile } from "./show-organization-profile";
 
-let sut: ShowOrganizationProfile;
-let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
-
 describe("Show organization profile", () => {
+  let sut: ShowOrganizationProfile;
+  let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
+
   beforeEach(() => {
     inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
     sut = new ShowOrganizationProfile(inMemoryOrganizationRepository);

@@ -6,11 +6,11 @@ import { FakeEncrypter } from "test/cryptography/fake-encrypter";
 import { InvalidCredentials } from "./errors/invalid-credentials";
 import { AuthenticateOrganization } from "./authenticate-organization";
 
-let sut: AuthenticateOrganization;
-let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
-let fakeEncrypter: FakeEncrypter;
-
 describe("Authenticate organization", () => {
+  let sut: AuthenticateOrganization;
+  let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
+  let fakeEncrypter: FakeEncrypter;
+
   beforeEach(() => {
     inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
     fakeEncrypter = new FakeEncrypter();

@@ -5,10 +5,10 @@ import { ExpiresAt } from "../../enterprise/entities/value-object/expires-at";
 
 import { SendAdoptionVerificationCode } from "./send-adoption-verification-code";
 
-let fakeSendAdoptionCodeMail: FakeSendAdoptionCodeMail;
-let sut: SendAdoptionVerificationCode;
-
 describe("Send adoption verification code", () => {
+  let fakeSendAdoptionCodeMail: FakeSendAdoptionCodeMail;
+  let sut: SendAdoptionVerificationCode;
+
   beforeEach(() => {
     fakeSendAdoptionCodeMail = new FakeSendAdoptionCodeMail();
     sut = new SendAdoptionVerificationCode(fakeSendAdoptionCodeMail);

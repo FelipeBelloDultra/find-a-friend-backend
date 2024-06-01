@@ -7,11 +7,11 @@ import { CompleteOrganizationProfile } from "../use-cases/complete-organization-
 
 import { OnOrganizationAddressCreated } from "./on-organization-address-created";
 
-let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
-let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
-let completeOrganizationProfile: CompleteOrganizationProfile;
-
 describe("On organization address created", () => {
+  let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
+  let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
+  let completeOrganizationProfile: CompleteOrganizationProfile;
+
   beforeEach(() => {
     inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
     inMemoryOrganizationAddressRepository = new InMemoryOrganizationAddressRepository();

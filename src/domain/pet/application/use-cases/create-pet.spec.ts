@@ -12,14 +12,13 @@ import { CompleteOrganizationProfile } from "~/domain/organization/application/u
 
 import { CreatePet } from "./create-pet";
 
-let sut: CreatePet;
-let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
-let inMemoryPetRepository: InMemoryPetRepository;
-let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
-
-let completeOrganizationProfile: CompleteOrganizationProfile;
-
 describe("Create pet", () => {
+  let sut: CreatePet;
+  let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
+  let inMemoryPetRepository: InMemoryPetRepository;
+  let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
+  let completeOrganizationProfile: CompleteOrganizationProfile;
+
   beforeEach(() => {
     inMemoryOrganizationAddressRepository = new InMemoryOrganizationAddressRepository();
     inMemoryOrganizationRepository = new InMemoryOrganizationRepository();

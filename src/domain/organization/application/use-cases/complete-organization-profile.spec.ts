@@ -3,10 +3,10 @@ import { makeOrganizationEntity } from "test/factories/make-organization";
 
 import { CompleteOrganizationProfile } from "./complete-organization-profile";
 
-let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
-let sut: CompleteOrganizationProfile;
-
 describe("Complete organization profile", () => {
+  let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
+  let sut: CompleteOrganizationProfile;
+
   beforeEach(() => {
     inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
 

@@ -10,15 +10,15 @@ import { Organization } from "~/domain/organization/enterprise/entities/organiza
 
 import { FetchManyPets } from "./fetch-many-pets";
 
-let sut: FetchManyPets;
-let inMemoryPetRepository: InMemoryPetRepository;
-let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
-let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
-let organization: Organization;
-let organizationAddress: OrganizationAddress;
-let pet: Pet;
-
 describe("Fetch many pets", () => {
+  let sut: FetchManyPets;
+  let inMemoryPetRepository: InMemoryPetRepository;
+  let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
+  let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
+  let organization: Organization;
+  let organizationAddress: OrganizationAddress;
+  let pet: Pet;
+
   beforeEach(async () => {
     organizationAddress = makeOrganizationAddressEntity();
     organization = await makeOrganizationEntity();
