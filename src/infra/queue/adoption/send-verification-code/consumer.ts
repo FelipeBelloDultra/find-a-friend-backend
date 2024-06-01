@@ -3,7 +3,9 @@ import { Job } from "bull";
 
 import { SendAdoptionVerificationCode } from "~/domain/adoption/application/use-cases/send-adoption-verification-code";
 
-@Processor("adoption.send-verification-code.job")
+import { ADOPTION_JOBS } from "../constants";
+
+@Processor(ADOPTION_JOBS.SendVerificationCode)
 export class SendVerificationCodeConsumer {
   public constructor(private readonly sendAdoptionVerificationCode: SendAdoptionVerificationCode) {}
 

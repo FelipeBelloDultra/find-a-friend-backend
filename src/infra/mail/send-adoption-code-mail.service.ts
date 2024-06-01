@@ -1,10 +1,12 @@
 import { MailerService } from "@nestjs-modules/mailer";
+import { Injectable } from "@nestjs/common";
 
 import {
   SendAdoptionCodeMail,
   SendAdoptionCodeMailData,
 } from "~/domain/adoption/application/mail/send-adoption-code-mail";
 
+@Injectable()
 export class SendAdoptionCodeMailService implements SendAdoptionCodeMail {
   public constructor(private readonly mailerService: MailerService) {}
 
@@ -12,7 +14,7 @@ export class SendAdoptionCodeMailService implements SendAdoptionCodeMail {
     await this.mailerService.sendMail({
       to: data.adopterEmail,
       subject: `Welcome, ${data.adopterName}!`,
-      html: "verify-adoption-code",
+      template: "verify-adoption-code",
       context: {
         name: data.adopterName,
         petName: data.petName,
