@@ -1,4 +1,4 @@
-import type { PetAdoptionStatus } from "@prisma/client";
+import { PetAdoptionStatus } from "@prisma/client";
 
 export interface FetchManyAdoptionsQuery {
   id: string;

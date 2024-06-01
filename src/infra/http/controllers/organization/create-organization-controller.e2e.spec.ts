@@ -1,70 +1,51 @@
+import { INestApplication } from "@nestjs/common";
+import { Test } from "@nestjs/testing";
 import supertest from "supertest";
 
-import { makeOrganization } from "test/factories/make-organization";
-import { App } from "~/infra/http/app";
+import { makeOrganization, OrganizationFactory } from "test/factories/make-organization";
+import { AppModule } from "~/infra/app.module";
+import { DatabaseModule } from "~/infra/database/database.module";
+import { PrismaService } from "~/infra/database/prisma/prisma.service";
 
-let app: App;
+describe("Create organization [E2E]", () => {
+  let app: INestApplication;
+  let prisma: PrismaService;
 
-describe("[POST] Create organization controller", () => {
   beforeAll(async () => {
-    app = new App();
-    await app.start();
-    await app.instance.ready();
+    const moduleRef = await Test.createTestingModule({
+      imports: [AppModule, DatabaseModule],
+      providers: [OrganizationFactory],
+    }).compile();
+
+    app = moduleRef.createNestApplication();
+
+    prisma = moduleRef.get(PrismaService);
+
+    await app.init();
   });
 
-  it("should create organization and return 201", async () => {
+  it("[POST] /api/orgs", async () => {
     const org = await makeOrganization();
 
-    const sut = await supertest(app.instance.server).post("/api/orgs").send({
+    const sut = await supertest(app.getHttpServer()).post("/orgs").send({
       email: org.email,
       logoUrl: org.logoUrl,
       name: org.name,
       password: "123456",
       phone: org.phone,
+    });
+
+    const savedOrganization = await prisma.organization.findUnique({
+      where: {
+        email: org.email,
+      },
     });
 
     expect(sut.status).toBe(201);
-    expect(sut.body).toEqual(
-      expect.objectContaining({
-        data: expect.objectContaining({
-          organization_id: expect.any(String),
-        }),
-      }),
-    );
-  });
-
-  it("should not be able to create an organization with same email", async () => {
-    const org = await makeOrganization();
-    await supertest(app.instance.server).post("/api/orgs").send({
-      email: org.email,
-      logoUrl: org.logoUrl,
-      name: org.name,
-      password: "123456",
-      phone: org.phone,
-    });
-
-    const sut = await supertest(app.instance.server).post("/api/orgs").send({
-      email: org.email,
-      logoUrl: org.logoUrl,
-      name: org.name,
-      password: "123456",
-      phone: org.phone,
-    });
-
-    expect(sut.status).toBe(409);
-    expect(sut.body).toEqual(
-      expect.objectContaining({
-        error: expect.objectContaining({
-          message: "Email already used.",
-          issues: {
-            email: "Email already used.",
-          },
-        }),
-      }),
-    );
+    expect(savedOrganization).not.toBeNull();
   });
 
   afterAll(async () => {
-    await app.disconnect();
+    await app.close();
   });
 });

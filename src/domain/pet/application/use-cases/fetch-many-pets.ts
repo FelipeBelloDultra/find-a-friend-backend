@@ -1,10 +1,8 @@
-import { right } from "~/core/either";
+import { Either, right } from "~/core/either";
+import { PetEnergyLevel, PetEnvironmentSize, PetSize } from "~/domain/pet/enterprise/entities/pet";
+import { PetRepository } from "~/domain/pet/application/repository/pet-repository";
 
-import type { PetEnergyLevel, PetEnvironmentSize, PetSize } from "~/domain/pet/enterprise/entities/pet";
-import type { FetchManyPetsQuery } from "../query/queries";
-import type { UseCase } from "~/application/use-case";
-import type { Either } from "~/core/either";
-import type { PetRepository } from "~/domain/pet/application/repository/pet-repository";
+import { FetchManyPetsQuery } from "../query/queries";
 
 interface FetchManyPetsInput {
   city: string;
@@ -15,19 +13,20 @@ interface FetchManyPetsInput {
   page: number;
   limit: number;
 }
-type OnLeft = never;
-type OnRight = {
-  pets: Array<
-    Omit<FetchManyPetsQuery, "about" | "environment_size" | "size" | "adoption_status" | "created_at" | "updated_at">
-  >;
-};
 
-type FetchManyPetsOutput = Promise<Either<OnLeft, OnRight>>;
+type FetchManyPetsOutput = Either<
+  never,
+  {
+    pets: Array<
+      Omit<FetchManyPetsQuery, "about" | "environment_size" | "size" | "adoption_status" | "created_at" | "updated_at">
+    >;
+  }
+>;
 
-export class FetchManyPets implements UseCase<FetchManyPetsInput, FetchManyPetsOutput> {
+export class FetchManyPets {
   public constructor(private readonly petRepository: PetRepository) {}
 
-  public async execute(input: FetchManyPetsInput): FetchManyPetsOutput {
+  public async execute(input: FetchManyPetsInput): Promise<FetchManyPetsOutput> {
     const pets = await this.petRepository.findAll(
       {
         city: input.city,

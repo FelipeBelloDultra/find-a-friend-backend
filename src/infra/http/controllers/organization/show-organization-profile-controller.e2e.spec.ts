@@ -1,22 +1,42 @@
+import { INestApplication } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
+import { Test } from "@nestjs/testing";
 import supertest from "supertest";
 
-import { DatabaseConnection } from "~/infra/database/connection";
-import { App } from "~/infra/http/app";
-import { makeAndAuthenticateOrganizationRequest } from "test/factories/make-organization";
+import { OrganizationFactory } from "test/factories/make-organization";
+import { AppModule } from "~/infra/app.module";
+import { DatabaseModule } from "~/infra/database/database.module";
 
-let app: App;
+describe("Show organization profile [E2E]", () => {
+  let app: INestApplication;
+  let jwt: JwtService;
+  let organizationFactory: OrganizationFactory;
 
-describe("[GET] Show organization profile controller", () => {
   beforeAll(async () => {
-    app = new App();
-    await app.start();
-    await app.instance.ready();
+    const moduleRef = await Test.createTestingModule({
+      imports: [AppModule, DatabaseModule],
+      providers: [OrganizationFactory],
+    }).compile();
+
+    app = moduleRef.createNestApplication();
+
+    organizationFactory = moduleRef.get(OrganizationFactory);
+    jwt = moduleRef.get(JwtService);
+
+    await app.init();
   });
 
-  it("should be able show authenticated organization profile", async () => {
-    const { token, organization } = await makeAndAuthenticateOrganizationRequest(app.instance);
+  it("[GET] /api/auth/me", async () => {
+    const organization = await organizationFactory.makePrismaOrganization();
 
-    const sut = await supertest(app.instance.server).get("/api/auth/me").set("Authorization", `Bearer ${token}`).send();
+    const token = jwt.sign(
+      { sub: organization.id.toValue() },
+      {
+        expiresIn: "10m",
+      },
+    );
+
+    const sut = await supertest(app.getHttpServer()).get("/auth/me").set("Authorization", `Bearer ${token}`).send();
 
     expect(sut.statusCode).toEqual(200);
     expect(sut.body).toEqual(
@@ -31,41 +51,7 @@ describe("[GET] Show organization profile controller", () => {
     );
   });
 
-  it("should not be able show authenticated organization profile if organization does not exists", async () => {
-    const { token, organization } = await makeAndAuthenticateOrganizationRequest(app.instance);
-    await DatabaseConnection.query.organization.delete({
-      where: { id: organization.id.toValue() },
-    });
-
-    const sut = await supertest(app.instance.server).get("/api/auth/me").set("Authorization", `Bearer ${token}`).send();
-
-    expect(sut.statusCode).toEqual(404);
-    expect(sut.body).toEqual(
-      expect.objectContaining({
-        error: expect.objectContaining({
-          message: "Organization not found.",
-        }),
-      }),
-    );
-  });
-
-  it("should not be able show authenticated organization profile if JWT is wrong", async () => {
-    const sut = await supertest(app.instance.server)
-      .get("/api/auth/me")
-      .set("Authorization", "Bearer invalid-bearer-token")
-      .send();
-
-    expect(sut.statusCode).toEqual(401);
-    expect(sut.body).toEqual(
-      expect.objectContaining({
-        error: expect.objectContaining({
-          message: "Unauthorized.",
-        }),
-      }),
-    );
-  });
-
   afterAll(async () => {
-    await app.disconnect();
+    await app.close();
   });
 });

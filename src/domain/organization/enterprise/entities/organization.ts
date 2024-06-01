@@ -1,8 +1,8 @@
 import { AggregateRoot } from "~/core/entity/aggregate-root";
+import { UniqueEntityID } from "~/core/entity/unique-entity-id";
+import { Optional } from "~/core/types/optional";
 
-import type { UniqueEntityID } from "~/core/entity/unique-entity-id";
-import type { Optional } from "~/core/types/optional";
-import type { Password } from "./value-object/password";
+import { Password } from "./value-object/password";
 
 export interface OrganizationProps {
   name: string;

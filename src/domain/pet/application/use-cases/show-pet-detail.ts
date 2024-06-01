@@ -1,24 +1,19 @@
-import { left, right } from "~/core/either";
+import { Either, left, right } from "~/core/either";
+import { PetRepository } from "~/domain/pet/application/repository/pet-repository";
+import { Pet } from "~/domain/pet/enterprise/entities/pet";
 
 import { PetNotFound } from "./errors/pet-not-found";
-
-import type { UseCase } from "~/application/use-case";
-import type { Either } from "~/core/either";
-import type { PetRepository } from "~/domain/pet/application/repository/pet-repository";
-import type { Pet } from "~/domain/pet/enterprise/entities/pet";
 
 interface ShowPetDetailInput {
   petId: string;
 }
-type OnLeft = PetNotFound;
-type OnRight = { pet: Pet };
 
-type ShowPetDetailOutput = Promise<Either<OnLeft, OnRight>>;
+type ShowPetDetailOutput = Either<PetNotFound, { pet: Pet }>;
 
-export class ShowPetDetail implements UseCase<ShowPetDetailInput, ShowPetDetailOutput> {
+export class ShowPetDetail {
   public constructor(private readonly petRepository: PetRepository) {}
 
-  public async execute(input: ShowPetDetailInput): ShowPetDetailOutput {
+  public async execute(input: ShowPetDetailInput): Promise<ShowPetDetailOutput> {
     const pet = await this.petRepository.findById(input.petId);
     if (!pet) {
       return left(new PetNotFound());

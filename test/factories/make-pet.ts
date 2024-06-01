@@ -1,10 +1,11 @@
 import { faker } from "@faker-js/faker";
+import { Injectable } from "@nestjs/common";
 
-import { Pet } from "~/domain/pet/enterprise/entities/pet";
+import { Pet, PetProps } from "~/domain/pet/enterprise/entities/pet";
 import { UniqueEntityID } from "~/core/entity/unique-entity-id";
 import { AdoptionStatus } from "~/domain/pet/enterprise/entities/value-object/adoption-status";
-
-import type { PetProps } from "~/domain/pet/enterprise/entities/pet";
+import { PrismaService } from "~/infra/database/prisma/prisma.service";
+import { PetMapper } from "~/infra/database/prisma/mappers/pet-mapper";
 
 export function makePet() {
   return {
@@ -29,4 +30,19 @@ export function makePetEntity(override: Partial<PetProps> = {}, id?: UniqueEntit
   );
 
   return pet;
+}
+
+@Injectable()
+export class PetFactory {
+  public constructor(private prisma: PrismaService) {}
+
+  public async makePrismaPet(data: Partial<PetProps> = {}): Promise<Pet> {
+    const pet = makePetEntity(data);
+
+    await this.prisma.pet.create({
+      data: PetMapper.toPersistence(pet),
+    });
+
+    return pet;
+  }
 }

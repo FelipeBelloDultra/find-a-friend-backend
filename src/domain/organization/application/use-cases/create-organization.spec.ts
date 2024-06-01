@@ -4,10 +4,10 @@ import { InMemoryOrganizationRepository } from "test/repository/in-memory-organi
 import { CreateOrganization } from "./create-organization";
 import { OrganizationAlreadyExists } from "./errors/organization-already-exists";
 
-let sut: CreateOrganization;
-let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
-
 describe("Create organization", () => {
+  let sut: CreateOrganization;
+  let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
+
   beforeEach(() => {
     inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
     sut = new CreateOrganization(inMemoryOrganizationRepository);

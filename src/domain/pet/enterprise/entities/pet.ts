@@ -1,8 +1,8 @@
 import { Entity } from "~/core/entity/entity";
+import { UniqueEntityID } from "~/core/entity/unique-entity-id";
+import { Optional } from "~/core/types/optional";
 
-import type { AdoptionStatus } from "./value-object/adoption-status";
-import type { UniqueEntityID } from "~/core/entity/unique-entity-id";
-import type { Optional } from "~/core/types/optional";
+import { AdoptionStatus } from "./value-object/adoption-status";
 
 export type PetSize = "SMALL" | "MEDIUM" | "LARGE";
 export type PetEnvironmentSize = "SMALL" | "MEDIUM" | "LARGE";

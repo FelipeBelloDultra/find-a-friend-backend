@@ -1,16 +1,15 @@
 import { makeOrganizationEntity } from "test/factories/make-organization";
 import { InMemoryOrganizationRepository } from "test/repository/in-memory-organization-repository";
+import { Organization } from "~/domain/organization/enterprise/entities/organization";
+import { Right } from "~/core/either";
 
 import { OrganizationNotFound } from "./errors/organization-not-found";
 import { ShowOrganizationProfile } from "./show-organization-profile";
 
-import type { Organization } from "~/domain/organization/enterprise/entities/organization";
-import type { Right } from "~/core/either";
-
-let sut: ShowOrganizationProfile;
-let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
-
 describe("Show organization profile", () => {
+  let sut: ShowOrganizationProfile;
+  let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
+
   beforeEach(() => {
     inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
     sut = new ShowOrganizationProfile(inMemoryOrganizationRepository);

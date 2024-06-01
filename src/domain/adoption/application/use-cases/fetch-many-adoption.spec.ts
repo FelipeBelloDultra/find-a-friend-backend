@@ -3,10 +3,10 @@ import { InMemoryAdoptionRepository } from "test/repository/in-memory-adoption-r
 
 import { FetchManyAdoption } from "./fetch-many-adoption";
 
-let sut: FetchManyAdoption;
-let inMemoryAdoptionRepository: InMemoryAdoptionRepository;
-
 describe("Fetch many adoptions", () => {
+  let sut: FetchManyAdoption;
+  let inMemoryAdoptionRepository: InMemoryAdoptionRepository;
+
   beforeEach(() => {
     inMemoryAdoptionRepository = new InMemoryAdoptionRepository();
     sut = new FetchManyAdoption(inMemoryAdoptionRepository);

@@ -1,22 +1,22 @@
+import { Injectable } from "@nestjs/common";
+
 import { DomainEvents } from "~/core/events/domain-events";
+import { EventHandler } from "~/core/events/event-handler";
 
 import { OrganizationAddressCreatedEvent } from "../../enterprise/events/organization-address-created-event";
+import { CompleteOrganizationProfile } from "../use-cases/complete-organization-profile";
 
-import type { CompleteOrganizationProfile } from "../use-cases/complete-organization-profile";
-import type { EventHandler } from "~/core/events/event-handler";
-
+@Injectable()
 export class OnOrganizationAddressCreated implements EventHandler {
-  public constructor(private readonly completeOrganizationProfile: CompleteOrganizationProfile) {}
+  public constructor(private readonly completeOrganizationProfile: CompleteOrganizationProfile) {
+    this.setupSubscriptions();
+  }
 
   public setupSubscriptions(): void {
     DomainEvents.register(
       this.completeOrganizationProfileOnAddAddress.bind(this),
       OrganizationAddressCreatedEvent.name,
     );
-  }
-
-  public listen(): void {
-    this.setupSubscriptions();
   }
 
   private async completeOrganizationProfileOnAddAddress({ organizationAddress }: OrganizationAddressCreatedEvent) {

@@ -1,52 +1,66 @@
+import { BadRequestException, Body, Controller, HttpCode, NotFoundException, Post } from "@nestjs/common";
 import { z } from "zod";
 
+import { UserPayload } from "~/infra/auth/jwt.strategy";
+import { CurrentUser } from "~/infra/auth/current-user-decorator";
 import { OrganizationNotFound } from "~/domain/organization/application/use-cases/errors/organization-not-found";
-import { makeCreateOrganizationAddress } from "~/domain/organization/application/use-cases/factories/make-create-organization-address";
-import { HttpPresenter } from "~/infra/http/http-presenter";
+import { CreateOrganizationAddress } from "~/domain/organization/application/use-cases/create-organization-address";
 
-import type { FastifyReply, FastifyRequest } from "fastify";
+import { ZodValidationPipe } from "../../pipes/zod-validation-pipe";
 
-export async function createOrganizationAddressController(request: FastifyRequest, reply: FastifyReply) {
-  const createOrganizationAddressSchema = z.object({
-    zipcode: z.string().max(255),
-    state: z.string().max(255),
-    city: z.string().max(255),
-    neighborhood: z.string().max(255),
-    street: z.string().max(255),
-    number: z.string().max(255),
-    latitude: z.number(),
-    longitude: z.number(),
-    complement: z.string().max(255).nullable(),
-  });
+const createOrganizationAddressBodySchema = z.object({
+  zipcode: z.string().max(255),
+  state: z.string().max(255),
+  city: z.string().max(255),
+  neighborhood: z.string().max(255),
+  street: z.string().max(255),
+  number: z.string().max(255),
+  latitude: z.number(),
+  longitude: z.number(),
+  complement: z.string().max(255).nullable(),
+});
 
-  const organizationId = request.user.sub;
-  const { city, complement, latitude, longitude, neighborhood, number, state, street, zipcode } =
-    createOrganizationAddressSchema.parse(request.body);
+const bodyValidationPipe = new ZodValidationPipe(createOrganizationAddressBodySchema);
 
-  const result = await makeCreateOrganizationAddress().execute({
-    organizationId,
-    city,
-    complement,
-    latitude,
-    longitude,
-    neighborhood,
-    number,
-    state,
-    street,
-    zipcode,
-  });
+type CreateOrganizationAddressSchema = z.infer<typeof createOrganizationAddressBodySchema>;
 
-  if (result.isRight()) {
-    return HttpPresenter.created(reply, {
-      organization_address_id: result.value.organizationAddress.id.toValue(),
+@Controller("/orgs/address")
+export class CreateOrganizationAddressController {
+  public constructor(private readonly createOrganizationAddress: CreateOrganizationAddress) {}
+
+  @Post()
+  @HttpCode(201)
+  public async handle(
+    @CurrentUser() user: UserPayload,
+    @Body(bodyValidationPipe) body: CreateOrganizationAddressSchema,
+  ) {
+    const { city, complement, latitude, longitude, neighborhood, number, state, street, zipcode } = body;
+    const authenticatedId = user.sub;
+
+    const result = await this.createOrganizationAddress.execute({
+      city,
+      complement,
+      latitude,
+      longitude,
+      neighborhood,
+      number,
+      state,
+      street,
+      zipcode,
+      organizationId: authenticatedId,
     });
-  }
 
-  if (result.isLeft() && result.value instanceof OrganizationNotFound) {
-    return HttpPresenter.notFound(reply, {
-      message: "Organization not found.",
-    });
-  }
+    if (result.isRight()) {
+      return {
+        data: result.value.organizationAddress.id.toValue(),
+      };
+    }
 
-  throw result.value;
+    switch (result.value.constructor) {
+      case OrganizationNotFound:
+        throw new NotFoundException("Organization not found.");
+      default:
+        throw new BadRequestException(result.value.message); // TODO: Fix it
+    }
+  }
 }

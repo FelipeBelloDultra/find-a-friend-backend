@@ -9,27 +9,26 @@ import { makePetEntity } from "test/factories/make-pet";
 import { makeAdoption } from "test/factories/make-adoption";
 import { InMemoryOrganizationAddressRepository } from "test/repository/in-memory-organization-address-repository";
 import { makeOrganizationAddressEntity } from "test/factories/make-organization-address";
-import { FakeQueueProvider } from "test/providers/fake-queue-provider";
+import { FakeQueueProvider } from "test/queue/fake-queue-provider";
+import { OrganizationAddress } from "~/domain/organization/enterprise/entities/organization-address";
+import { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
+import { Pet } from "~/domain/pet/enterprise/entities/pet";
+import { Organization } from "~/domain/organization/enterprise/entities/organization";
+import { Right } from "~/core/either";
 
 import { AdoptPet } from "./adopt-pet";
 
-import type { OrganizationAddress } from "~/domain/organization/enterprise/entities/organization-address";
-import type { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
-import type { Pet } from "~/domain/pet/enterprise/entities/pet";
-import type { Organization } from "~/domain/organization/enterprise/entities/organization";
-import type { Right } from "~/core/either";
-
-let sut: AdoptPet;
-let inMemoryPetRepository: InMemoryPetRepository;
-let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
-let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
-let inMemoryAdoptionRepository: InMemoryAdoptionRepository;
-let fakeQueueProvider: FakeQueueProvider;
-let organizationAddress: OrganizationAddress;
-let organization: Organization;
-let pet: Pet;
-
 describe("Adopt pet", () => {
+  let sut: AdoptPet;
+  let inMemoryPetRepository: InMemoryPetRepository;
+  let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
+  let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
+  let inMemoryAdoptionRepository: InMemoryAdoptionRepository;
+  let fakeQueueProvider: FakeQueueProvider;
+  let organizationAddress: OrganizationAddress;
+  let organization: Organization;
+  let pet: Pet;
+
   beforeEach(async () => {
     organization = await makeOrganizationEntity();
     organizationAddress = makeOrganizationAddressEntity({

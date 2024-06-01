@@ -1,17 +1,15 @@
-import { left, right } from "~/core/either";
+import { Injectable } from "@nestjs/common";
+
+import { Either, left, right } from "~/core/either";
 import { OrganizationNotFound } from "~/domain/organization/application/use-cases/errors/organization-not-found";
 import { NotAllowed } from "~/core/errors/not-allowed";
-import { Pet } from "~/domain/pet/enterprise/entities/pet";
+import { Pet, PetEnergyLevel, PetEnvironmentSize, PetSize } from "~/domain/pet/enterprise/entities/pet";
 import { OrganizationAddressNotFound } from "~/domain/organization/application/use-cases/errors/organization-address-not-found";
+import { OrganizationAddressRepository } from "~/domain/organization/application/repository/organization-address-repository";
+import { PetRepository } from "~/domain/pet/application/repository/pet-repository";
+import { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
 
 import { AdoptionStatus } from "../../enterprise/entities/value-object/adoption-status";
-
-import type { PetEnergyLevel, PetEnvironmentSize, PetSize } from "~/domain/pet/enterprise/entities/pet";
-import type { OrganizationAddressRepository } from "~/domain/organization/application/repository/organization-address-repository";
-import type { Either } from "~/core/either";
-import type { UseCase } from "~/application/use-case";
-import type { PetRepository } from "~/domain/pet/application/repository/pet-repository";
-import type { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
 
 interface CreatePetInput {
   organizationId: string;
@@ -22,19 +20,18 @@ interface CreatePetInput {
   energyLevel: PetEnergyLevel;
   environmentSize: PetEnvironmentSize;
 }
-type OnLeft = OrganizationNotFound | OrganizationAddressNotFound | NotAllowed;
-type OnRight = { pet: Pet };
 
-type CreatePetOutput = Promise<Either<OnLeft, OnRight>>;
+type CreatePetOutput = Either<OrganizationNotFound | OrganizationAddressNotFound | NotAllowed, { pet: Pet }>;
 
-export class CreatePet implements UseCase<CreatePetInput, CreatePetOutput> {
+@Injectable()
+export class CreatePet {
   public constructor(
     private readonly organizationRepository: OrganizationRepository,
     private readonly organizationAddressRepository: OrganizationAddressRepository,
     private readonly petRepository: PetRepository,
   ) {}
 
-  public async execute(input: CreatePetInput): CreatePetOutput {
+  public async execute(input: CreatePetInput): Promise<CreatePetOutput> {
     const organization = await this.organizationRepository.findById(input.organizationId);
     if (!organization) {
       return left(new OrganizationNotFound());

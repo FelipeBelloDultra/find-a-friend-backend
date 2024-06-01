@@ -1,37 +1,60 @@
+import { INestApplication } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
+import { Test } from "@nestjs/testing";
 import supertest from "supertest";
 
-import { makeAndAuthenticateOrganizationRequest } from "test/factories/make-organization";
+import { OrganizationFactory } from "test/factories/make-organization";
 import { makeOrganizationAddress } from "test/factories/make-organization-address";
-import { App } from "~/infra/http/app";
+import { AppModule } from "~/infra/app.module";
+import { DatabaseModule } from "~/infra/database/database.module";
+import { PrismaService } from "~/infra/database/prisma/prisma.service";
 
-let app: App;
+describe("Create organization address [E2E]", () => {
+  let app: INestApplication;
+  let jwt: JwtService;
+  let prisma: PrismaService;
+  let organizationFactory: OrganizationFactory;
 
-describe("[POST] Create organization address", () => {
   beforeAll(async () => {
-    app = new App();
-    await app.start();
-    await app.instance.ready();
+    const moduleRef = await Test.createTestingModule({
+      imports: [AppModule, DatabaseModule],
+      providers: [OrganizationFactory],
+    }).compile();
+
+    app = moduleRef.createNestApplication();
+
+    jwt = moduleRef.get(JwtService);
+    prisma = moduleRef.get(PrismaService);
+    organizationFactory = moduleRef.get(OrganizationFactory);
+
+    await app.init();
   });
 
-  it("should be able create an organization address", async () => {
-    const { token } = await makeAndAuthenticateOrganizationRequest(app.instance);
+  it("[POST] /api/orgs/address", async () => {
+    const org = await organizationFactory.makePrismaOrganization();
 
-    const sut = await supertest(app.instance.server)
-      .post("/api/orgs/address")
+    const token = jwt.sign({
+      sub: org.id.toValue(),
+    });
+
+    const sut = await supertest(app.getHttpServer())
+      .post("/orgs/address")
       .set("Authorization", `Bearer ${token}`)
       .send(makeOrganizationAddress());
 
     expect(sut.statusCode).toEqual(201);
-    expect(sut.body).toEqual(
-      expect.objectContaining({
-        data: expect.objectContaining({
-          organization_address_id: expect.any(String),
-        }),
-      }),
-    );
+    expect(await prisma.organizationAddress.count()).toBeGreaterThan(0);
+
+    const organization = await prisma.organization.findUnique({
+      where: {
+        id: org.id.toValue(),
+      },
+    });
+
+    expect(organization.profile_completed).toBeTruthy();
   });
 
   afterAll(async () => {
-    await app.disconnect();
+    await app.close();
   });
 });

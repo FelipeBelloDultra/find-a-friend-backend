@@ -1,17 +1,20 @@
 import { makeOrganizationEntity } from "test/factories/make-organization";
 import { InMemoryOrganizationRepository } from "test/repository/in-memory-organization-repository";
 import { Password } from "~/domain/organization/enterprise/entities/value-object/password";
+import { FakeEncrypter } from "test/cryptography/fake-encrypter";
 
 import { InvalidCredentials } from "./errors/invalid-credentials";
 import { AuthenticateOrganization } from "./authenticate-organization";
 
-let sut: AuthenticateOrganization;
-let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
-
 describe("Authenticate organization", () => {
+  let sut: AuthenticateOrganization;
+  let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
+  let fakeEncrypter: FakeEncrypter;
+
   beforeEach(() => {
     inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
-    sut = new AuthenticateOrganization(inMemoryOrganizationRepository);
+    fakeEncrypter = new FakeEncrypter();
+    sut = new AuthenticateOrganization(inMemoryOrganizationRepository, fakeEncrypter);
   });
 
   it("should authenticate the organization", async () => {
@@ -30,10 +33,12 @@ describe("Authenticate organization", () => {
     });
 
     expect(result.isRight()).toBeTruthy();
-    expect(result.value).contains({
-      email: EMAIL,
-      id: inMemoryOrganizationRepository.organizations[0].id.toValue(),
-    });
+    expect(result.value).toEqual(
+      expect.objectContaining({
+        accessToken: expect.any(String),
+        refreshToken: expect.any(String),
+      }),
+    );
   });
 
   it("should not be able to authenticate the organization if organization does not exist", async () => {

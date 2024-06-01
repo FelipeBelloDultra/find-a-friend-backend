@@ -1,8 +1,8 @@
-import type { Organization } from "~/domain/organization/enterprise/entities/organization";
+import { Organization } from "~/domain/organization/enterprise/entities/organization";
 
-export interface OrganizationRepository {
-  create: (organization: Organization) => Promise<Organization>;
-  findByEmail: (email: string) => Promise<Organization | null>;
-  findById: (id: string) => Promise<Organization | null>;
-  save: (organization: Organization) => Promise<Organization>;
+export abstract class OrganizationRepository {
+  public abstract create: (organization: Organization) => Promise<Organization>;
+  public abstract findByEmail: (email: string) => Promise<Organization | null>;
+  public abstract findById: (id: string) => Promise<Organization | null>;
+  public abstract save: (organization: Organization) => Promise<Organization>;
 }

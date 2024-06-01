@@ -1,30 +1,25 @@
-import { left, right } from "~/core/either";
+import { Either, left, right } from "~/core/either";
 import { PetNotFound } from "~/domain/pet/application/use-cases/errors/pet-not-found";
+import { PetRepository } from "~/domain/pet/application/repository/pet-repository";
+import { AdoptionRepository } from "~/domain/adoption/application/repository/adoption-repository";
+import { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
 
-import { AdoptionNotFound } from "./errors/adoption-not-found";
 import { AdoptionCodeExpired } from "./errors/adoption-code-expired";
-
-import type { PetRepository } from "~/domain/pet/application/repository/pet-repository";
-import type { UseCase } from "~/application/use-case";
-import type { Either } from "~/core/either";
-import type { AdoptionRepository } from "~/domain/adoption/application/repository/adoption-repository";
-import type { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
+import { AdoptionNotFound } from "./errors/adoption-not-found";
 
 interface VerifyAdoptionCodeInput {
   adoptionCode: string;
 }
-type OnLeft = AdoptionNotFound | AdoptionCodeExpired | PetNotFound;
-type OnRight = { adoption: Adoption };
 
-type VerifyAdoptionCodeOutput = Promise<Either<OnLeft, OnRight>>;
+type VerifyAdoptionCodeOutput = Either<AdoptionNotFound | AdoptionCodeExpired | PetNotFound, { adoption: Adoption }>;
 
-export class VerifyAdoptionCode implements UseCase<VerifyAdoptionCodeInput, VerifyAdoptionCodeOutput> {
+export class VerifyAdoptionCode {
   public constructor(
     private readonly petRepository: PetRepository,
     private readonly adoptionRepository: AdoptionRepository,
   ) {}
 
-  public async execute(input: VerifyAdoptionCodeInput): VerifyAdoptionCodeOutput {
+  public async execute(input: VerifyAdoptionCodeInput): Promise<VerifyAdoptionCodeOutput> {
     const adoption = await this.adoptionRepository.findByCode(input.adoptionCode);
     if (!adoption) {
       return left(new AdoptionNotFound());

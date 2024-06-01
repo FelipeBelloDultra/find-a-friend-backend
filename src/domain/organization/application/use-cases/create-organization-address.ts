@@ -1,13 +1,12 @@
-import { left, right } from "~/core/either";
+import { Injectable } from "@nestjs/common";
+
+import { Either, left, right } from "~/core/either";
+import { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
 
 import { OrganizationAddress } from "../../enterprise/entities/organization-address";
+import { OrganizationAddressRepository } from "../repository/organization-address-repository";
 
 import { OrganizationNotFound } from "./errors/organization-not-found";
-
-import type { UseCase } from "~/application/use-case";
-import type { Either } from "~/core/either";
-import type { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
-import type { OrganizationAddressRepository } from "../repository/organization-address-repository";
 
 interface CreateOrganizationAddressInput {
   organizationId: string;
@@ -21,20 +20,17 @@ interface CreateOrganizationAddressInput {
   longitude: number;
   complement: string | null;
 }
-type OnLeft = OrganizationNotFound;
-type OnRight = { organizationAddress: OrganizationAddress };
 
-type CreateOrganizationAddressOutput = Promise<Either<OnLeft, OnRight>>;
+type CreateOrganizationAddressOutput = Either<OrganizationNotFound, { organizationAddress: OrganizationAddress }>;
 
-export class CreateOrganizationAddress
-  implements UseCase<CreateOrganizationAddressInput, CreateOrganizationAddressOutput>
-{
+@Injectable()
+export class CreateOrganizationAddress {
   public constructor(
     private readonly organizationRepository: OrganizationRepository,
     private readonly organizationAddressRepository: OrganizationAddressRepository,
   ) {}
 
-  public async execute(input: CreateOrganizationAddressInput): CreateOrganizationAddressOutput {
+  public async execute(input: CreateOrganizationAddressInput): Promise<CreateOrganizationAddressOutput> {
     const organization = await this.organizationRepository.findById(input.organizationId);
     if (!organization) {
       return left(new OrganizationNotFound());

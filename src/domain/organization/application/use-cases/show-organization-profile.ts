@@ -1,24 +1,22 @@
-import { left, right } from "~/core/either";
+import { Injectable } from "@nestjs/common";
+
+import { Either, left, right } from "~/core/either";
+import { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
+import { Organization } from "~/domain/organization/enterprise/entities/organization";
 
 import { OrganizationNotFound } from "./errors/organization-not-found";
-
-import type { UseCase } from "~/application/use-case";
-import type { Either } from "~/core/either";
-import type { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
-import type { Organization } from "~/domain/organization/enterprise/entities/organization";
 
 interface ShowOrganizationProfileInput {
   organizationId: string;
 }
-type OnLeft = OrganizationNotFound;
-type OnRight = { organization: Organization };
 
-type ShowOrganizationProfileOutput = Promise<Either<OnLeft, OnRight>>;
+type ShowOrganizationProfileOutput = Either<OrganizationNotFound, { organization: Organization }>;
 
-export class ShowOrganizationProfile implements UseCase<ShowOrganizationProfileInput, ShowOrganizationProfileOutput> {
+@Injectable()
+export class ShowOrganizationProfile {
   public constructor(private readonly organizationRepository: OrganizationRepository) {}
 
-  public async execute(input: ShowOrganizationProfileInput): ShowOrganizationProfileOutput {
+  public async execute(input: ShowOrganizationProfileInput): Promise<ShowOrganizationProfileOutput> {
     const organization = await this.organizationRepository.findById(input.organizationId);
     if (!organization) {
       return left(new OrganizationNotFound());

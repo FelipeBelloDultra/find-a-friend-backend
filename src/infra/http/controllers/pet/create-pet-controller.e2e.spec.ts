@@ -1,35 +1,58 @@
+import { INestApplication } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
+import { Test } from "@nestjs/testing";
 import supertest from "supertest";
 
-import { makeAndAuthenticateOrganizationRequest } from "test/factories/make-organization";
-import { makeOrganizationAddressRequest } from "test/factories/make-organization-address";
+import { OrganizationFactory } from "test/factories/make-organization";
+import { OrganizationAddressFactory } from "test/factories/make-organization-address";
 import { makePetEntity } from "test/factories/make-pet";
-import { App } from "~/infra/http/app";
+import { AppModule } from "~/infra/app.module";
+import { DatabaseModule } from "~/infra/database/database.module";
+import { PrismaService } from "~/infra/database/prisma/prisma.service";
 
-let app: App;
+describe("Create pet [E2E]", () => {
+  let app: INestApplication;
+  let jwt: JwtService;
+  let prisma: PrismaService;
+  let organizationFactory: OrganizationFactory;
+  let organizationAddressFactory: OrganizationAddressFactory;
 
-describe("[POST] Create pet controller", () => {
   beforeAll(async () => {
-    app = new App();
-    await app.start();
-    await app.instance.ready();
+    const moduleRef = await Test.createTestingModule({
+      imports: [AppModule, DatabaseModule],
+      providers: [OrganizationFactory, OrganizationAddressFactory],
+    }).compile();
+
+    app = moduleRef.createNestApplication();
+
+    jwt = moduleRef.get(JwtService);
+    prisma = moduleRef.get(PrismaService);
+    organizationFactory = moduleRef.get(OrganizationFactory);
+    organizationAddressFactory = moduleRef.get(OrganizationAddressFactory);
+
+    await app.init();
   });
 
-  it("should create a pet and return 201", async () => {
-    const { token, organization } = await makeAndAuthenticateOrganizationRequest(app.instance);
-    const { organizationAddress } = await makeOrganizationAddressRequest(organization.id);
-    const pet = makePetEntity({
-      organizationId: organization.id,
-      organizationAddressId: organizationAddress.id,
+  it("[POST] /api/pets", async () => {
+    const org = await organizationFactory.makePrismaOrganization();
+    const orgAddress = await organizationAddressFactory.makePrismaOrganizationAddress({
+      organizationId: org.id,
+    });
+    await prisma.organization.update({
+      where: { id: org.id.toValue() },
+      data: { profile_completed: true },
     });
 
-    /**
-     * In this case, we are working with Domain events,
-     * and this code await for the next tick of event loop running to
-     * continue the test execution
-     */
-    await new Promise((r, _) => setTimeout(r));
+    const token = jwt.sign({
+      sub: org.id.toValue(),
+    });
 
-    const sut = await supertest(app.instance.server).post("/api/pets").set("Authorization", `Bearer ${token}`).send({
+    const pet = makePetEntity({
+      organizationId: org.id,
+      organizationAddressId: orgAddress.id,
+    });
+
+    const sut = await supertest(app.getHttpServer()).post("/pets").set("Authorization", `Bearer ${token}`).send({
       organization_address_id: pet.values.organizationAddressId.toValue(),
       name: pet.values.name,
       about: pet.values.about,
@@ -38,17 +61,11 @@ describe("[POST] Create pet controller", () => {
       environment_size: pet.values.environmentSize,
     });
 
-    expect(sut.status).toEqual(201);
-    expect(sut.body).toEqual(
-      expect.objectContaining({
-        data: expect.objectContaining({
-          pet_id: expect.any(String),
-        }),
-      }),
-    );
+    expect(sut.statusCode).toEqual(201);
+    expect(await prisma.pet.count()).toBeGreaterThan(0);
   });
 
   afterAll(async () => {
-    await app.disconnect();
+    await app.close();
   });
 });

@@ -1,5 +1,5 @@
-import type { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
-import type { Organization } from "~/domain/organization/enterprise/entities/organization";
+import { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
+import { Organization } from "~/domain/organization/enterprise/entities/organization";
 
 export class InMemoryOrganizationRepository implements OrganizationRepository {
   public readonly organizations: Array<Organization> = [];

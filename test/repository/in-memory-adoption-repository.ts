@@ -1,10 +1,10 @@
-import type { FetchManyAdoptionsQuery } from "~/domain/adoption/application/query/queries";
-import type { PaginationRepository } from "~/application/repository/pagination-repository";
-import type {
+import { FetchManyAdoptionsQuery } from "~/domain/adoption/application/query/queries";
+import { PaginationRepository } from "~/application/repository/pagination-repository";
+import {
   AdoptionRepository,
   FindAllAdoptionsFilters,
 } from "~/domain/adoption/application/repository/adoption-repository";
-import type { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
+import { Adoption } from "~/domain/adoption/enterprise/entities/adoption";
 
 export class InMemoryAdoptionRepository implements AdoptionRepository {
   public readonly adoptions: Array<Adoption> = [];

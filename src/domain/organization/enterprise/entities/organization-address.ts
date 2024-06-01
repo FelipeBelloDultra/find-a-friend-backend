@@ -1,8 +1,7 @@
 import { AggregateRoot } from "~/core/entity/aggregate-root";
 import { OrganizationAddressCreatedEvent } from "~/domain/organization/enterprise/events/organization-address-created-event";
-
-import type { UniqueEntityID } from "~/core/entity/unique-entity-id";
-import type { Optional } from "~/core/types/optional";
+import { UniqueEntityID } from "~/core/entity/unique-entity-id";
+import { Optional } from "~/core/types/optional";
 
 export interface OrganizationAddressProps {
   organizationId: UniqueEntityID;

@@ -1,14 +1,11 @@
-import supertest from "supertest";
 import { faker } from "@faker-js/faker";
+import { Injectable } from "@nestjs/common";
 
-import { OrganizationMapper } from "~/domain/organization/application/mappers/organization-mapper";
-import { Organization } from "~/domain/organization/enterprise/entities/organization";
+import { Organization, OrganizationProps } from "~/domain/organization/enterprise/entities/organization";
 import { Password } from "~/domain/organization/enterprise/entities/value-object/password";
-import { DatabaseConnection } from "~/infra/database/connection";
-
-import type { OrganizationProps } from "~/domain/organization/enterprise/entities/organization";
-import type { FastifyInstance } from "fastify";
-import type { UniqueEntityID } from "~/core/entity/unique-entity-id";
+import { UniqueEntityID } from "~/core/entity/unique-entity-id";
+import { PrismaService } from "~/infra/database/prisma/prisma.service";
+import { OrganizationMapper } from "~/infra/database/prisma/mappers/organization-mapper";
 
 export async function makeOrganization() {
   return {
@@ -32,21 +29,17 @@ export async function makeOrganizationEntity(override: Partial<OrganizationProps
   return organization;
 }
 
-export async function makeAndAuthenticateOrganizationRequest(fastifyInstance: FastifyInstance) {
-  const organization = await makeOrganizationEntity({
-    password: await Password.create("123456"),
-  });
+@Injectable()
+export class OrganizationFactory {
+  public constructor(private prisma: PrismaService) {}
 
-  await DatabaseConnection.query.organization.create({
-    data: OrganizationMapper.toPersistence(organization),
-  });
+  public async makePrismaOrganization(data: Partial<OrganizationProps> = {}): Promise<Organization> {
+    const organization = await makeOrganizationEntity(data);
 
-  const authResponse = await supertest(fastifyInstance.server).post("/api/session").send({
-    email: organization.values.email,
-    password: "123456",
-  });
+    await this.prisma.organization.create({
+      data: OrganizationMapper.toPersistence(organization),
+    });
 
-  const { data } = authResponse.body;
-
-  return { token: data.token, organization };
+    return organization;
+  }
 }

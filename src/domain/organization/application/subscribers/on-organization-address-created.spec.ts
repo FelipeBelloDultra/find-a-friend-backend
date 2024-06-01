@@ -7,17 +7,17 @@ import { CompleteOrganizationProfile } from "../use-cases/complete-organization-
 
 import { OnOrganizationAddressCreated } from "./on-organization-address-created";
 
-let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
-let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
-let completeOrganizationProfile: CompleteOrganizationProfile;
-
 describe("On organization address created", () => {
+  let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
+  let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
+  let completeOrganizationProfile: CompleteOrganizationProfile;
+
   beforeEach(() => {
     inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
     inMemoryOrganizationAddressRepository = new InMemoryOrganizationAddressRepository();
     completeOrganizationProfile = new CompleteOrganizationProfile(inMemoryOrganizationRepository);
 
-    new OnOrganizationAddressCreated(completeOrganizationProfile).listen();
+    new OnOrganizationAddressCreated(completeOrganizationProfile);
   });
 
   it("should set the organization profile to true", async () => {
