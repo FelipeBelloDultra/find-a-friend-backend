@@ -3,7 +3,7 @@ USER node
 WORKDIR /home/node/app
 
 FROM base AS builder
-COPY ./package*.json .
+COPY ./package*.json ./
 RUN npm ci
 COPY . .
 RUN npm run build

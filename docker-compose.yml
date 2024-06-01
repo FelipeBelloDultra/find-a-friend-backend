@@ -4,7 +4,7 @@ services:
         build:
             dockerfile: Dockerfile
             target: base
-        entrypoint: sh -c "npm ci && npm run dev:server:watch"
+        entrypoint: sh -c "npm ci && npm run start:dev"
         ports:
             - 3333:3333
         volumes:
@@ -14,19 +14,6 @@ services:
         depends_on:
             - postgres_db
             - redis
-
-    api-queue-worker:
-        container_name: find-a-friend-api-queue-worker
-        build:
-            dockerfile: Dockerfile
-            target: base
-        volumes:
-            - ./:/home/node/app
-        entrypoint: sh -c "npm ci && npm run dev:queue"
-        networks:
-            - find-a-friend-network
-        depends_on:
-            - api
 
     postgres_db:
         image: bitnami/postgresql:16.2.0
@@ -59,7 +46,6 @@ services:
             TZ: America/Sao_Paulo
         ports:
             - 8025:8025
-            - 1025:1025
         volumes:
             - mailpit-data:/data
         networks:
