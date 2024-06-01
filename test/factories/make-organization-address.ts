@@ -40,7 +40,9 @@ export function makeOrganizationAddressEntity(override: Partial<OrganizationAddr
 export class OrganizationAddressFactory {
   public constructor(private prisma: PrismaService) {}
 
-  public async makePrismaOrganization(data: Partial<OrganizationAddressProps> = {}): Promise<OrganizationAddress> {
+  public async makePrismaOrganizationAddress(
+    data: Partial<OrganizationAddressProps> = {},
+  ): Promise<OrganizationAddress> {
     const organizationAddress = makeOrganizationAddressEntity(data);
 
     await this.prisma.organizationAddress.create({

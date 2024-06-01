@@ -1,3 +1,5 @@
+import { Injectable } from "@nestjs/common";
+
 import { Either, right } from "~/core/either";
 import { OrganizationRepository } from "~/domain/organization/application/repository/organization-repository";
 
@@ -7,6 +9,7 @@ interface CompleteOrganizationProfileInput {
 
 type CompleteOrganizationProfileOutput = Either<never, void>;
 
+@Injectable()
 export class CompleteOrganizationProfile {
   public constructor(private readonly organizationRepository: OrganizationRepository) {}
 

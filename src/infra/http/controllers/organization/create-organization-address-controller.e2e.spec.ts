@@ -9,7 +9,7 @@ import { AppModule } from "~/infra/app.module";
 import { DatabaseModule } from "~/infra/database/database.module";
 import { PrismaService } from "~/infra/database/prisma/prisma.service";
 
-describe.only("Create organization address [E2E]", () => {
+describe("Create organization address [E2E]", () => {
   let app: INestApplication;
   let jwt: JwtService;
   let prisma: PrismaService;
@@ -44,6 +44,14 @@ describe.only("Create organization address [E2E]", () => {
 
     expect(sut.statusCode).toEqual(201);
     expect(await prisma.organizationAddress.count()).toBeGreaterThan(0);
+
+    const organization = await prisma.organization.findUnique({
+      where: {
+        id: org.id.toValue(),
+      },
+    });
+
+    expect(organization.profile_completed).toBeTruthy();
   });
 
   afterAll(async () => {

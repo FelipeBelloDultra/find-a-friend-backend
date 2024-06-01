@@ -8,7 +8,7 @@ import { makeOrganization, OrganizationFactory } from "test/factories/make-organ
 import { AppModule } from "~/infra/app.module";
 import { DatabaseModule } from "~/infra/database/database.module";
 
-describe.only("Refresh token [E2E]", () => {
+describe("Refresh token [E2E]", () => {
   let app: INestApplication;
   let jwt: JwtService;
   let organizationFactory: OrganizationFactory;

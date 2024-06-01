@@ -1,3 +1,5 @@
+import { Injectable } from "@nestjs/common";
+
 import { Either, left, right } from "~/core/either";
 import { OrganizationNotFound } from "~/domain/organization/application/use-cases/errors/organization-not-found";
 import { NotAllowed } from "~/core/errors/not-allowed";
@@ -21,6 +23,7 @@ interface CreatePetInput {
 
 type CreatePetOutput = Either<OrganizationNotFound | OrganizationAddressNotFound | NotAllowed, { pet: Pet }>;
 
+@Injectable()
 export class CreatePet {
   public constructor(
     private readonly organizationRepository: OrganizationRepository,

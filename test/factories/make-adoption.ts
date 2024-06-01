@@ -35,7 +35,7 @@ export class AdoptionFactory {
   public constructor(private prisma: PrismaService) {}
 
   public async makePrismaAdoption(data: Partial<AdoptionProps> = {}): Promise<Adoption> {
-    const adoption = await makeAdoptionEntity(data);
+    const adoption = makeAdoptionEntity(data);
 
     await this.prisma.adoption.create({
       data: AdoptionMapper.toPersistence(adoption),
