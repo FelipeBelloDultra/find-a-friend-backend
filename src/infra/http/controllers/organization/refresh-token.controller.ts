@@ -4,6 +4,8 @@ import { Request, Response } from "express";
 import { Encrypter } from "~/application/cryptography/encrypter";
 import { Public } from "~/infra/auth/public";
 
+import { HttpPresenter } from "../../presenters/http-presenter";
+
 @Controller("/refresh-token")
 @Public()
 export class RefreshTokenController {
@@ -39,12 +41,10 @@ export class RefreshTokenController {
         sameSite: true,
         httpOnly: true,
       })
-      .json({
-        status: "success",
-        error: {},
-        data: {
+      .json(
+        HttpPresenter.success({
           token: accessToken,
-        },
-      });
+        }),
+      );
   }
 }

@@ -7,6 +7,7 @@ import { AuthenticateOrganization } from "~/domain/organization/application/use-
 import { Public } from "~/infra/auth/public";
 
 import { ZodValidationPipe } from "../../pipes/zod-validation-pipe";
+import { HttpPresenter } from "../../presenters/http-presenter";
 
 const authenticateOrganizationBodySchema = z.object({
   email: z.string().email().max(255),
@@ -41,13 +42,11 @@ export class AuthenticateOrganizationController {
         sameSite: true,
         httpOnly: true,
       });
-      return response.json({
-        status: "success",
-        error: {},
-        data: {
+      return response.json(
+        HttpPresenter.success({
           token: accessToken,
-        },
-      });
+        }),
+      );
     }
 
     switch (result.value.constructor) {

@@ -51,21 +51,17 @@ export class CreatePetController {
       size,
     });
 
-    if (result.isRight()) {
-      return {
-        data: result.value.pet.id.toValue(),
-      };
-    }
-
-    switch (result.value.constructor) {
-      case OrganizationNotFound:
-        throw new NotFoundException("Organization not found.");
-      case OrganizationAddressNotFound:
-        throw new NotFoundException("Organization address not found.");
-      case NotAllowed:
-        throw new ForbiddenException("Not allowed.");
-      default:
-        throw new BadRequestException(result.value.message); // TODO: Fix it
+    if (result.isLeft()) {
+      switch (result.value.constructor) {
+        case OrganizationNotFound:
+          throw new NotFoundException("Organization not found.");
+        case OrganizationAddressNotFound:
+          throw new NotFoundException("Organization address not found.");
+        case NotAllowed:
+          throw new ForbiddenException("Not allowed.");
+        default:
+          throw new BadRequestException(result.value.message); // TODO: Fix it
+      }
     }
   }
 }

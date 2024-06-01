@@ -50,17 +50,13 @@ export class CreateOrganizationAddressController {
       organizationId: authenticatedId,
     });
 
-    if (result.isRight()) {
-      return {
-        data: result.value.organizationAddress.id.toValue(),
-      };
-    }
-
-    switch (result.value.constructor) {
-      case OrganizationNotFound:
-        throw new NotFoundException("Organization not found.");
-      default:
-        throw new BadRequestException(result.value.message); // TODO: Fix it
+    if (result.isLeft()) {
+      switch (result.value.constructor) {
+        case OrganizationNotFound:
+          throw new NotFoundException("Organization not found.");
+        default:
+          throw new BadRequestException(result.value.message); // TODO: Fix it
+      }
     }
   }
 }
