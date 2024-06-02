@@ -6,11 +6,13 @@ FROM base AS builder
 COPY ./package*.json ./
 RUN npm ci
 COPY . .
-RUN npm run build
+RUN npm run db:generate && \
+  npm run build
 
 FROM base AS production
-COPY --from=builder /home/node/app/dist ./dist
 ENV NODE_ENV=production
-COPY ./package*.json ./
-RUN npm ci
-CMD [ "npm", "run", "start" ]
+COPY --chown=node:node --from=builder /home/node/app/node_modules ./node_modules
+COPY --chown=node:node --from=builder /home/node/app/package*.json ./
+COPY --chown=node:node --from=builder /home/node/app/dist ./dist
+RUN npm prune --production
+CMD [ "npm", "run", "start:prod" ]
