@@ -5,6 +5,7 @@ import supertest from "supertest";
 
 import { OrganizationFactory } from "test/factories/make-organization";
 import { makeOrganizationAddress } from "test/factories/make-organization-address";
+import { waitFor } from "test/utils/wait-for";
 import { AppModule } from "~/infra/app.module";
 import { DatabaseModule } from "~/infra/database/database.module";
 import { PrismaService } from "~/infra/database/prisma/prisma.service";
@@ -45,13 +46,15 @@ describe("Create organization address [E2E]", () => {
     expect(sut.statusCode).toEqual(201);
     expect(await prisma.organizationAddress.count()).toBeGreaterThan(0);
 
-    const organization = await prisma.organization.findUnique({
-      where: {
-        id: org.id.toValue(),
-      },
-    });
+    await waitFor(async () => {
+      const organization = await prisma.organization.findUnique({
+        where: {
+          id: org.id.toValue(),
+        },
+      });
 
-    expect(organization.profile_completed).toBeTruthy();
+      expect(organization.profile_completed).toBeTruthy();
+    });
   });
 
   afterAll(async () => {

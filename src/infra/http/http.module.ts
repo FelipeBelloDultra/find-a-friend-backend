@@ -5,6 +5,7 @@ import { AuthenticateOrganization } from "~/domain/organization/application/use-
 import { ShowOrganizationProfile } from "~/domain/organization/application/use-cases/show-organization-profile";
 import { CreateOrganizationAddress } from "~/domain/organization/application/use-cases/create-organization-address";
 import { CreatePet } from "~/domain/pet/application/use-cases/create-pet";
+import { ShowPetDetail } from "~/domain/pet/application/use-cases/show-pet-detail";
 
 import { DatabaseModule } from "../database/database.module";
 import { CryptographyModule } from "../cryptography/cryptography.module";
@@ -15,6 +16,7 @@ import { ShowOrganizationProfileController } from "./controllers/organization/sh
 import { RefreshTokenController } from "./controllers/organization/refresh-token.controller";
 import { CreateOrganizationAddressController } from "./controllers/organization/create-organization-address-controller";
 import { CreatePetController } from "./controllers/pet/create-pet-controller";
+import { ShowPetDetailController } from "./controllers/pet/show-pet-detail-controller";
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -25,8 +27,10 @@ import { CreatePetController } from "./controllers/pet/create-pet-controller";
     ShowOrganizationProfileController,
     RefreshTokenController,
     CreatePetController,
+    ShowPetDetailController,
   ],
   providers: [
+    ShowPetDetail,
     CreateOrganizationAddress,
     CreateOrganization,
     AuthenticateOrganization,

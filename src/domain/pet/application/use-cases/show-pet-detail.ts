@@ -1,3 +1,5 @@
+import { Injectable } from "@nestjs/common";
+
 import { Either, left, right } from "~/core/either";
 import { PetRepository } from "~/domain/pet/application/repository/pet-repository";
 import { Pet } from "~/domain/pet/enterprise/entities/pet";
@@ -10,6 +12,7 @@ interface ShowPetDetailInput {
 
 type ShowPetDetailOutput = Either<PetNotFound, { pet: Pet }>;
 
+@Injectable()
 export class ShowPetDetail {
   public constructor(private readonly petRepository: PetRepository) {}
 
