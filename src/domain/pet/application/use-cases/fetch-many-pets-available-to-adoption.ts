@@ -1,3 +1,5 @@
+import { Injectable } from "@nestjs/common";
+
 import { Either, right } from "~/core/either";
 import { PetEnergyLevel, PetEnvironmentSize, PetSize } from "~/domain/pet/enterprise/entities/pet";
 import { PetRepository } from "~/domain/pet/application/repository/pet-repository";
@@ -24,6 +26,7 @@ type FetchManyPetsAvailableToAdoptionOutput = Either<
   }
 >;
 
+@Injectable()
 export class FetchManyPetsAvailableToAdoption {
   public constructor(private readonly petRepository: PetRepository) {}
 

@@ -6,6 +6,7 @@ import { ShowOrganizationProfile } from "~/domain/organization/application/use-c
 import { CreateOrganizationAddress } from "~/domain/organization/application/use-cases/create-organization-address";
 import { CreatePet } from "~/domain/pet/application/use-cases/create-pet";
 import { ShowPetDetail } from "~/domain/pet/application/use-cases/show-pet-detail";
+import { FetchManyPetsAvailableToAdoption } from "~/domain/pet/application/use-cases/fetch-many-pets-available-to-adoption";
 
 import { DatabaseModule } from "../database/database.module";
 import { CryptographyModule } from "../cryptography/cryptography.module";
@@ -17,6 +18,7 @@ import { RefreshTokenController } from "./controllers/organization/refresh-token
 import { CreateOrganizationAddressController } from "./controllers/organization/create-organization-address-controller";
 import { CreatePetController } from "./controllers/pet/create-pet-controller";
 import { ShowPetDetailController } from "./controllers/pet/show-pet-detail-controller";
+import { FetchManyPetsAvailableToAdoptionController } from "./controllers/pet/fetch-many-pets-available-to-adoption-controller";
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -28,6 +30,7 @@ import { ShowPetDetailController } from "./controllers/pet/show-pet-detail-contr
     RefreshTokenController,
     CreatePetController,
     ShowPetDetailController,
+    FetchManyPetsAvailableToAdoptionController,
   ],
   providers: [
     ShowPetDetail,
@@ -36,6 +39,7 @@ import { ShowPetDetailController } from "./controllers/pet/show-pet-detail-contr
     AuthenticateOrganization,
     ShowOrganizationProfile,
     CreatePet,
+    FetchManyPetsAvailableToAdoption,
   ],
 })
 export class HttpModule {}
