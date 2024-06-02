@@ -55,45 +55,52 @@ export class PrismaPetRepository implements PetRepository {
       state,
     }: FindAllPetsFilters,
     { limit, page }: PaginationRepository,
-  ): Promise<Array<FetchManyPetsQuery>> {
+  ): Promise<{ pets: Array<FetchManyPetsQuery>; total: number }> {
     const SKIP = (page - 1) * limit;
     const TAKE = page * limit;
 
-    const pet = await this.prisma.pet.findMany({
-      take: TAKE,
-      skip: SKIP,
-      orderBy: [
-        {
-          created_at: "desc",
-        },
-      ],
-      select: {
-        organization_address_id: true,
-        id: true,
-        name: true,
-        energy_level: true,
-        environment_size: true,
-        about: true,
-        size: true,
-        adoption_status: true,
-        created_at: true,
-        updated_at: true,
-        organization_id: true,
+    const where = {
+      adoption_status: adoptionStatus,
+      energy_level: energyLevel,
+      environment_size: environment,
+      size,
+      organization_address_id: organizationAddressId,
+      organization_id: organizationId,
+      OrganizationAddress: {
+        city,
+        state,
       },
-      where: {
-        adoption_status: adoptionStatus,
-        energy_level: energyLevel,
-        environment_size: environment,
-        size,
-        organization_address_id: organizationAddressId,
-        organization_id: organizationId,
-        OrganizationAddress: {
-          city,
-          state,
-        },
-      },
-    });
+    };
 
-    return pet;
+    const [pets, total] = await Promise.all([
+      this.prisma.pet.findMany({
+        take: TAKE,
+        skip: SKIP,
+        orderBy: [
+          {
+            created_at: "desc",
+          },
+        ],
+        select: {
+          organization_address_id: true,
+          id: true,
+          name: true,
+          energy_level: true,
+          environment_size: true,
+          about: true,
+          size: true,
+          adoption_status: true,
+          created_at: true,
+          updated_at: true,
+          organization_id: true,
+        },
+        where,
+      }),
+      this.prisma.pet.count({
+        where,
+      }),
+    ]);
+
+    return { pets, total };
   }
 }

@@ -8,10 +8,10 @@ import { Pet } from "~/domain/pet/enterprise/entities/pet";
 import { OrganizationAddress } from "~/domain/organization/enterprise/entities/organization-address";
 import { Organization } from "~/domain/organization/enterprise/entities/organization";
 
-import { FetchManyPets } from "./fetch-many-pets";
+import { FetchManyPetsAvailableToAdoption } from "./fetch-many-pets-available-to-adoption";
 
-describe("Fetch many pets", () => {
-  let sut: FetchManyPets;
+describe("Fetch many pets available to adoption", () => {
+  let sut: FetchManyPetsAvailableToAdoption;
   let inMemoryPetRepository: InMemoryPetRepository;
   let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
   let inMemoryOrganizationAddressRepository: InMemoryOrganizationAddressRepository;
@@ -37,7 +37,7 @@ describe("Fetch many pets", () => {
       await inMemoryPetRepository.create(pet);
     }
 
-    sut = new FetchManyPets(inMemoryPetRepository);
+    sut = new FetchManyPetsAvailableToAdoption(inMemoryPetRepository);
   });
 
   it("should fetch all pets by city in the first page", async () => {
@@ -53,6 +53,7 @@ describe("Fetch many pets", () => {
     expect(result.isRight()).toBeTruthy();
     expect(inMemoryPetRepository.pets.length).toBe(25);
     expect(result.value.pets.length).toBe(20);
+    expect(result.value.total).toBe(25);
   });
 
   it("should fetch all pets by city in the second page", async () => {
@@ -81,5 +82,6 @@ describe("Fetch many pets", () => {
     expect(result.isRight()).toBeTruthy();
     expect(inMemoryPetRepository.pets.length).toBe(25);
     expect(result.value.pets.length).toBe(0);
+    expect(result.value.total).toBe(0);
   });
 });

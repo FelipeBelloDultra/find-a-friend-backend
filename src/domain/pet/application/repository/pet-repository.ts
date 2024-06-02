@@ -22,5 +22,5 @@ export abstract class PetRepository {
   public abstract findAll: (
     filters: FindAllPetsFilters,
     paginationParams: PaginationRepository,
-  ) => Promise<Array<FetchManyPetsQuery>>;
+  ) => Promise<{ pets: Array<FetchManyPetsQuery>; total: number }>;
 }

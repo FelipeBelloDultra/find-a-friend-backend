@@ -27,14 +27,14 @@ export class InMemoryPetRepository implements PetRepository {
   public async findAll(
     { adoptionStatus, city, energyLevel, environment, organizationAddressId, organizationId, size }: FindAllPetsFilters,
     { limit, page }: PaginationRepository,
-  ): Promise<Array<FetchManyPetsQuery>> {
+  ): Promise<{ pets: Array<FetchManyPetsQuery>; total: number }> {
     const orgsByCity = this.organizationAddressRepository.organizationAddresses.filter((organizationAddresses) => {
       if (organizationAddresses.values.city === city) {
         return organizationAddresses;
       }
     });
 
-    const pets = this.pets
+    const savedPets = this.pets
       .filter((pet) => orgsByCity.some((orgAddress) => orgAddress.id.equals(pet.values.organizationAddressId)))
       .filter((pet) => (adoptionStatus ? pet.values.adoptionStatus.value === adoptionStatus : true))
       .filter((pet) => (size ? pet.values.size === size : true))
@@ -61,7 +61,7 @@ export class InMemoryPetRepository implements PetRepository {
     const SKIP = (page - 1) * limit;
     const TAKE = page * limit;
 
-    return pets.slice(SKIP, TAKE);
+    return { pets: savedPets.slice(SKIP, TAKE), total: savedPets.length };
   }
 
   public async save(pet: Pet): Promise<Pet> {

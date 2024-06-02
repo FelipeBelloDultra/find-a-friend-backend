@@ -4,7 +4,7 @@ import { PetRepository } from "~/domain/pet/application/repository/pet-repositor
 
 import { FetchManyPetsQuery } from "../query/queries";
 
-interface FetchManyPetsInput {
+interface FetchManyPetsAvailableToAdoptionInput {
   city: string;
   state: string;
   size?: PetSize;
@@ -14,20 +14,21 @@ interface FetchManyPetsInput {
   limit: number;
 }
 
-type FetchManyPetsOutput = Either<
+type FetchManyPetsAvailableToAdoptionOutput = Either<
   never,
   {
     pets: Array<
       Omit<FetchManyPetsQuery, "about" | "environment_size" | "size" | "adoption_status" | "created_at" | "updated_at">
     >;
+    total: number;
   }
 >;
 
-export class FetchManyPets {
+export class FetchManyPetsAvailableToAdoption {
   public constructor(private readonly petRepository: PetRepository) {}
 
-  public async execute(input: FetchManyPetsInput): Promise<FetchManyPetsOutput> {
-    const pets = await this.petRepository.findAll(
+  public async execute(input: FetchManyPetsAvailableToAdoptionInput): Promise<FetchManyPetsAvailableToAdoptionOutput> {
+    const { pets, total } = await this.petRepository.findAll(
       {
         city: input.city,
         state: input.state,
@@ -50,6 +51,7 @@ export class FetchManyPets {
         energy_level: pet.energy_level,
         organization_id: pet.organization_id,
       })),
+      total,
     });
   }
 }
