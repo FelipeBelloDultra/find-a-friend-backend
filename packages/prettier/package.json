@@ -1,9 +1,12 @@
 {
-  "name": "@find-a-friend/eslint",
+  "name": "@find-a-friend/prettier",
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "prettier": "3.3.1"
   }
 }

@@ -1,0 +1,13 @@
+{
+  "plugins": ["@find-a-friend/eslint/node.js"],
+  "overrides": [
+    {
+      "files": ["./*.ts"]
+    }
+  ],
+  "parserOptions": {
+    "root": true,
+    "tsconfigRootDir": ".",
+    "project": ["./tsconfig.json"]
+  }
+}
