@@ -1,4 +1,5 @@
 FROM node:20-alpine AS base
+RUN apk update
 USER node
 WORKDIR /home/node/app
 
